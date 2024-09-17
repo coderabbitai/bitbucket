@@ -1,0 +1,23 @@
+# Folders
+.git
+.github
+.vscode
+dist
+docs
+node_modules
+
+# Files
+.dockerignore
+.editorconfig
+.eslintignore
+.eslintrc.yaml
+.gitignore
+.prettierignore
+.prettierrc.yaml
+*.md
+*.test.ts
+*.tsbuildinfo
+*.txt
+Dockerfile
+tsconfig.eslint.json
+typedoc.json

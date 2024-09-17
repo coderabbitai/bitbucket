@@ -1,0 +1,80 @@
+{
+	"name": "@natoboram/gigachad.ts",
+	"version": "0.0.0",
+	"description": "The most gigachad project setup for TypeScript.",
+	"keywords": [
+		"dependabot",
+		"eslint",
+		"gigachad",
+		"markdownlint",
+		"prettier",
+		"project-template",
+		"typescript",
+		"vitest"
+	],
+	"homepage": "https://github.com/NatoBoram/gigachad.ts",
+	"bugs": {
+		"url": "https://github.com/NatoBoram/gigachad.ts/issues"
+	},
+	"license": "Unlicense",
+	"author": {
+		"name": "Nato Boram",
+		"url": "https://github.com/NatoBoram"
+	},
+	"funding": [
+		{
+			"type": "patreon",
+			"url": "https://www.patreon.com/NatoBoram"
+		},
+		{
+			"type": "individual",
+			"url": "https://paypal.me/NatoBoram/5"
+		}
+	],
+	"files": [
+		"dist",
+		"!dist/**/*.test.*"
+	],
+	"main": "dist/index.js",
+	"bin": {
+		"gigachad": "dist/main.js"
+	},
+	"repository": "github:NatoBoram/gigachad.ts",
+	"scripts": {
+		"build": "tsc",
+		"clean": "rm -rf dist docs node_modules tsconfig.tsbuildinfo",
+		"dev": "tsx ./src/main.ts",
+		"docker": "pnpm run docker:build && pnpm run docker:run",
+		"docker:build": "docker build -t gigachad.ts .",
+		"docker:kill": "docker ps --format '{{.Image}} {{.ID}}' | grep gigachad.ts | awk '{print $2}' | xargs docker kill",
+		"docker:run": "docker run gigachad.ts",
+		"docs": "typedoc",
+		"format": "prettier --write .",
+		"lint": "eslint . && markdownlint-cli2 \"**/*.md\" && prettier --check .",
+		"lint:fix": "eslint --fix --quiet .; markdownlint-cli2 \"**/*.md\" --fix; prettier --list-different --write .",
+		"start": "node dist/main.js",
+		"test": "vitest"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.9.1",
+		"eslint": "^9.9.1",
+		"eslint-config-prettier": "^9.1.0",
+		"globals": "^15.9.0",
+		"markdownlint-cli2": "^0.13.0",
+		"prettier": "^3.3.3",
+		"tsx": "^4.19.0",
+		"typedoc": "^0.26.6",
+		"typescript": "^5.5.4",
+		"typescript-eslint": "^8.3.0",
+		"vitest": "^2.0.5"
+	},
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"types": "dist/index.d.ts",
+	"module": "dist/index.js"
+}

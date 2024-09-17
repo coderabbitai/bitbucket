@@ -1,0 +1,48 @@
+name: Node.js Patch
+
+on: workflow_dispatch
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    if: github.actor != 'nektos/act' && github.ref_name == 'main'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+          node-version: latest
+      - name: Configure Git, patch, release and push
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          git config commit.gpgsign true
+          git config gpg.format ssh
+          git config push.gpgSign 'if-asked'
+          git config tag.gpgSign true
+          git config user.signingkey 'key::${{ vars.DEPLOY_KEY_PUBLIC }}'
+
+          eval `ssh-agent -s`
+          ssh-add - <<< '${{ secrets.DEPLOY_KEY_PRIVATE }}'
+
+          VERSION=$(pnpm version patch --no-git-tag-version)
+
+          git commit --all --message "🔖 $VERSION"
+          git tag --annotate --message "🔖 $VERSION" --sign $VERSION
+          git push
+          git push --tags
+
+          gh release create $VERSION --generate-notes --title $VERSION --verify-tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
