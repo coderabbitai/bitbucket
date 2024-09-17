@@ -31,7 +31,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           registry-url: https://npm.pkg.github.com
-          scope: "@natoboram"
+          scope: "@coderabbitai"
       - run: pnpm publish --access public --no-git-checks --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -39,7 +39,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           registry-url: https://registry.npmjs.org
-          scope: "@natoboram"
+          scope: "@coderabbitai"
       - run: pnpm publish --access public --no-git-checks --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
@@ -50,8 +50,8 @@ jobs:
           eval `ssh-agent -s`
           ssh-add - <<< '${{ secrets.DEPLOY_KEY_PRIVATE }}'
           echo '${{ vars.DEPLOY_KEY_PUBLIC }}' > '${{ runner.temp }}/DEPLOY_KEY_PUBLIC.pub'
-          ssh-keygen -Y sign -f '${{ runner.temp }}/DEPLOY_KEY_PUBLIC.pub' -n file natoboram-gigachad.ts-*.tgz
-          ssh-keygen -Y verify -f ./.github/authorized_keys -I '41898282+github-actions[bot]@users.noreply.github.com' -n file -s natoboram-gigachad.ts-*.tgz.sig < natoboram-gigachad.ts-*.tgz
-      - run: gh release upload ${{ github.ref_name }} natoboram-gigachad.ts-*.tgz natoboram-gigachad.ts-*.tgz.sig
+          ssh-keygen -Y sign -f '${{ runner.temp }}/DEPLOY_KEY_PUBLIC.pub' -n file coderabbitai-bitbucket-*.tgz
+          ssh-keygen -Y verify -f ./.github/authorized_keys -I '41898282+github-actions[bot]@users.noreply.github.com' -n file -s coderabbitai-bitbucket-*.tgz.sig < coderabbitai-bitbucket-*.tgz
+      - run: gh release upload ${{ github.ref_name }} coderabbitai-bitbucket-*.tgz coderabbitai-bitbucket-*.tgz.sig
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
