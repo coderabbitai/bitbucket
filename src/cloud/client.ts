@@ -6,7 +6,7 @@ import type { paths } from "./openapi/index.js"
  * Creates an `openapi-fetch` client using {@link createClient}.
  *
  * @example
- * export client = createBitbucketCloudClient({
+ * const client = createBitbucketCloudClient({
  * 	baseUrl: "https://api.bitbucket.org/2.0",
  * 	headers: { Accept: "application/json", Authorization: `Basic ${basic}` },
  * })

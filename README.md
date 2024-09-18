@@ -29,7 +29,7 @@ const basic = toBase64(
 	BITBUCKET_CLOUD_USERNAME + ":" + BITBUCKET_CLOUD_APP_PASSWORD,
 )
 
-export const client = createBitbucketCloudClient({
+const client = createBitbucketCloudClient({
 	baseUrl: BITBUCKET_CLOUD_URL.toString(),
 	headers: { Accept: "application/json", Authorization: `Basic ${basic}` },
 })
@@ -41,7 +41,7 @@ export const client = createBitbucketCloudClient({
 import { createBitbucketServerClient } from "@coderabbitai/bitbucket"
 import { BITBUCKET_SERVER_TOKEN, BITBUCKET_SERVER_URL } from "./env.js"
 
-export const server = createBitbucketServerClient({
+const server = createBitbucketServerClient({
 	baseUrl: BITBUCKET_SERVER_URL,
 	headers: {
 		Accept: "application/json",
