@@ -1,5 +1,4 @@
 {
 	"$schema": "https://typedoc.org/schema.json",
-	"entryPoints": ["./src/index.ts"],
-	"projectDocuments": ["LICENSE.md"]
+	"entryPoints": ["./src/index.ts"]
 }
