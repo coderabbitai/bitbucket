@@ -19,6 +19,7 @@
 		"resolveJsonModule": true,
 
 		/* JavaScript Support */
+		"checkJs": true,
 
 		/* Emit */
 		"declaration": true,
