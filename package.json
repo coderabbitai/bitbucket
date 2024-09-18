@@ -27,7 +27,7 @@
 	],
 	"main": "dist/index.js",
 	"bin": {
-		"gigachad": "dist/main.js"
+		"coderabbitai-bitbucket": "dist/main.js"
 	},
 	"repository": "github:coderabbitai/bitbucket",
 	"scripts": {
