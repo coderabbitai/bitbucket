@@ -3,7 +3,10 @@
 	"version": "0.0.0",
 	"description": "CodeRabbit's TypeScript API client for connecting to Bitbucket Cloud and Bitbucker Data Center",
 	"keywords": [
-		"bitbucker-cloud",
+		"bitbucket-api-v1",
+		"bitbucket-api-v2",
+		"bitbucket-api",
+		"bitbucket-cloud",
 		"bitbucket-data-center",
 		"bitbucket-server",
 		"bitbucket"
@@ -45,6 +48,9 @@
 		"openapi-typescript:server": "openapi-typescript ./src/server/openapi/swagger.v3.json --output ./src/server/openapi/openapi-typescript.ts --immutable --empty-objects-unknown --alphabetize --root-types",
 		"postopenapi-typescript:server": "ts-autofix ./src/server/openapi && pnpm run lint:fix"
 	},
+	"dependencies": {
+		"openapi-fetch": "^0.12.0"
+	},
 	"devDependencies": {
 		"@eslint/js": "^9.10.0",
 		"@types/node": "^22.5.5",
@@ -69,8 +75,5 @@
 		}
 	},
 	"types": "dist/index.d.ts",
-	"module": "dist/index.js",
-	"dependencies": {
-		"openapi-fetch": "^0.12.0"
-	}
+	"module": "dist/index.js"
 }
