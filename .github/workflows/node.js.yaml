@@ -23,6 +23,7 @@ jobs:
       - run: pnpm run build --noEmit
       - run: pnpm run lint
       - run: pnpm run test run
+        if: github.actor != 'dependabot[bot]'
         env:
           BITBUCKET_CLOUD_USERNAME: ${{ secrets.BITBUCKET_CLOUD_USERNAME }}
           BITBUCKET_CLOUD_APP_PASSWORD: ${{ secrets.BITBUCKET_CLOUD_APP_PASSWORD }}
