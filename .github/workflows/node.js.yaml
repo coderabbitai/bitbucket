@@ -23,3 +23,8 @@ jobs:
       - run: pnpm run build --noEmit
       - run: pnpm run lint
       - run: pnpm run test run
+        env:
+          BITBUCKET_CLOUD_USERNAME: ${{ secrets.BITBUCKET_CLOUD_USERNAME }}
+          BITBUCKET_CLOUD_APP_PASSWORD: ${{ secrets.BITBUCKET_CLOUD_APP_PASSWORD }}
+          BITBUCKET_SERVER_URL: ${{ secrets.BITBUCKET_SERVER_URL }}
+          BITBUCKET_SERVER_TOKEN: ${{ secrets.BITBUCKET_SERVER_TOKEN }}

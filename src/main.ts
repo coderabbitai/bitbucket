@@ -1,1 +1,1 @@
-console.log("CLI mode not supported.")
+console.log("@coderabbitai/bitbucket")

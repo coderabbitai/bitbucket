@@ -8,27 +8,27 @@ import path from "path"
 export type NodeEnv = (typeof nodeEnvs)[keyof typeof nodeEnvs]
 export type ProcessEnv = typeof process.env
 
-export function isNodeEnv(value: unknown): value is NodeEnv {
-	return Object.values<unknown>(nodeEnvs).includes(value)
-}
-
-export function toNodeEnv(value: unknown): NodeEnv {
-	if (isNodeEnv(value)) return value
-	return nodeEnvs.development
-}
-
-const nodeEnvs = {
-	development: "development",
-	production: "production",
-	/**
-	 * Vitest sets `NODE_ENV` to `test` if it wasn't set before.
-	 * @see https://vitest.dev/guide/migration.html#envs
-	 */
-	test: "test",
-} as const
-
 interface LoadedEnv extends ProcessEnv {
 	readonly NODE_ENV: NodeEnv
+}
+
+function envString(key: string) {
+	const value = parsed[key]
+	if (!value) throw new Error(`$${key} is missing`)
+	return value
+}
+
+function envUrl(key: string) {
+	const str = envString(key)
+	try {
+		return new URL(str)
+	} catch (error) {
+		throw new Error(`$${key} is not a URL: ${str}`, { cause: error })
+	}
+}
+
+export function isNodeEnv(value: unknown): value is NodeEnv {
+	return Object.values<unknown>(nodeEnvs).includes(value)
 }
 
 /** Loads environment variables from the `.env` files. `NODE_ENV` has to be
@@ -66,13 +66,25 @@ function loadEnv(): LoadedEnv {
 	return merged
 }
 
-const parsed = loadEnv()
-
-function envString(key: string) {
-	const value = parsed[key]
-	if (!value) throw new Error(`$${key} is missing`)
-	return value
+export function toNodeEnv(value: unknown): NodeEnv {
+	if (isNodeEnv(value)) return value
+	return nodeEnvs.development
 }
 
-export const BITBUCKET_CLOUD_URL = envString("BITBUCKET_CLOUD_URL")
-export const BITBUCKET_CLOUD_TOKEN = envString("BITBUCKET_CLOUD_TOKEN")
+const nodeEnvs = {
+	development: "development",
+	production: "production",
+	/**
+	 * Vitest sets `NODE_ENV` to `test` if it wasn't set before.
+	 * @see https://vitest.dev/guide/migration.html#envs
+	 */
+	test: "test",
+} as const
+const parsed = loadEnv()
+export const BITBUCKET_CLOUD_URL = envUrl("BITBUCKET_CLOUD_URL")
+export const BITBUCKET_CLOUD_USERNAME = envString("BITBUCKET_CLOUD_USERNAME")
+export const BITBUCKET_CLOUD_APP_PASSWORD = envString(
+	"BITBUCKET_CLOUD_APP_PASSWORD",
+)
+export const BITBUCKET_SERVER_URL = envUrl("BITBUCKET_SERVER_URL")
+export const BITBUCKET_SERVER_TOKEN = envString("BITBUCKET_SERVER_TOKEN")
