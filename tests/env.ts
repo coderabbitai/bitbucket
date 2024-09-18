@@ -18,6 +18,15 @@ function envString(key: string) {
 	return value
 }
 
+function envUrl(key: string) {
+	const str = envString(key)
+	try {
+		return new URL(str)
+	} catch (error) {
+		throw new Error(`$${key} is not a URL: ${str}`, { cause: error })
+	}
+}
+
 export function isNodeEnv(value: unknown): value is NodeEnv {
 	return Object.values<unknown>(nodeEnvs).includes(value)
 }
@@ -72,12 +81,10 @@ const nodeEnvs = {
 	test: "test",
 } as const
 const parsed = loadEnv()
-
-export const BITBUCKET_CLOUD_URL = envString("BITBUCKET_CLOUD_URL")
+export const BITBUCKET_CLOUD_URL = envUrl("BITBUCKET_CLOUD_URL")
 export const BITBUCKET_CLOUD_USERNAME = envString("BITBUCKET_CLOUD_USERNAME")
 export const BITBUCKET_CLOUD_APP_PASSWORD = envString(
 	"BITBUCKET_CLOUD_APP_PASSWORD",
 )
-
-export const BITBUCKET_SERVER_URL = envString("BITBUCKET_SERVER_URL")
+export const BITBUCKET_SERVER_URL = envUrl("BITBUCKET_SERVER_URL")
 export const BITBUCKET_SERVER_TOKEN = envString("BITBUCKET_SERVER_TOKEN")
