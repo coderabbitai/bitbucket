@@ -1,6 +1,6 @@
 {
 	"name": "@coderabbitai/bitbucket",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "CodeRabbit's TypeScript API client for connecting to Bitbucket Cloud and Bitbucket Data Center",
 	"keywords": [
 		"bitbucket-api-v1",
