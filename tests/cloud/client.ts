@@ -9,7 +9,7 @@ const basic = toBase64(
 	BITBUCKET_CLOUD_USERNAME + ":" + BITBUCKET_CLOUD_APP_PASSWORD,
 )
 
-export const cloud = createBitbucketCloudClient({
+export const client = createBitbucketCloudClient({
 	baseUrl: BITBUCKET_CLOUD_URL.toString(),
 	headers: { Accept: "application/json", Authorization: `Basic ${basic}` },
 })
