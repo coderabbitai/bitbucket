@@ -1,6 +1,9 @@
-import { prEventKeys, type PrEvent } from "./pr/event.js"
-import { projectEventKeys, type ProjectEvent } from "./project/event.js"
-import { repoEventKeys, type RepoEvent } from "./repo/event.js"
+import type { PrEvent } from "./pr/event.js"
+import { prEventKeys } from "./pr/event.js"
+import type { ProjectEvent } from "./project/event.js"
+import { projectEventKeys } from "./project/event.js"
+import type { RepoEvent } from "./repo/event.js"
+import { repoEventKeys } from "./repo/event.js"
 
 /**
  * When you have a webhook with an event, Bitbucket Data Center sends the event
