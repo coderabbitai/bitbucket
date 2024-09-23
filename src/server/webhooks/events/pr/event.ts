@@ -27,18 +27,26 @@ export type PrEvent =
 	| PRReviewerChangesRequested
 	| PRReviewerUnapproved
 	| PRReviewerUpdated
+export type PrEventKey = PrEvent["eventKey"]
 
-export type PrEventKey =
-	| PRCommentAdded["eventKey"]
-	| PRCommentDeleted["eventKey"]
-	| PRCommentEdited["eventKey"]
-	| PRDeclined["eventKey"]
-	| PRDeleted["eventKey"]
-	| PRFromRefUpdated["eventKey"]
-	| PRMerged["eventKey"]
-	| PRModified["eventKey"]
-	| PROpened["eventKey"]
-	| PRReviewerApproved["eventKey"]
-	| PRReviewerChangesRequested["eventKey"]
-	| PRReviewerUnapproved["eventKey"]
-	| PRReviewerUpdated["eventKey"]
+export function isPrEventKey(key: unknown): key is PrEventKey {
+	return Object.values<unknown>(prEventKeys).includes(key)
+}
+
+export const prEventKeys = {
+	"pr:comment:added": "pr:comment:added",
+	"pr:comment:deleted": "pr:comment:deleted",
+	"pr:comment:edited": "pr:comment:edited",
+	"pr:declined": "pr:declined",
+	"pr:deleted": "pr:deleted",
+	"pr:from_ref_updated": "pr:from_ref_updated",
+	"pr:merged": "pr:merged",
+	"pr:modified": "pr:modified",
+	"pr:opened": "pr:opened",
+	"pr:reviewer:approved": "pr:reviewer:approved",
+	"pr:reviewer:changes_requested": "pr:reviewer:changes_requested",
+	"pr:reviewer:unapproved": "pr:reviewer:unapproved",
+	"pr:reviewer:updated": "pr:reviewer:updated",
+} as const
+
+prEventKeys satisfies Record<PrEventKey, PrEventKey>

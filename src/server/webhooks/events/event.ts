@@ -1,6 +1,9 @@
 import type { PrEvent } from "./pr/event.js"
+import { prEventKeys } from "./pr/event.js"
 import type { ProjectEvent } from "./project/event.js"
+import { projectEventKeys } from "./project/event.js"
 import type { RepoEvent } from "./repo/event.js"
+import { repoEventKeys } from "./repo/event.js"
 
 /**
  * When you have a webhook with an event, Bitbucket Data Center sends the event
@@ -17,8 +20,16 @@ import type { RepoEvent } from "./repo/event.js"
  * event's user.
  */
 export type Event = PrEvent | ProjectEvent | RepoEvent
+export type EventKey = Event["eventKey"]
 
-export type EventKey =
-	| PrEvent["eventKey"]
-	| ProjectEvent["eventKey"]
-	| RepoEvent["eventKey"]
+export function isEventKey(key: unknown): key is EventKey {
+	return Object.values<unknown>(eventKeys).includes(key)
+}
+
+const eventKeys = {
+	...prEventKeys,
+	...projectEventKeys,
+	...repoEventKeys,
+} as const
+
+eventKeys satisfies Record<EventKey, EventKey>

@@ -17,12 +17,21 @@ export type RepoEvent =
 	| RepoModified
 	| RepoRefsChanged
 	| RepoSecretDetected
-export type RepoEventKey =
-	| MirrorRepoSynchronized["eventKey"]
-	| RepoCommentAdded["eventKey"]
-	| RepoCommentDeleted["eventKey"]
-	| RepoCommentEdited["eventKey"]
-	| RepoForked["eventKey"]
-	| RepoModified["eventKey"]
-	| RepoRefsChanged["eventKey"]
-	| RepoSecretDetected["eventKey"]
+export type RepoEventKey = RepoEvent["eventKey"]
+
+export function isRepoEventKey(key: unknown): key is RepoEventKey {
+	return Object.values<unknown>(repoEventKeys).includes(key)
+}
+
+export const repoEventKeys = {
+	"mirror:repo_synchronized": "mirror:repo_synchronized",
+	"repo:comment:added": "repo:comment:added",
+	"repo:comment:deleted": "repo:comment:deleted",
+	"repo:comment:edited": "repo:comment:edited",
+	"repo:forked": "repo:forked",
+	"repo:modified": "repo:modified",
+	"repo:refs_changed": "repo:refs_changed",
+	"repo:secret_detected": "repo:secret_detected",
+} as const
+
+repoEventKeys satisfies Record<RepoEventKey, RepoEventKey>
