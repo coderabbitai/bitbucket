@@ -1,3 +1,4 @@
+import type { Event } from "../event.js"
 import type { PRCommentAdded } from "./comment_added.js"
 import type { PRCommentDeleted } from "./comment_deleted.js"
 import type { PRCommentEdited } from "./comment_edited.js"
@@ -28,6 +29,10 @@ export type PrEvent =
 	| PRReviewerUnapproved
 	| PRReviewerUpdated
 export type PrEventKey = PrEvent["eventKey"]
+
+export function isPrEvent(event: Event): event is PrEvent {
+	return isPrEventKey(event.eventKey)
+}
 
 export function isPrEventKey(key: unknown): key is PrEventKey {
 	return Object.values<unknown>(prEventKeys).includes(key)
