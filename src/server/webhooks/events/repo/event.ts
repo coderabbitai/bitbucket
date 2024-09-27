@@ -1,3 +1,4 @@
+import type { Event } from "../event.js"
 import type { RepoCommentAdded } from "./comment_added.js"
 import type { RepoCommentDeleted } from "./comment_deleted.js"
 import type { RepoCommentEdited } from "./comment_edited.js"
@@ -18,6 +19,10 @@ export type RepoEvent =
 	| RepoRefsChanged
 	| RepoSecretDetected
 export type RepoEventKey = RepoEvent["eventKey"]
+
+export function isRepoEvent(event: Event): event is RepoEvent {
+	return isRepoEventKey(event.eventKey)
+}
 
 export function isRepoEventKey(key: unknown): key is RepoEventKey {
 	return Object.values<unknown>(repoEventKeys).includes(key)
