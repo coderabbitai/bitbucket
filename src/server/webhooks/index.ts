@@ -1,2 +1,2 @@
 export * from "./events/index.js"
-export * from "./headers.js"
+export type * from "./headers.js"

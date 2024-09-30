@@ -1,1 +1,1 @@
-export * from "./openapi-typescript.js"
+export type * from "./openapi-typescript.js"
