@@ -1,3 +1,5 @@
+import type { SchemaRepository } from "../../../openapi/openapi-typescript.js"
+
 export interface Change {
 	readonly fromHash: string
 	readonly ref: Ref
@@ -73,7 +75,7 @@ export interface Repository {
 	readonly public: boolean
 	readonly scmId: string
 	readonly slug: string
-	readonly state: string
+	readonly state: SchemaRepository["state"]
 	readonly statusMessage: string
 }
 

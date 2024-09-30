@@ -1,6 +1,8 @@
 import type {
 	SchemaApplicationUser,
+	SchemaComment,
 	SchemaProject,
+	SchemaPullRequest,
 	SchemaPullRequestParticipant,
 	SchemaRepository,
 	SchemaRestMinimalRef,
@@ -40,7 +42,7 @@ export interface Comment {
 	readonly id: number
 	readonly properties: Properties
 	readonly severity: string
-	readonly state: string
+	readonly state: SchemaComment["state"]
 	readonly tasks?: unknown[]
 	readonly text: string
 	readonly threadResolved: boolean
@@ -89,7 +91,7 @@ export interface PullRequest {
 	readonly open: boolean
 	readonly participants: Author[]
 	readonly reviewers: Author[]
-	readonly state: string
+	readonly state: SchemaPullRequest["state"]
 	readonly title: string
 	readonly toRef: Ref
 	readonly updatedDate: number
