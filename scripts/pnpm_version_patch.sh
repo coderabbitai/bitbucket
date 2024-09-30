@@ -9,13 +9,13 @@ pnpm i
 pnpm lint:fix
 
 git status
-
 echo 'Do you want to publish @coderabbitai/bitbucket@'$VERSION'? (y/n) '
 read Y
 if [ "$Y" = "y" ]; then
 	echo "Publishing version $VERSION"
 else
 	git checkout -- package.json
+	git status
 	exit 1
 fi
 
