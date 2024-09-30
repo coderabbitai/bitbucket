@@ -1,3 +1,8 @@
+import type {
+	SchemaPullRequest,
+	SchemaRepository,
+} from "../../../openapi/openapi-typescript.js"
+
 export interface Actor {
 	readonly active: boolean
 	readonly displayName: string
@@ -55,8 +60,8 @@ export interface PullRequest {
 	readonly open: boolean
 	readonly participants: Author[]
 	readonly properties: Properties
-	readonly reviewers: unknown[]
-	readonly state: string
+	readonly reviewers: Author[]
+	readonly state: SchemaPullRequest["state"]
 	readonly title: string
 	readonly toRef: Ref
 	readonly updatedDate: number
@@ -78,6 +83,6 @@ export interface Repository {
 	readonly public: boolean
 	readonly scmId: string
 	readonly slug: string
-	readonly state: string
+	readonly state: SchemaRepository["state"]
 	readonly statusMessage: string
 }

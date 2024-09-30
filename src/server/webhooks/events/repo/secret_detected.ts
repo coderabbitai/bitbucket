@@ -1,3 +1,5 @@
+import type { SchemaRepository } from "../../../openapi/openapi-typescript.js"
+
 export interface Actor {
 	readonly active: boolean
 	readonly backingCrowdUser: null
@@ -43,7 +45,7 @@ export interface Repository {
 	readonly public: boolean
 	readonly scmId: string
 	readonly slug: string
-	readonly state: string
+	readonly state: SchemaRepository["state"]
 	readonly statusMessage: string
 }
 
