@@ -58,8 +58,8 @@ export interface PullRequest {
 	readonly id: number
 	readonly locked: boolean
 	readonly open: boolean
-	readonly participants: unknown[]
-	readonly reviewers: unknown[]
+	readonly participants: Author[]
+	readonly reviewers: Author[]
 	readonly state: string
 	readonly title: string
 	readonly toRef: Ref

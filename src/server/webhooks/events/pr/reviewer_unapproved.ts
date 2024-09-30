@@ -49,7 +49,7 @@ export interface PullRequest {
 	readonly id: number
 	readonly locked: boolean
 	readonly open: boolean
-	readonly participants: unknown[]
+	readonly participants: Participant[]
 	readonly reviewers: Participant[]
 	readonly state: string
 	readonly title: string
