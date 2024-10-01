@@ -1,5 +1,9 @@
 {
 	"$schema": "https://typedoc.org/schema.json",
-	"entryPoints": ["./src/index.ts"],
+	"entryPoints": [
+		"./src/index.ts",
+		"./src/cloud/index.ts",
+		"./src/server/index.ts"
+	],
 	"highlightLanguages": ["ini", "sh", "ts"]
 }
