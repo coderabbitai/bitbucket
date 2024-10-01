@@ -7,6 +7,7 @@ import type {
 	SchemaRepository,
 	SchemaRestMinimalRef,
 } from "../../../openapi/openapi-typescript.js"
+import type { SuggestionState } from "../suggestion_state.js"
 
 export interface Actor {
 	readonly active: boolean
@@ -75,7 +76,7 @@ export interface Project {
 
 export interface Properties {
 	readonly repositoryId: number
-	readonly suggestionState: string
+	readonly suggestionState?: SuggestionState
 }
 
 export interface PullRequest {
