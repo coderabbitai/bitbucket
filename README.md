@@ -18,7 +18,8 @@ pnpm i @coderabbitai/bitbucket
 ### Cloud
 
 ```ts
-import { createBitbucketCloudClient, toBase64 } from "@coderabbitai/bitbucket"
+import { createBitbucketCloudClient } from "@coderabbitai/bitbucket/cloud"
+import { toBase64 } from "@coderabbitai/bitbucket"
 import {
 	BITBUCKET_CLOUD_APP_PASSWORD,
 	BITBUCKET_CLOUD_URL,
@@ -38,7 +39,7 @@ const client = createBitbucketCloudClient({
 ### Server
 
 ```ts
-import { createBitbucketServerClient } from "@coderabbitai/bitbucket"
+import { createBitbucketServerClient } from "@coderabbitai/bitbucket/server"
 import { BITBUCKET_SERVER_TOKEN, BITBUCKET_SERVER_URL } from "./env.js"
 
 const server = createBitbucketServerClient({

@@ -1,4 +1,5 @@
-import { createBitbucketCloudClient, toBase64 } from "../../src/index.js"
+import { createBitbucketCloudClient } from "../../src/cloud/index.js"
+import { toBase64 } from "../../src/index.js"
 import {
 	BITBUCKET_CLOUD_APP_PASSWORD,
 	BITBUCKET_CLOUD_URL,
@@ -6,7 +7,7 @@ import {
 } from "../env.js"
 
 const basic = toBase64(
-	BITBUCKET_CLOUD_USERNAME + ":" + BITBUCKET_CLOUD_APP_PASSWORD,
+	`${BITBUCKET_CLOUD_USERNAME}:${BITBUCKET_CLOUD_APP_PASSWORD}`,
 )
 
 export const client = createBitbucketCloudClient({
