@@ -8,6 +8,10 @@ package-lock.json
 .env.*.local
 .env.local
 
+
+### JetBrains ###
+.idea
+
 # Created by https://www.toptal.com/developers/gitignore/api/linux,macos,windows,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,macos,windows,node
 

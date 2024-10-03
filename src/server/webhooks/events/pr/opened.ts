@@ -1,7 +1,7 @@
 import type {
 	SchemaPullRequest,
 	SchemaRepository,
-} from "../../../openapi/openapi-typescript.js"
+} from "../../../openapi/index.js"
 
 export interface Actor {
 	readonly active: boolean
@@ -11,6 +11,15 @@ export interface Actor {
 	readonly name: string
 	readonly slug: string
 	readonly type: string
+	readonly links: SelfLinks
+}
+
+export interface SelfLinks {
+	readonly self: Self[]
+}
+
+export interface Self {
+	readonly href: string
 }
 
 export interface Author {
@@ -39,6 +48,7 @@ export interface Project {
 	readonly name: string
 	readonly public: boolean
 	readonly type: string
+	readonly links: SelfLinks
 }
 
 export interface PullRequest {
@@ -58,12 +68,14 @@ export interface PullRequest {
 	readonly toRef: Ref
 	readonly updatedDate: number
 	readonly version: number
+	readonly description: string
 }
 
 export interface Ref {
 	readonly displayId: string
 	readonly id: string
 	readonly latestCommit: string
+	readonly type: string
 	readonly repository: Repository
 }
 
@@ -77,4 +89,17 @@ export interface Repository {
 	readonly slug: string
 	readonly state: SchemaRepository["state"]
 	readonly statusMessage: string
+	readonly hierarchyId: string
+	readonly archived: boolean
+	readonly links: RepositoryLinks
+}
+
+export interface RepositoryLinks {
+	readonly clone: Clone[]
+	readonly self: Self[]
+}
+
+export interface Clone {
+	readonly href: string
+	readonly name: string
 }

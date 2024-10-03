@@ -1,7 +1,7 @@
 import type {
 	SchemaPullRequest,
 	SchemaRepository,
-} from "../../../openapi/openapi-typescript.js"
+} from "../../../openapi/index.js"
 
 export interface Actor {
 	readonly active: boolean
@@ -11,6 +11,15 @@ export interface Actor {
 	readonly name: string
 	readonly slug: string
 	readonly type: string
+	readonly links: ActorLinks
+}
+
+export interface ActorLinks {
+	readonly self: Self[]
+}
+
+export interface Self {
+	readonly href: string
 }
 
 export interface Author {
@@ -29,27 +38,30 @@ export interface PRModified {
 	readonly previousDescription: string
 	readonly previousDraft: boolean
 	/** Previous target of the pull request, may not have changed */
-	readonly previousTarget: PreviousTarget
+	readonly previousTarget: Ref
 	/** Previous title of the pull request, may not have changed */
 	readonly previousTitle: string
 	/** Details of the pull request created. */
 	readonly pullRequest: PullRequest
 }
 
-export interface PreviousTarget {
+export interface Ref {
 	readonly displayId: string
 	readonly id: string
-	readonly latestChangeset: string
+	readonly latestChangeset?: string
 	readonly latestCommit: string
 	readonly type: string
+	readonly repository?: Repository
 }
 
 export interface Project {
 	readonly id: number
 	readonly key: string
 	readonly name: string
-	readonly owner: Actor
+	readonly owner?: Actor
 	readonly type: string
+	readonly public: boolean
+	readonly links: ActorLinks
 }
 
 export interface PullRequest {
@@ -69,13 +81,7 @@ export interface PullRequest {
 	readonly toRef: Ref
 	readonly updatedDate: number
 	readonly version: number
-}
-
-export interface Ref {
-	readonly displayId: string
-	readonly id: string
-	readonly latestCommit: string
-	readonly repository: Repository
+	readonly links: ActorLinks
 }
 
 export interface Repository {
@@ -88,4 +94,17 @@ export interface Repository {
 	readonly slug: string
 	readonly state: SchemaRepository["state"]
 	readonly statusMessage: string
+	readonly hierarchyId: string
+	readonly archived: boolean
+	readonly links: RepositoryLinks
+}
+
+export interface RepositoryLinks {
+	readonly clone: Clone[]
+	readonly self: Self[]
+}
+
+export interface Clone {
+	readonly href: string
+	readonly name: string
 }

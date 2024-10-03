@@ -11,6 +11,15 @@ export interface Actor {
 	readonly name: string
 	readonly slug: string
 	readonly type: string
+	readonly links: ActorLinks
+}
+
+export interface ActorLinks {
+	readonly self: Self[]
+}
+
+export interface Self {
+	readonly href: string
 }
 
 export interface Author {
@@ -56,6 +65,8 @@ export interface PullRequest {
 	readonly toRef: Ref
 	readonly updatedDate: number
 	readonly version: number
+	readonly links: ActorLinks
+	readonly description: string
 }
 
 export interface Ref {
