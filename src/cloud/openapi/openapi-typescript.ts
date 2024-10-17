@@ -10368,6 +10368,11 @@ export interface paths {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
 				}
+				/** @description Unable to merge because one of the refs involved changed while attempting to merge */
+				readonly 409: {
+					headers: Readonly<Record<string, unknown>>
+					content?: never
+				}
 				/** @description If the merge took too long and timed out.
 				 *     In this case the caller should retry the request later */
 				readonly 555: {
@@ -10488,6 +10493,11 @@ export interface paths {
 				}
 				/** @description The user making the request does not have permission to the repo and is different from the user who queued the task */
 				readonly 403: {
+					headers: Readonly<Record<string, unknown>>
+					content?: never
+				}
+				/** @description Unable to merge because one of the refs involved changed while attempting to merge */
+				readonly 409: {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
 				}
@@ -18949,6 +18959,9 @@ export interface components {
 				readonly merge_strategies?: readonly (
 					| "fast_forward"
 					| "merge_commit"
+					| "rebase_fast_forward"
+					| "rebase_merge"
+					| "squash_fast_forward"
 					| "squash"
 				)[]
 			})
@@ -22044,6 +22057,9 @@ export interface components {
 				readonly merge_strategies?: readonly (
 					| "fast_forward"
 					| "merge_commit"
+					| "rebase_fast_forward"
+					| "rebase_merge"
+					| "squash_fast_forward"
 					| "squash"
 				)[]
 				readonly name?: string
@@ -22066,7 +22082,13 @@ export interface components {
 			 * @default merge_commit
 			 * @enum {string}
 			 */
-			readonly merge_strategy?: "fast_forward" | "merge_commit" | "squash"
+			readonly merge_strategy?:
+				| "fast_forward"
+				| "merge_commit"
+				| "rebase_fast_forward"
+				| "rebase_merge"
+				| "squash_fast_forward"
+				| "squash"
 			/** @description The commit message that will be used on the resulting commit. Note that the size of the message is limited to 128 KiB. */
 			readonly message?: string
 			readonly type: string
@@ -22826,6 +22848,15 @@ export interface components {
 			(Readonly<Record<string, unknown>> & {
 				/** Format: date-time */
 				readonly created_on?: string
+				/**
+				 * @description Controls the rules for forking repositories within this workspace.
+				 *
+				 *     * **allow_forks**: unrestricted forking
+				 *     * **internal_only**: prevents forking of private repositories outside the workspace or to public repositories
+				 *
+				 * @enum {string}
+				 */
+				readonly forking_mode?: "allow_forks" | "internal_only"
 				/** @description Indicates whether the workspace enforces private content, or whether it allows public content. */
 				readonly is_privacy_enforced?: boolean
 				/** @description Indicates whether the workspace is publicly accessible, or whether it is
