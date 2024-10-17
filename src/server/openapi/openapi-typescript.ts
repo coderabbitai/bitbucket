@@ -8433,7 +8433,47 @@ export interface paths {
 		readonly patch?: never
 		readonly trace?: never
 	}
-	readonly "/mirroring/latest/supportInfo/projects/{projectKey}/repos/{repoSlug}/repoSyncStatus": {
+	readonly "/mirroring/latest/supportInfo/out-of-sync-repos/content": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path?: never
+			readonly cookie?: never
+		}
+		/**
+		 * Get out-of-sync repositories
+		 * @description Retrieves a list of repository IDs which have not synced on the mirror node for at least the threshold time limit after the content was changed in the corresponding upstream repositories. The threshold time limit is defined by a configuration property <code>plugin.mirroring.repository.diagnostics.sync.tolerance</code>. The detection of out of sync repositories is dependent on the timing of a scheduled job which is controlled by a configuration property <code>plugin.mirroring.synchronization.interval</code> which means in worst case it can take upto <code>plugin.mirroring.repository.diagnostics.sync.tolerance</code> + <code>plugin.mirroring.synchronization.interval</code> time to detect an out-of-sync repository.<p>To use this API, a configuration property <code>plugin.mirroring.repository.diagnostics.sync.enabled</code> has to be set to <code>true</code> as this feature is disabled by default.
+		 */
+		readonly get: operations["getOutOfSyncRepositories"]
+		readonly put?: never
+		readonly post?: never
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
+	readonly "/mirroring/latest/supportInfo/projects/{projectKey}/repos/{repositorySlug}/repo-lock-owner": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path?: never
+			readonly cookie?: never
+		}
+		/**
+		 * Get the repository lock owner for the syncing process
+		 * @description Retrieves the information about the process owning the sync lock for this repository. The process owning the lock could be running on any of the nodes in the mirror farm
+		 */
+		readonly get: operations["getRepositoryLockOwner"]
+		readonly put?: never
+		readonly post?: never
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
+	readonly "/mirroring/latest/supportInfo/projects/{projectKey}/repos/{repositorySlug}/repoSyncStatus": {
 		readonly parameters: {
 			readonly query?: never
 			readonly header?: never
@@ -8485,6 +8525,26 @@ export interface paths {
 		 * @description Retrieves the total number of items currently in the ref changes queue
 		 */
 		readonly get: operations["getRefChangesQueueCount"]
+		readonly put?: never
+		readonly post?: never
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
+	readonly "/mirroring/latest/supportInfo/repo-lock-owners": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path?: never
+			readonly cookie?: never
+		}
+		/**
+		 * Get all the repository lock owners for the syncing process
+		 * @description Retrieves the information about all the processes from the all the nodes in the mirror farm owning sync lock for any repository
+		 */
+		readonly get: operations["getRepositoryLockOwners"]
 		readonly put?: never
 		readonly post?: never
 		readonly delete?: never
@@ -9051,6 +9111,11 @@ export interface components {
 			readonly lineAnchor?: boolean
 			/** @enum {string} */
 			readonly lineType?: "ADDED" | "CONTEXT" | "REMOVED"
+			readonly multilineAnchor?: boolean
+			/** Format: int32 */
+			readonly multilineStartLine?: number
+			/** @enum {string} */
+			readonly multilineStartLineType?: "ADDED" | "CONTEXT" | "REMOVED"
 			readonly orphaned?: boolean
 			readonly path?: string
 			readonly srcPath?: string
@@ -10575,9 +10640,20 @@ export interface components {
 				 * @example 98
 				 */
 				readonly line?: number
-				readonly lineComment?: boolean
 				/** @enum {string} */
 				readonly lineType?: "ADDED" | "CONTEXT" | "REMOVED"
+				readonly multilineMarker?: {
+					/**
+					 * Format: int32
+					 * @description The line number where the multiline comment will begin
+					 */
+					readonly startLine?: number
+					/**
+					 * @description The segment type of the start line of the multiline comment
+					 * @enum {string}
+					 */
+					readonly startLineType: "ADDED" | "CONTEXT" | "REMOVED"
+				}
 				readonly path?: {
 					/** @example [
 					 *       "path",
@@ -10918,9 +10994,20 @@ export interface components {
 					 * @example 98
 					 */
 					readonly line?: number
-					readonly lineComment?: boolean
 					/** @enum {string} */
 					readonly lineType?: "ADDED" | "CONTEXT" | "REMOVED"
+					readonly multilineMarker?: {
+						/**
+						 * Format: int32
+						 * @description The line number where the multiline comment will begin
+						 */
+						readonly startLine?: number
+						/**
+						 * @description The segment type of the start line of the multiline comment
+						 * @enum {string}
+						 */
+						readonly startLineType: "ADDED" | "CONTEXT" | "REMOVED"
+					}
 					readonly path?: {
 						/** @example [
 						 *       "path",
@@ -11413,9 +11500,20 @@ export interface components {
 			 * @example 98
 			 */
 			readonly line?: number
-			readonly lineComment?: boolean
 			/** @enum {string} */
 			readonly lineType?: "ADDED" | "CONTEXT" | "REMOVED"
+			readonly multilineMarker?: {
+				/**
+				 * Format: int32
+				 * @description The line number where the multiline comment will begin
+				 */
+				readonly startLine?: number
+				/**
+				 * @description The segment type of the start line of the multiline comment
+				 * @enum {string}
+				 */
+				readonly startLineType: "ADDED" | "CONTEXT" | "REMOVED"
+			}
 			readonly path?: {
 				/** @example [
 				 *       "path",
@@ -13020,6 +13118,18 @@ export interface components {
 			/** @example 8.0.0 */
 			readonly productVersion?: string
 		}
+		readonly RestMultilineCommentMarker: {
+			/**
+			 * Format: int32
+			 * @description The line number where the multiline comment will begin
+			 */
+			readonly startLine?: number
+			/**
+			 * @description The segment type of the start line of the multiline comment
+			 * @enum {string}
+			 */
+			readonly startLineType?: "ADDED" | "CONTEXT" | "REMOVED"
+		}
 		readonly RestMultipleBuildStats: unknown
 		readonly RestNamedLink: {
 			/** @example https://bitbucket.example.com/scm/awesomeproject/awesomerepo.git */
@@ -14372,6 +14482,33 @@ export interface components {
 			/** @example Insufficient branch permissions */
 			readonly summaryMessage?: string
 		}
+		readonly RestRepositoryLockOwner: {
+			/**
+			 * @description The repository ID for which the lock is held
+			 * @example 101
+			 */
+			readonly externalRepositoryId?: string
+			/**
+			 * Format: date-time
+			 * @description The time at which lock was last acquired
+			 */
+			readonly lockAcquireTime?: string
+			/**
+			 * @description The ID of the mirror node on which the lock is being held
+			 * @example 4da47d83-ec95-489d-ad46-012cc086c0da
+			 */
+			readonly nodeId?: string
+			/**
+			 * @description The unique ID of the request for which the lock is being held
+			 * @example *T75X1Tx955x782x0
+			 */
+			readonly requestId?: string
+			/**
+			 * @description Name of the thread that is holding the lock
+			 * @example farm-refchange-poller:thread-2
+			 */
+			readonly threadName?: string
+		}
 		readonly RestRepositoryMirrorEvent: {
 			/**
 			 * Format: int32
@@ -15302,9 +15439,20 @@ export interface components {
 					 * @example 98
 					 */
 					readonly line?: number
-					readonly lineComment?: boolean
 					/** @enum {string} */
 					readonly lineType?: "ADDED" | "CONTEXT" | "REMOVED"
+					readonly multilineMarker?: {
+						/**
+						 * Format: int32
+						 * @description The line number where the multiline comment will begin
+						 */
+						readonly startLine?: number
+						/**
+						 * @description The segment type of the start line of the multiline comment
+						 * @enum {string}
+						 */
+						readonly startLineType: "ADDED" | "CONTEXT" | "REMOVED"
+					}
 					readonly path?: {
 						/** @example [
 						 *       "path",
@@ -15645,9 +15793,20 @@ export interface components {
 						 * @example 98
 						 */
 						readonly line?: number
-						readonly lineComment?: boolean
 						/** @enum {string} */
 						readonly lineType?: "ADDED" | "CONTEXT" | "REMOVED"
+						readonly multilineMarker?: {
+							/**
+							 * Format: int32
+							 * @description The line number where the multiline comment will begin
+							 */
+							readonly startLine?: number
+							/**
+							 * @description The segment type of the start line of the multiline comment
+							 * @enum {string}
+							 */
+							readonly startLineType: "ADDED" | "CONTEXT" | "REMOVED"
+						}
 						readonly path?: {
 							/** @example [
 							 *       "path",
@@ -16452,6 +16611,8 @@ export type SchemaRestMirrorRepositorySynchronizationStatus =
 export type SchemaRestMirrorServer = components["schemas"]["RestMirrorServer"]
 export type SchemaRestMirrorUpgradeRequest =
 	components["schemas"]["RestMirrorUpgradeRequest"]
+export type SchemaRestMultilineCommentMarker =
+	components["schemas"]["RestMultilineCommentMarker"]
 export type SchemaRestMultipleBuildStats =
 	components["schemas"]["RestMultipleBuildStats"]
 export type SchemaRestNamedLink = components["schemas"]["RestNamedLink"]
@@ -16540,6 +16701,8 @@ export type SchemaRestRepositoryHook =
 	components["schemas"]["RestRepositoryHook"]
 export type SchemaRestRepositoryHookVeto =
 	components["schemas"]["RestRepositoryHookVeto"]
+export type SchemaRestRepositoryLockOwner =
+	components["schemas"]["RestRepositoryLockOwner"]
 export type SchemaRestRepositoryMirrorEvent =
 	components["schemas"]["RestRepositoryMirrorEvent"]
 export type SchemaRestRepositoryPolicy =
@@ -35093,8 +35256,12 @@ export interface operations {
 				 * @example 0
 				 */
 				readonly start?: number
-				/** @description (optional) if specified, it must be a valid repository state name and will limit the resulting repository list to ones that are in the specified state. The currently supported explicit state values are <tt>AVAILABLE</tt>, <tt>INITIALISING</tt> and <tt>INITIALISATION_FAILED</tt>.<br> <em>Available since 5.13</em> */
-				readonly state?: "AVAILABLE" | "INITIALISATION_FAILED" | "INITIALISING"
+				/** @description (optional) if specified, it must be a valid repository state name and will limit the resulting repository list to ones that are in the specified state. The currently supported explicit state values are <tt>AVAILABLE</tt>, <tt>INITIALISING</tt>, <tt>INITIALISATION_FAILED</tt> and <tt>OFFLINE</tt>.<br> <em>Available since 5.13</em> */
+				readonly state?:
+					| "AVAILABLE"
+					| "INITIALISATION_FAILED"
+					| "INITIALISING"
+					| "OFFLINE"
 				/** @description (optional) if specified, this will limit the resulting repository list based on the repositories visibility. Valid values are <em>public</em> or <em>private</em>. */
 				readonly visibility?: "private" | "public"
 			}
@@ -40021,13 +40188,88 @@ export interface operations {
 			}
 		}
 	}
+	readonly getOutOfSyncRepositories: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path?: never
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The upstream IDs of the repositories that are out of sync on the mirror node */
+			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json;charset=UTF-8": string
+				}
+			}
+			/** @description The currently authenticated user has insufficient permissions to call this resource. */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json;charset=UTF-8": components["schemas"]["RestErrors"]
+				}
+			}
+			/** @description The feature is not enabled i.e. <code>plugin.mirroring.repository.diagnostics.sync.enabled=false</code> */
+			readonly 409: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json;charset=UTF-8": components["schemas"]["RestErrors"]
+				}
+			}
+		}
+	}
+	readonly getRepositoryLockOwner: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description The project key */
+				readonly projectKey: string
+				/** @description The repository slug */
+				readonly repositorySlug: string
+			}
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The information about the repository lock owner for the syncing process, if the lock is currently being held, otherwise an empty response */
+			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["RestRepositoryLockOwner"]
+				}
+			}
+			/** @description The currently authenticated user has insufficient permissions to call this resource. */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
+			/** @description The specified repository does not exist */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
+		}
+	}
 	readonly getRepoSyncStatus_1: {
 		readonly parameters: {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
+				/** @description The project key */
 				readonly projectKey: string
-				readonly repoSlug: string
+				/** @description The repository slug */
+				readonly repositorySlug: string
 			}
 			readonly cookie?: never
 		}
@@ -40038,6 +40280,24 @@ export interface operations {
 				headers: Readonly<Record<string, unknown>>
 				content: {
 					readonly "application/json": components["schemas"]["RestMirrorRepositorySynchronizationStatus"]
+				}
+			}
+			/** @description The currently authenticated user has insufficient permissions to call this resource. */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
+			/** @description The specified repository does not exist */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
 				}
 			}
 		}
@@ -40058,6 +40318,13 @@ export interface operations {
 					readonly "application/json;charset=UTF-8": components["schemas"]["RestRefSyncQueue"]
 				}
 			}
+			/** @description The currently authenticated user has insufficient permissions to call this resource. */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["RestErrors"]
+				}
+			}
 		}
 	}
 	readonly getRefChangesQueueCount: {
@@ -40074,6 +40341,40 @@ export interface operations {
 				headers: Readonly<Record<string, unknown>>
 				content: {
 					readonly "application/json": unknown
+				}
+			}
+			/** @description The currently authenticated user has insufficient permissions to call this resource. */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
+		}
+	}
+	readonly getRepositoryLockOwners: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path?: never
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description A list of all the repository lock owners for the syncing process */
+			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json;charset=UTF-8": readonly components["schemas"]["RestRepositoryLockOwner"][]
+				}
+			}
+			/** @description The currently authenticated user has insufficient permissions to call this resource. */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["RestErrors"]
 				}
 			}
 		}
@@ -40116,6 +40417,15 @@ export interface operations {
 					}
 				}
 			}
+			/** @description The currently authenticated user has insufficient permissions to call this resource. */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
 		}
 	}
 	readonly getMirrorSettings: {
@@ -40132,6 +40442,15 @@ export interface operations {
 				headers: Readonly<Record<string, unknown>>
 				content: {
 					readonly "application/json": components["schemas"]["RestUpstreamSettings"]
+				}
+			}
+			/** @description When the user is not a service user for the currently registered upstream or doesn't have ADMIN permission */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
 				}
 			}
 			/** @description The upstream server could not be found. */
@@ -40166,6 +40485,15 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestUpstreamSettings"]
 				}
 			}
+			/** @description When the user is not a service user for the currently registered upstream or doesn't have ADMIN permission */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
 			/** @description The upstream server could not be found. */
 			readonly 404: {
 				headers: Readonly<Record<string, unknown>>
@@ -40191,6 +40519,15 @@ export interface operations {
 				headers: Readonly<Record<string, unknown>>
 				content: {
 					readonly "application/json": unknown
+				}
+			}
+			/** @description When the user is not a service user for the currently registered upstream or doesn't have ADMIN permission */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
 				}
 			}
 			/** @description The upstream server could not be found. */
@@ -40233,6 +40570,15 @@ export interface operations {
 					}
 				}
 			}
+			/** @description When the user is not a service user for the currently registered upstream or doesn't have ADMIN permission */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
 		}
 	}
 	readonly getMirroredProjects: {
@@ -40249,6 +40595,24 @@ export interface operations {
 				headers: Readonly<Record<string, unknown>>
 				content: {
 					readonly "application/json": unknown
+				}
+			}
+			/** @description When the user is not a service user for the currently registered upstream or doesn't have ADMIN permission */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
+			/** @description The upstream server could not be found. */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
 				}
 			}
 		}
@@ -40273,6 +40637,24 @@ export interface operations {
 					readonly "application/json": unknown
 				}
 			}
+			/** @description When the user is not a service user for the currently registered upstream or doesn't have ADMIN permission */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
+			/** @description The upstream server could not be found. */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
 		}
 	}
 	readonly startMirroringProject: {
@@ -40293,6 +40675,24 @@ export interface operations {
 					readonly "application/json": unknown
 				}
 			}
+			/** @description When the user is not a service user for the currently registered upstream or doesn't have ADMIN permission */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
+			/** @description The upstream server could not be found. */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
 		}
 	}
 	readonly stopMirroringProject: {
@@ -40311,6 +40711,24 @@ export interface operations {
 			readonly 204: {
 				headers: Readonly<Record<string, unknown>>
 				content?: never
+			}
+			/** @description When the user is not a service user for the currently registered upstream or doesn't have ADMIN permission */
+			readonly 401: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
+			}
+			/** @description The upstream server could not be found. */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": {
+						readonly errors?: readonly components["schemas"]["RestErrorMessage"][]
+					}
+				}
 			}
 		}
 	}

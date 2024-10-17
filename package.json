@@ -44,7 +44,7 @@
 		"preopenapi-typescript:cloud": "curl --output ./src/cloud/openapi/swagger.v3.json https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json",
 		"openapi-typescript:cloud": "openapi-typescript ./src/cloud/openapi/swagger.v3.json --output ./src/cloud/openapi/openapi-typescript.ts --immutable --empty-objects-unknown --alphabetize --root-types",
 		"postopenapi-typescript:cloud": "ts-autofix ./src/cloud/openapi && pnpm run lint:fix",
-		"preopenapi-typescript:server": "curl --output ./src/server/openapi/swagger.v3.json https://dac-static.atlassian.com/server/bitbucket/9.1.swagger.v3.json",
+		"preopenapi-typescript:server": "curl --output ./src/server/openapi/swagger.v3.json https://dac-static.atlassian.com/server/bitbucket/9.2.swagger.v3.json",
 		"openapi-typescript:server": "openapi-typescript ./src/server/openapi/swagger.v3.json --output ./src/server/openapi/openapi-typescript.ts --immutable --empty-objects-unknown --alphabetize --root-types",
 		"postopenapi-typescript:server": "ts-autofix ./src/server/openapi && pnpm run lint:fix"
 	},
