@@ -14571,6 +14571,9 @@
 					"202": {
 						"description": "In the Location header, the URL to poll for the pull request merge status"
 					},
+					"409": {
+						"description": "Unable to merge because one of the refs involved changed while attempting to merge"
+					},
 					"555": {
 						"description": "If the merge took too long and timed out.\nIn this case the caller should retry the request later",
 						"content": {
@@ -14668,6 +14671,9 @@
 					},
 					"403": {
 						"description": "The user making the request does not have permission to the repo and is different from the user who queued the task"
+					},
+					"409": {
+						"description": "Unable to merge because one of the refs involved changed while attempting to merge"
 					}
 				},
 				"security": [
@@ -15821,7 +15827,10 @@
 													"merge_strategies": [
 														"merge_commit",
 														"squash",
-														"fast_forward"
+														"fast_forward",
+														"squash_fast_forward",
+														"rebase_fast_forward",
+														"rebase_merge"
 													],
 													"type": "branch",
 													"target": {
@@ -16133,7 +16142,10 @@
 											"merge_strategies": [
 												"merge_commit",
 												"squash",
-												"fast_forward"
+												"fast_forward",
+												"squash_fast_forward",
+												"rebase_fast_forward",
+												"rebase_merge"
 											],
 											"type": "branch",
 											"target": {
@@ -24659,7 +24671,7 @@
 			"description": "A workspace is where you create repositories, collaborate on\nyour code, and organize different streams of work in your Bitbucket\nCloud account. Workspaces replace the use of teams and users in API\ncalls.\n"
 		}
 	],
-	"x-revision": "33b035ea9108",
+	"x-revision": "6e8ad69baf7f",
 	"x-atlassian-narrative": {
 		"documents": [
 			{
@@ -29978,7 +29990,14 @@
 					"merge_strategy": {
 						"type": "string",
 						"description": "The merge strategy that will be used to merge the pull request.",
-						"enum": ["merge_commit", "squash", "fast_forward"],
+						"enum": [
+							"merge_commit",
+							"squash",
+							"fast_forward",
+							"squash_fast_forward",
+							"rebase_fast_forward",
+							"rebase_merge"
+						],
 						"default": "merge_commit"
 					}
 				},
@@ -30004,7 +30023,14 @@
 								"description": "Available merge strategies, when this endpoint is the destination of the pull request.",
 								"items": {
 									"type": "string",
-									"enum": ["merge_commit", "squash", "fast_forward"]
+									"enum": [
+										"merge_commit",
+										"squash",
+										"fast_forward",
+										"squash_fast_forward",
+										"rebase_fast_forward",
+										"rebase_merge"
+									]
 								}
 							},
 							"default_merge_strategy": {
@@ -31914,6 +31940,11 @@
 								"type": "boolean",
 								"description": "Indicates whether the workspace enforces private content, or whether it allows public content."
 							},
+							"forking_mode": {
+								"type": "string",
+								"description": "Controls the rules for forking repositories within this workspace.\n\n* **allow_forks**: unrestricted forking\n* **internal_only**: prevents forking of private repositories outside the workspace or to public repositories\n",
+								"enum": ["allow_forks", "internal_only"]
+							},
 							"created_on": {
 								"type": "string",
 								"format": "date-time"
@@ -32362,7 +32393,14 @@
 								"description": "Available merge strategies for pull requests targeting this branch.",
 								"items": {
 									"type": "string",
-									"enum": ["merge_commit", "squash", "fast_forward"]
+									"enum": [
+										"merge_commit",
+										"squash",
+										"fast_forward",
+										"squash_fast_forward",
+										"rebase_fast_forward",
+										"rebase_merge"
+									]
 								}
 							},
 							"default_merge_strategy": {
