@@ -1,5 +1,5 @@
-import type { Event } from "../event.js"
-import type { ProjectModified } from "./modified.js"
+import type { Event } from "../event.ts"
+import type { ProjectModified } from "./modified.ts"
 
 /** You can create webhooks for events that occur in a project. */
 export type ProjectEvent = ProjectModified

@@ -1,4 +1,4 @@
-import type { SchemaRepository } from "../../../openapi/openapi-typescript.js"
+import type { SchemaRepository } from "../../../openapi/openapi-typescript.ts"
 
 export interface Change {
 	readonly fromHash: string

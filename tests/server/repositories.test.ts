@@ -2,8 +2,8 @@ import { describe, test } from "vitest"
 import {
 	BITBUCKET_SERVER_TEST_PROJECT_KEY,
 	BITBUCKET_SERVER_TEST_PROJECT_NAME,
-} from "../env.js"
-import { client } from "./client.js"
+} from "../env.ts"
+import { client } from "./client.ts"
 
 describe("Repositories", { concurrent: false, sequential: true }, () => {
 	const projectKey = BITBUCKET_SERVER_TEST_PROJECT_KEY

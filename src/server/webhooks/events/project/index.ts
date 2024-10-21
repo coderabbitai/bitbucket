@@ -1,2 +1,2 @@
-export * from "./event.js"
-export type * from "./modified.js"
+export * from "./event.ts"
+export type * from "./modified.ts"

@@ -1,5 +1,5 @@
 import type { UUID } from "crypto"
-import type { EventKey } from "./events/event.js"
+import type { EventKey } from "./events/event.ts"
 
 /**
  * All event payload requests may have these HTTP headers.

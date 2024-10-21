@@ -6,8 +6,8 @@ import type {
 	SchemaPullRequestParticipant,
 	SchemaRepository,
 	SchemaRestMinimalRef,
-} from "../../../openapi/openapi-typescript.js"
-import type { SuggestionState } from "../suggestion_state.js"
+} from "../../../openapi/openapi-typescript.ts"
+import type { SuggestionState } from "../suggestion_state.ts"
 
 export interface Actor {
 	readonly active: boolean

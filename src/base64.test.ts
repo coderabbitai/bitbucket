@@ -1,5 +1,5 @@
 import { test } from "vitest"
-import { fromBase64, toBase64 } from "./base64.js"
+import { fromBase64, toBase64 } from "./base64.ts"
 
 test("toBase64", ({ expect }) => {
 	const based = toBase64("Copyright © 2024 CodeRabbit")

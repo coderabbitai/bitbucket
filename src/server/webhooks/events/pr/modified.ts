@@ -1,7 +1,7 @@
 import type {
 	SchemaPullRequest,
 	SchemaRepository,
-} from "../../../openapi/index.js"
+} from "../../../openapi/index.ts"
 
 export interface Actor {
 	readonly active: boolean

@@ -1,3 +1,3 @@
-export * from "./base64.js"
-export * as cloud from "./cloud/index.js"
-export * as server from "./server/index.js"
+export * from "./base64.ts"
+export * as BitbucketCloud from "./cloud/index.ts"
+export * as BitbucketServer from "./server/index.ts"
