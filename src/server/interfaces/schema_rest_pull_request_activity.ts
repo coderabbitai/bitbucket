@@ -29,19 +29,19 @@ export interface SchemaRestPullRequestActivityUpdated
 }
 
 export function isSchemaRestPullRequestActivityCommented(
-	activity: SchemaRestPullRequestActivity,
+	activity?: SchemaRestPullRequestActivity | SchemaRestPullRequestActivityBase,
 ): activity is SchemaRestPullRequestActivityCommented {
-	return activity.action === "COMMENTED"
+	return activity?.action === "COMMENTED"
 }
 
 export function isSchemaRestPullRequestActivityOpened(
-	activity: SchemaRestPullRequestActivity,
+	activity?: SchemaRestPullRequestActivity | SchemaRestPullRequestActivityBase,
 ): activity is SchemaRestPullRequestActivityOpened {
-	return activity.action === "OPENED"
+	return activity?.action === "OPENED"
 }
 
 export function isSchemaRestPullRequestActivityUpdated(
-	activity: SchemaRestPullRequestActivity,
+	activity?: SchemaRestPullRequestActivity | SchemaRestPullRequestActivityBase,
 ): activity is SchemaRestPullRequestActivityUpdated {
-	return activity.action === "UPDATED"
+	return activity?.action === "UPDATED"
 }
