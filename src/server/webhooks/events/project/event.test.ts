@@ -1,6 +1,6 @@
 import { describe, test } from "vitest"
-import type { Event } from "../event.js"
-import { isProjectEvent, isProjectEventKey } from "./event.js"
+import type { Event } from "../event.ts"
+import { isProjectEvent, isProjectEventKey } from "./event.ts"
 
 describe("isProjectEventKey", () => {
 	test("project:modified", ({ expect }) => {

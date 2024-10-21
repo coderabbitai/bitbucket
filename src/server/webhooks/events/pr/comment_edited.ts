@@ -6,7 +6,7 @@ import type {
 	SchemaPullRequestParticipant,
 	SchemaRepository,
 	SchemaRestMinimalRef,
-} from "../../../openapi/openapi-typescript.js"
+} from "../../../openapi/openapi-typescript.ts"
 
 export interface Actor {
 	readonly active: boolean

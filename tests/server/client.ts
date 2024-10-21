@@ -1,5 +1,5 @@
-import { createBitbucketServerClient } from "../../src/server/index.js"
-import { BITBUCKET_SERVER_TOKEN, BITBUCKET_SERVER_URL } from "../env.js"
+import { createBitbucketServerClient } from "../../src/server/index.ts"
+import { BITBUCKET_SERVER_TOKEN, BITBUCKET_SERVER_URL } from "../env.ts"
 
 export const client = createBitbucketServerClient({
 	baseUrl: BITBUCKET_SERVER_URL.toString(),

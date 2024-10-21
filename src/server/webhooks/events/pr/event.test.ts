@@ -1,6 +1,6 @@
 import { describe, test } from "vitest"
-import type { Event } from "../event.js"
-import { isPrEvent, isPrEventKey } from "./event.js"
+import type { Event } from "../event.ts"
+import { isPrEvent, isPrEventKey } from "./event.ts"
 
 describe("isPrEventKey", () => {
 	test("pr:comment:added", ({ expect }) => {

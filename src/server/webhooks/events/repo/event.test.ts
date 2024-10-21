@@ -1,6 +1,6 @@
 import { describe, test } from "vitest"
-import type { Event } from "../event.js"
-import { isRepoEvent, isRepoEventKey } from "./event.js"
+import type { Event } from "../event.ts"
+import { isRepoEvent, isRepoEventKey } from "./event.ts"
 
 describe("isRepoEventKey", () => {
 	test("mirror:repo_synchronized", ({ expect }) => {

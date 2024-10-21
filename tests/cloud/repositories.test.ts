@@ -1,5 +1,5 @@
 import { test } from "vitest"
-import { client } from "./client.js"
+import { client } from "./client.ts"
 
 test("GET /repositories", async ({ expect }) => {
 	const got = await client.GET("/repositories")

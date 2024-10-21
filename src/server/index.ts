@@ -1,3 +1,4 @@
-export * from "./client.js"
-export type * from "./openapi/index.js"
-export * from "./webhooks/index.js"
+export * from "./client.ts"
+export * from "./interfaces/index.ts"
+export type * as OpenApi from "./openapi/index.ts"
+export * from "./webhooks/index.ts"
