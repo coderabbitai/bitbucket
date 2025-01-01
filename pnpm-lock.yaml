@@ -10,7 +10,7 @@ importers:
     dependencies:
       openapi-fetch:
         specifier: ^0.13.0
-        version: 0.13.0
+        version: 0.13.3
     devDependencies:
       '@eslint/js':
         specifier: ^9.14.0
@@ -1115,8 +1115,8 @@ packages:
   oniguruma-to-js@0.4.3:
     resolution: {integrity: sha512-X0jWUcAlxORhOqqBREgPMgnshB7ZGYszBNspP+tS9hPD3l13CdaXcHbgImoHUHlrvGx/7AvFEkTRhAGYh+jzjQ==}
 
-  openapi-fetch@0.13.0:
-    resolution: {integrity: sha512-6Nlf/BDbtyHwHdNrLPUiyt4CZMzL3ZyAt55yWH8W7+Z+8aYWnvca4uZHQHXViy8KcnCMqAhLM/bifh2Yjjkf6w==}
+  openapi-fetch@0.13.3:
+    resolution: {integrity: sha512-M1THnPkNOXUPsQKZfqunhW/wqH8l3/W3Vlj4lemQynf4mTaTwBTvL2pgjBe0zerL/GFT5ttCHu9fYvanUI3tOw==}
 
   openapi-typescript-helpers@0.0.15:
     resolution: {integrity: sha512-opyTPaunsklCBpTK8JGef6mfPhLSnyy5a0IN9vKtx3+4aExf+KxEqYwIy3hqkedXIB97u357uLMJsOnm3GVjsw==}
@@ -2486,7 +2486,7 @@ snapshots:
     dependencies:
       regex: 4.4.0
 
-  openapi-fetch@0.13.0:
+  openapi-fetch@0.13.3:
     dependencies:
       openapi-typescript-helpers: 0.0.15
 
