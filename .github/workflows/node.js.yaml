@@ -19,6 +19,23 @@ jobs:
         with:
           node-version: latest
           cache: pnpm
+
+      - name: Install Twingate
+        run: |
+          echo "deb [trusted=yes] https://packages.twingate.com/apt/ /" | sudo tee /etc/apt/sources.list.d/twingate.list
+          sudo apt update -yq
+          sudo apt install -yq twingate
+
+      - name: Setup and start Twingate
+        env:
+          TWINGATE_SERVICE_KEY: ${{ secrets.TWINGATE_SCM_TOOLS_SERVICE_KEY }}
+        run: |
+          echo $TWINGATE_SERVICE_KEY | sudo twingate setup --headless=-
+          sudo twingate start
+
+      - name: Twingate status
+        run: twingate status
+
       - run: pnpm install --frozen-lockfile --strict-peer-dependencies
       - run: pnpm run build --noEmit
       - run: pnpm run lint
