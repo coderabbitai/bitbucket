@@ -2,10 +2,11 @@ import { describe, test } from "vitest"
 import {
 	BITBUCKET_SERVER_TEST_PROJECT_KEY,
 	BITBUCKET_SERVER_TEST_PROJECT_NAME,
+	SKIP_BITBUCKET_SERVER,
 } from "../env.ts"
 import { client } from "./client.ts"
 
-describe("Projects", () => {
+describe.skipIf(SKIP_BITBUCKET_SERVER)("Projects", () => {
 	const key = BITBUCKET_SERVER_TEST_PROJECT_KEY
 	const name = BITBUCKET_SERVER_TEST_PROJECT_NAME
 

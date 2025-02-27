@@ -15,6 +15,9 @@ importers:
       '@eslint/js':
         specifier: ^9.21.0
         version: 9.21.0
+      '@natoboram/load_env':
+        specifier: ^1.0.0
+        version: 1.0.0
       '@types/node':
         specifier: ^22.13.5
         version: 22.13.5
@@ -418,6 +421,9 @@ packages:
 
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
+
+  '@natoboram/load_env@1.0.0':
+    resolution: {integrity: sha512-nlrFCVlEV9Z0FhsTrC3I0vDV9dhCtiK28OV2QBxDtwjXd3p6Ed52Ftyhc3LGlan9Yy+9UDR1Hqw8W5Fqf0q//w==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1738,6 +1744,10 @@ snapshots:
   '@humanwhocodes/retry@0.4.2': {}
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
+
+  '@natoboram/load_env@1.0.0':
+    dependencies:
+      dotenv: 16.4.7
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
