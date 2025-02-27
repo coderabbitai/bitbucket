@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
+          ssh-key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
       - uses: pnpm/action-setup@v4
         with:
           version: latest
@@ -29,9 +30,15 @@ jobs:
         with:
           message: 🔖 ${{ steps.patch.outputs.VERSION }}
 
-      - run: |
+      - name: Push
+        run: |
+          eval `ssh-agent -s`
+          ssh-add - <<< "$DEPLOY_KEY_PRIVATE"
           git push
-          gh release create "$VERSION" --generate-notes --target "$COMMIT" --title "$VERSION"
+        env:
+          DEPLOY_KEY_PRIVATE: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+
+      - run: gh release create "$VERSION" --generate-notes --target "$COMMIT" --title "$VERSION"
         env:
           COMMIT: ${{ steps.commit.outputs.commit }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
