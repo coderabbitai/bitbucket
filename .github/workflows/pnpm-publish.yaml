@@ -45,13 +45,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.CODERABBIT_NPM_TOKEN }}
 
       - run: pnpm pack --pack-gzip-level 9
-      - name: Sign
-        run: |
-          eval `ssh-agent -s`
-          ssh-add - <<< '${{ secrets.DEPLOY_KEY_PRIVATE }}'
-          echo '${{ vars.DEPLOY_KEY_PUBLIC }}' > '${{ runner.temp }}/DEPLOY_KEY_PUBLIC.pub'
-          ssh-keygen -Y sign -f '${{ runner.temp }}/DEPLOY_KEY_PUBLIC.pub' -n file coderabbitai-bitbucket-*.tgz
-          ssh-keygen -Y verify -f ./.github/authorized_keys -I '41898282+github-actions[bot]@users.noreply.github.com' -n file -s coderabbitai-bitbucket-*.tgz.sig < coderabbitai-bitbucket-*.tgz
-      - run: gh release upload ${{ github.ref_name }} coderabbitai-bitbucket-*.tgz coderabbitai-bitbucket-*.tgz.sig
+      - run: gh release upload ${{ github.ref_name }} coderabbitai-bitbucket-*.tgz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

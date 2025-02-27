@@ -634,69 +634,6 @@
 				}
 			]
 		},
-		"/pullrequests/{selected_user}": {
-			"get": {
-				"tags": ["Pullrequests"],
-				"description": "Returns all pull requests authored by the specified user.\n\nBy default only open pull requests are returned. This can be controlled\nusing the `state` query parameter. To retrieve pull requests that are\nin one of multiple states, repeat the `state` parameter for each\nindividual state.\n\nThis endpoint also supports filtering and sorting of the results. See\n[filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.",
-				"summary": "List pull requests for a user",
-				"responses": {
-					"200": {
-						"description": "All pull requests authored by the specified user.",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/paginated_pullrequests"
-								}
-							}
-						}
-					},
-					"404": {
-						"description": "If the specified user does not exist.",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/error"
-								}
-							}
-						}
-					}
-				},
-				"parameters": [
-					{
-						"name": "state",
-						"in": "query",
-						"description": "Only return pull requests that are in this state. This parameter can be repeated.",
-						"schema": {
-							"type": "string",
-							"enum": ["OPEN", "MERGED", "DECLINED", "SUPERSEDED"]
-						}
-					}
-				],
-				"security": [
-					{
-						"oauth2": ["pullrequest"]
-					},
-					{
-						"basic": []
-					},
-					{
-						"api_key": []
-					}
-				],
-				"deprecated": true
-			},
-			"parameters": [
-				{
-					"name": "selected_user",
-					"in": "path",
-					"description": "This can either be the username of the pull request author, the author's UUID\nsurrounded by curly-braces, for example: `{account UUID}`, or the author's Atlassian ID.\n",
-					"required": true,
-					"schema": {
-						"type": "string"
-					}
-				}
-			]
-		},
 		"/repositories": {
 			"get": {
 				"tags": ["Repositories"],
@@ -2847,13 +2784,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pullrequest:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pullrequest"]
@@ -2863,6 +2793,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pullrequest:bitbucket"]
 					}
 				]
 			}
@@ -2914,13 +2851,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository"]
@@ -2930,6 +2860,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			}
@@ -3011,13 +2948,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository"]
@@ -3027,6 +2957,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -3095,13 +3032,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository"]
@@ -3111,6 +3041,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -3162,13 +3099,6 @@
 						"description": "No content"
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository"]
@@ -3178,6 +3108,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			}
@@ -3238,13 +3175,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository"]
@@ -3254,6 +3184,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -3331,13 +3268,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository"]
@@ -3347,6 +3277,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			}
@@ -3426,13 +3363,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository"]
@@ -3442,6 +3372,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -3530,13 +3467,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository"]
@@ -3546,6 +3476,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -3606,13 +3543,6 @@
 						"description": "No content"
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository"]
@@ -3622,6 +3552,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			}
@@ -3737,7 +3674,7 @@
 		"/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build": {
 			"post": {
 				"tags": ["Commit statuses"],
-				"description": "Creates a new build status against the specified commit.\n\nIf the specified key already exists, the existing status object will\nbe overwritten.\n\nExample:\n\n```\ncurl https://api.bitbucket.org/2.0/repositories/my-workspace/my-repo/commit/e10dae226959c2194f2b07b077c07762d93821cf/statuses/build/           -X POST -u jdoe -H 'Content-Type: application/json'           -d '{\n    \"key\": \"MY-BUILD\",\n    \"state\": \"SUCCESSFUL\",\n    \"description\": \"42 tests passed\",\n    \"url\": \"https://www.example.org/my-build-result\"\n  }'\n```\n\nWhen creating a new commit status, you can use a URI template for the URL.\nTemplates are URLs that contain variable names that Bitbucket will\nevaluate at runtime whenever the URL is displayed anywhere similar to\nparameter substitution in\n[Bitbucket Connect](https://developer.atlassian.com/bitbucket/concepts/context-parameters.html).\nFor example, one could use `https://foo.com/builds/{repository.full_name}`\nwhich Bitbucket will turn into `https://foo.com/builds/foo/bar` at render time.\nThe context variables available are `repository` and `commit`.",
+				"description": "Creates a new build status against the specified commit.\n\nIf the specified key already exists, the existing status object will\nbe overwritten.\n\nExample:\n\n```\ncurl https://api.bitbucket.org/2.0/repositories/my-workspace/my-repo/commit/e10dae226959c2194f2b07b077c07762d93821cf/statuses/build/           -X POST -u jdoe -H 'Content-Type: application/json'           -d '{\n    \"key\": \"MY-BUILD\",\n    \"state\": \"SUCCESSFUL\",\n    \"description\": \"42 tests passed\",\n    \"url\": \"https://www.example.org/my-build-result\"\n  }'\n```\n\nWhen creating a new commit status, you can use a URI template for the URL.\nTemplates are URLs that contain variable names that Bitbucket will\nevaluate at runtime whenever the URL is displayed anywhere similar to\nparameter substitution in\n[Bitbucket Connect](https://developer.atlassian.com/bitbucket/concepts/context-parameters.html).\nFor example, one could use `https://foo.com/builds/{repository.full_name}`\nwhich Bitbucket will turn into `https://foo.com/builds/foo/bar` at render time.\nThe context variables available are `repository` and `commit`.\n\nTo associate a commit status to a pull request, the refname field must be set to the source branch\nof the pull request.\n\nExample:\n```\ncurl https://api.bitbucket.org/2.0/repositories/my-workspace/my-repo/commit/e10dae226959c2194f2b07b077c07762d93821cf/statuses/build/           -X POST -u jdoe -H 'Content-Type: application/json'           -d '{\n    \"key\": \"MY-BUILD\",\n    \"state\": \"SUCCESSFUL\",\n    \"description\": \"42 tests passed\",\n    \"url\": \"https://www.example.org/my-build-result\",\n    \"refname\": \"my-pr-branch\"\n  }'\n```",
 				"summary": "Create a build status for a commit",
 				"responses": {
 					"201": {
@@ -5002,13 +4939,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -5018,6 +4948,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -5079,13 +5016,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -5095,6 +5025,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -5146,13 +5083,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -5162,6 +5092,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -5250,13 +5187,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -5266,6 +5196,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -5347,13 +5284,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -5363,6 +5293,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -5424,13 +5361,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -5440,6 +5370,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -5824,6 +5761,13 @@
 					{
 						"api_key": []
 					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["write:repository:bitbucket"]
+					}
 				]
 			},
 			"parameters": [
@@ -5934,6 +5878,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -6186,13 +6137,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -6202,6 +6146,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -6281,13 +6232,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -6297,6 +6241,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -6358,13 +6309,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -6374,6 +6318,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -6426,13 +6377,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -6442,6 +6386,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -6496,13 +6447,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -6512,6 +6456,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -7601,15 +7552,8 @@
 				"description": "Deletes the specified issue. This requires write access to the\nrepository.",
 				"summary": "Delete an issue",
 				"responses": {
-					"200": {
-						"description": "The issue object.",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/issue"
-								}
-							}
-						}
+					"204": {
+						"description": "Indicates the issue was deleted successfully."
 					},
 					"403": {
 						"description": "When the authenticated user isn't authorized to delete the issue.",
@@ -9436,7 +9380,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -9593,7 +9537,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -9830,7 +9774,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -9988,7 +9932,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -10127,7 +10071,7 @@
 			"get": {
 				"tags": ["Pipelines"],
 				"summary": "List pipelines",
-				"description": "Find pipelines",
+				"description": "Find pipelines in a repository.\n\nNote that unlike other endpoints in the Bitbucket API, this endpoint utilizes query parameters to allow filtering\nand sorting of returned results. See [query parameters](#api-repositories-workspace-repo-slug-pipelines-get-request-Query%20parameters)\nfor specific details.\n",
 				"operationId": "getPipelinesForRepository",
 				"parameters": [
 					{
@@ -10147,6 +10091,148 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"name": "creator.uuid",
+						"description": "The UUID of the creator of the pipeline to filter by.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					},
+					{
+						"name": "target.ref_type",
+						"description": "The type of the reference to filter by.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["BRANCH", "TAG", "ANNOTATED_TAG"]
+						}
+					},
+					{
+						"name": "target.ref_name",
+						"description": "The reference name to filter by.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "target.branch",
+						"description": "The name of the branch to filter by.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "target.commit.hash",
+						"description": "The revision to filter by.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "target.selector.pattern",
+						"description": "The pipeline pattern to filter by.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "target.selector.type",
+						"description": "The type of pipeline to filter by.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["BRANCH", "TAG", "CUSTOM", "PULLREQUESTS", "DEFAULT"]
+						}
+					},
+					{
+						"name": "created_on",
+						"description": "The creation date to filter by.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"format": "date-time"
+						}
+					},
+					{
+						"name": "trigger_type",
+						"description": "The trigger type to filter by.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["PUSH", "MANUAL", "SCHEDULED", "PARENT_STEP"]
+						}
+					},
+					{
+						"name": "status",
+						"description": "The pipeline status to filter by.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": [
+								"PARSING",
+								"PENDING",
+								"PAUSED",
+								"HALTED",
+								"BUILDING",
+								"ERROR",
+								"PASSED",
+								"FAILED",
+								"STOPPED",
+								"UNKNOWN"
+							]
+						}
+					},
+					{
+						"name": "sort",
+						"description": "The attribute name to sort on.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["creator.uuid", "created_on", "run_creation_date"]
+						}
+					},
+					{
+						"name": "page",
+						"description": "The page number of elements to retrieve.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"format": "int32",
+							"minimum": 1,
+							"default": 1
+						}
+					},
+					{
+						"name": "pagelen",
+						"description": "The maximum number of results to return.",
+						"required": false,
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"format": "int32",
+							"minimum": 1,
+							"maximum": 100,
+							"default": 10
+						}
 					}
 				],
 				"responses": {
@@ -10161,13 +10247,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -10177,6 +10256,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -10256,13 +10342,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket", "write:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -10272,6 +10351,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket", "write:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -10324,13 +10410,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -10340,6 +10419,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -10392,13 +10478,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["write:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:write"]
@@ -10408,6 +10487,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["write:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -10462,13 +10548,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["write:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:write"]
@@ -10478,6 +10557,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["write:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -10539,13 +10625,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -10555,6 +10634,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -10616,13 +10702,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -10632,6 +10711,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -10683,13 +10769,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -10699,6 +10778,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -10769,13 +10855,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -10785,6 +10864,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -10847,6 +10933,9 @@
 							}
 						}
 					},
+					"307": {
+						"description": "After the step is completed, the log is moved to long term storage and a redirection to the log file is returned."
+					},
 					"404": {
 						"description": "A pipeline with the given UUID does not exist, a step with the given UUID does not exist in the pipeline or a log file does not exist for the given step.",
 						"content": {
@@ -10868,13 +10957,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -10884,6 +10966,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -10945,6 +11034,9 @@
 					"200": {
 						"description": "The raw log file for the build container or service container."
 					},
+					"307": {
+						"description": "After the step is completed, the log is moved to long term storage and a redirection to the log file is returned."
+					},
 					"404": {
 						"description": "No account, repository, pipeline, step or log exist for the provided path.",
 						"content": {
@@ -10956,13 +11048,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -10972,6 +11057,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -11034,13 +11126,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -11050,6 +11135,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -11112,13 +11204,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -11128,6 +11213,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -11199,13 +11291,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -11215,6 +11300,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -11279,13 +11371,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["write:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:write"]
@@ -11295,6 +11380,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["write:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -11337,13 +11429,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository:admin"]
@@ -11353,6 +11438,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:repository:bitbucket"]
 					}
 				]
 			},
@@ -11404,13 +11496,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository:admin"]
@@ -11420,6 +11505,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:repository:bitbucket"]
 					}
 				]
 			}
@@ -11493,13 +11585,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -11509,6 +11594,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -11600,13 +11692,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket", "write:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:write"]
@@ -11616,6 +11701,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket", "write:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -11666,13 +11758,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -11682,6 +11767,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -11743,13 +11835,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -11759,6 +11844,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -11829,13 +11921,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket", "write:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:write"]
@@ -11845,6 +11930,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket", "write:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -11897,13 +11989,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["write:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:write"]
@@ -11913,6 +11998,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["write:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -11974,13 +12066,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -11990,6 +12075,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -12042,13 +12134,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -12058,6 +12143,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -12119,13 +12211,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -12135,6 +12220,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -12178,13 +12270,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -12194,6 +12279,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -12236,13 +12328,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -12252,6 +12337,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -12331,13 +12423,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -12347,6 +12432,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -12408,13 +12500,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -12424,6 +12509,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -12494,13 +12586,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -12510,6 +12595,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -12562,13 +12654,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -12578,6 +12663,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -12620,13 +12712,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -12636,6 +12721,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -12715,13 +12807,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -12731,6 +12816,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -12792,13 +12884,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -12808,6 +12893,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -12878,13 +12970,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -12894,6 +12979,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -12946,13 +13038,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -12962,6 +13047,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -19700,6 +19792,349 @@
 				}
 			]
 		},
+		"/users/{selected_user}/gpg-keys": {
+			"get": {
+				"tags": ["GPG"],
+				"description": "Returns a paginated list of the user's GPG public keys.\nThe `key` and `subkeys` fields can also be requested from the endpoint.\nSee [Partial Responses](/cloud/bitbucket/rest/intro/#partial-response) for more details.",
+				"summary": "List GPG keys",
+				"responses": {
+					"200": {
+						"description": "A list of the GPG keys associated with the account.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/paginated_gpg_user_keys"
+								},
+								"examples": {
+									"response": {
+										"value": {
+											"page": 1,
+											"pagelen": 10,
+											"size": 1,
+											"values": [
+												{
+													"added_on": "2024-09-24T12:09:33.154081+00:00",
+													"created_on": "2018-03-20T13:09:04.207005+00:00",
+													"expires_on": null,
+													"fingerprint": "h4m26ppxrol7blr7spbc7lhyymokdbnkxd06kzrt",
+													"key_id": "ymokdbnkxd06kzrt",
+													"last_used": "2024-09-25T15:18:05.196003+00:00",
+													"links": {
+														"self": {
+															"href": "https://api.bitbucket.org/2.0/users/{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}/gpg-keys/H4M26PPXROL7BLR7SPBC7LHYYMOKDBNKXD06KZRT"
+														}
+													},
+													"name": "Alice's OpenPGP key",
+													"owner": {
+														"display_name": "Mark Adams",
+														"links": {
+															"avatar": {
+																"href": "https://bitbucket.org/account/markadams-atl/avatar/32/"
+															},
+															"html": {
+																"href": "https://bitbucket.org/markadams-atl/"
+															},
+															"self": {
+																"href": "https://api.bitbucket.org/2.0/users/{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}"
+															}
+														},
+														"type": "user",
+														"username": "markadams-atl",
+														"nickname": "markadams-atl",
+														"uuid": "{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}"
+													},
+													"parent_fingerprint": null,
+													"type": "gpg_key"
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "If the specified user's keys are not accessible to the current user"
+					},
+					"404": {
+						"description": "If the specified user does not exist",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/error"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"oauth2": ["account"]
+					},
+					{
+						"basic": []
+					},
+					{
+						"api_key": []
+					}
+				]
+			},
+			"post": {
+				"tags": ["GPG"],
+				"description": "Adds a new GPG public key to the specified user account and returns the resulting key.\n\nExample:\n\n```\n$ curl -X POST -H \"Content-Type: application/json\" -d\n'{\"key\": \"<insert GPG Key>\"}'\nhttps://api.bitbucket.org/2.0/users/{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}/gpg-keys\n```",
+				"summary": "Add a new GPG key",
+				"responses": {
+					"201": {
+						"description": "The newly created GPG key.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GPG_account_key"
+								},
+								"examples": {
+									"response": {
+										"value": {
+											"added_on": "2024-09-24T12:09:33.154081+00:00",
+											"created_on": "2018-03-20T13:09:04.207005+00:00",
+											"expires_on": null,
+											"fingerprint": "h4m26ppxrol7blr7spbc7lhyymokdbnkxd06kzrt",
+											"key_id": "ymokdbnkxd06kzrt",
+											"last_used": "2024-09-25T15:18:05.196003+00:00",
+											"links": {
+												"self": {
+													"href": "https://api.bitbucket.org/2.0/users/{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}/gpg-keys/H4M26PPXROL7BLR7SPBC7LHYYMOKDBNKXD06KZRT"
+												}
+											},
+											"name": "Alice's OpenPGP key",
+											"owner": {
+												"display_name": "Mark Adams",
+												"links": {
+													"avatar": {
+														"href": "https://bitbucket.org/account/markadams-atl/avatar/32/"
+													},
+													"html": {
+														"href": "https://bitbucket.org/markadams-atl/"
+													},
+													"self": {
+														"href": "https://api.bitbucket.org/2.0/users/{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}"
+													}
+												},
+												"type": "user",
+												"username": "markadams-atl",
+												"nickname": "markadams-atl",
+												"uuid": "{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}"
+											},
+											"parent_fingerprint": null,
+											"type": "gpg_key"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "If the submitted key or related value is invalid",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/error"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "If the current user does not have permission to add a key for the specified user"
+					},
+					"404": {
+						"description": "If the specified user does not exist",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/error"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GPG_account_key"
+							}
+						}
+					},
+					"description": "The new GPG key object."
+				},
+				"security": [
+					{
+						"oauth2": ["account:write"]
+					},
+					{
+						"basic": []
+					},
+					{
+						"api_key": []
+					}
+				]
+			},
+			"parameters": [
+				{
+					"name": "selected_user",
+					"in": "path",
+					"description": "This can either be an Atlassian Account ID OR the UUID of the account,\nsurrounded by curly-braces, for example: `{account UUID}`.\n",
+					"required": true,
+					"schema": {
+						"type": "string"
+					}
+				}
+			]
+		},
+		"/users/{selected_user}/gpg-keys/{fingerprint}": {
+			"delete": {
+				"tags": ["GPG"],
+				"description": "Deletes a specific GPG public key from a user's account.",
+				"summary": "Delete a GPG key",
+				"responses": {
+					"204": {
+						"description": "The key has been deleted"
+					},
+					"400": {
+						"description": "If the submitted key or related value is invalid",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/error"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "If the current user does not have permission to delete a key for the specified user, or the submitted key is a subkey"
+					},
+					"404": {
+						"description": "If the specified key does not exist",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/error"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"oauth2": ["account:write"]
+					},
+					{
+						"basic": []
+					},
+					{
+						"api_key": []
+					}
+				]
+			},
+			"get": {
+				"tags": ["GPG"],
+				"description": "Returns a specific GPG public key belonging to a user.\nThe `key` and `subkeys` fields can also be requested from the endpoint.\nSee [Partial Responses](/cloud/bitbucket/rest/intro/#partial-response) for more details.",
+				"summary": "Get a GPG key",
+				"responses": {
+					"200": {
+						"description": "The specific GPG key matching the user and fingerprint.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GPG_account_key"
+								},
+								"examples": {
+									"response": {
+										"value": {
+											"added_on": "2024-09-24T12:09:33.154081+00:00",
+											"created_on": "2018-03-20T13:09:04.207005+00:00",
+											"expires_on": null,
+											"fingerprint": "h4m26ppxrol7blr7spbc7lhyymokdbnkxd06kzrt",
+											"key_id": "ymokdbnkxd06kzrt",
+											"last_used": "2024-09-25T15:18:05.196003+00:00",
+											"links": {
+												"self": {
+													"href": "https://api.bitbucket.org/2.0/users/{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}/gpg-keys/H4M26PPXROL7BLR7SPBC7LHYYMOKDBNKXD06KZRT"
+												}
+											},
+											"name": "Alice's OpenPGP key",
+											"owner": {
+												"display_name": "Mark Adams",
+												"links": {
+													"avatar": {
+														"href": "https://bitbucket.org/account/markadams-atl/avatar/32/"
+													},
+													"html": {
+														"href": "https://bitbucket.org/markadams-atl/"
+													},
+													"self": {
+														"href": "https://api.bitbucket.org/2.0/users/{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}"
+													}
+												},
+												"type": "user",
+												"username": "markadams-atl",
+												"nickname": "markadams-atl",
+												"uuid": "{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}"
+											},
+											"parent_fingerprint": null,
+											"type": "gpg_key"
+										}
+									}
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "If the specified user's keys are not accessible to the current user"
+					},
+					"404": {
+						"description": "If the specified user does not exist",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/error"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"oauth2": ["account"]
+					},
+					{
+						"basic": []
+					},
+					{
+						"api_key": []
+					}
+				]
+			},
+			"parameters": [
+				{
+					"name": "fingerprint",
+					"in": "path",
+					"description": "A GPG key fingerprint.\n",
+					"required": true,
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "selected_user",
+					"in": "path",
+					"description": "This can either be an Atlassian Account ID OR the UUID of the account,\nsurrounded by curly-braces, for example: `{account UUID}`.\n",
+					"required": true,
+					"schema": {
+						"type": "string"
+					}
+				}
+			]
+		},
 		"/users/{selected_user}/pipelines_config/variables": {
 			"get": {
 				"tags": ["Pipelines"],
@@ -20337,7 +20772,7 @@
 		},
 		"/users/{selected_user}/ssh-keys": {
 			"get": {
-				"tags": ["Ssh"],
+				"tags": ["SSH"],
 				"description": "Returns a paginated list of the user's SSH public keys.",
 				"summary": "List SSH keys",
 				"responses": {
@@ -20421,7 +20856,7 @@
 				]
 			},
 			"post": {
-				"tags": ["Ssh"],
+				"tags": ["SSH"],
 				"description": "Adds a new SSH public key to the specified user account and returns the resulting key.\n\nExample:\n\n```\n$ curl -X POST -H \"Content-Type: application/json\" -d '{\"key\": \"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKqP3Cr632C2dNhhgKVcon4ldUSAeKiku2yP9O9/bDtY user@myhost\"}' https://api.bitbucket.org/2.0/users/{ed08f5e1-605b-4f4a-aee4-6c97628a673e}/ssh-keys\n```",
 				"summary": "Add a new SSH key",
 				"responses": {
@@ -20531,7 +20966,7 @@
 		},
 		"/users/{selected_user}/ssh-keys/{key_id}": {
 			"delete": {
-				"tags": ["Ssh"],
+				"tags": ["SSH"],
 				"description": "Deletes a specific SSH public key from a user's account.",
 				"summary": "Delete a SSH key",
 				"responses": {
@@ -20575,7 +21010,7 @@
 				]
 			},
 			"get": {
-				"tags": ["Ssh"],
+				"tags": ["SSH"],
 				"description": "Returns a specific SSH public key belonging to a user.",
 				"summary": "Get a SSH key",
 				"responses": {
@@ -20652,7 +21087,7 @@
 				]
 			},
 			"put": {
-				"tags": ["Ssh"],
+				"tags": ["SSH"],
 				"description": "Updates a specific SSH public key on a user's account\n\nNote: Only the 'comment' field can be updated using this API. To modify the key or comment values, you must delete and add the key again.\n\nExample:\n\n```\n$ curl -X PUT -H \"Content-Type: application/json\" -d '{\"label\": \"Work key\"}' https://api.bitbucket.org/2.0/users/{ed08f5e1-605b-4f4a-aee4-6c97628a673e}/ssh-keys/{b15b6026-9c02-4626-b4ad-b905f99f763a}\n```",
 				"summary": "Update a SSH key",
 				"responses": {
@@ -21254,7 +21689,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:workspace:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:workspace:bitbucket"]
 					}
 				]
 			},
@@ -21322,7 +21757,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:workspace:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:workspace:bitbucket"]
 					}
 				]
 			},
@@ -21442,7 +21877,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:workspace:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:workspace:bitbucket"]
 					}
 				]
 			},
@@ -21576,7 +22011,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -21695,7 +22130,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			},
@@ -21839,13 +22274,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -21855,6 +22283,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -21917,13 +22352,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -21933,6 +22361,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -21985,13 +22420,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline"]
@@ -22001,6 +22429,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -22054,13 +22489,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -22070,6 +22498,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			},
@@ -22113,13 +22548,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["admin:pipeline:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["pipeline:variable"]
@@ -22129,6 +22557,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["admin:pipeline:bitbucket"]
 					}
 				]
 			}
@@ -23642,7 +24077,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:project:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:project:bitbucket"]
 					}
 				]
 			},
@@ -23798,7 +24233,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:project:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:project:bitbucket"]
 					}
 				]
 			},
@@ -24034,7 +24469,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:project:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:project:bitbucket"]
 					}
 				]
 			},
@@ -24191,7 +24626,7 @@
 					{
 						"state": "Current",
 						"scheme": "oauth2",
-						"scopes": ["read:project:bitbucket", "read:user:bitbucket"]
+						"scopes": ["read:project:bitbucket"]
 					}
 				]
 			},
@@ -24560,13 +24995,6 @@
 						}
 					}
 				},
-				"x-atlassian-oauth2-scopes": [
-					{
-						"state": "Current",
-						"scheme": "oauth2",
-						"scopes": ["read:repository:bitbucket"]
-					}
-				],
 				"security": [
 					{
 						"oauth2": ["repository"]
@@ -24576,6 +25004,13 @@
 					},
 					{
 						"api_key": []
+					}
+				],
+				"x-atlassian-oauth2-scopes": [
+					{
+						"state": "Current",
+						"scheme": "oauth2",
+						"scopes": ["read:repository:bitbucket"]
 					}
 				]
 			}
@@ -24611,6 +25046,10 @@
 			"description": "Access the list of download links associated with the repository."
 		},
 		{
+			"name": "GPG",
+			"description": "The GPG resource allows you to manage GPG keys.\n"
+		},
+		{
 			"name": "Issue tracker",
 			"description": "The issue resources provide functionality for getting information on\nissues in an issue tracker, creating new issues, updating them and deleting\nthem.\n\nYou can access public issues without authentication, but you can't gain access\nto private repositories' issues. By authenticating, you will get the ability\nto create issues, as well as access to updating data or deleting issues you\nhave access to. Issue Tracker features are not supported for repositories in workspaces administered through admin.atlassian.com.\n"
 		},
@@ -24639,16 +25078,16 @@
 			"description": "A Git repository is a virtual storage of your project. It\nallows you to save versions of your code, which you can access\nwhen needed. The repo resource allows you to access public repos,\nor repos that belong to a specific workspace.\n"
 		},
 		{
+			"name": "SSH",
+			"description": "The SSH resource allows you to manage SSH keys.\n"
+		},
+		{
 			"name": "Snippets",
 			"description": "Snippets allow you share code segments or files with yourself, members of\nyour workspace, or the world.\n\nLike pull requests, repositories and workspaces, the full set of snippets\nis defined by what the current user has access to. This includes all\nsnippets owned by any of the workspaces the user is a member of, or\nsnippets by other users that the current user is either watching or has\n collaborated on (for instance by commenting on it).\n"
 		},
 		{
 			"name": "Source",
 			"description": "Browse the source code in the repository and\n                              create new commits by uploading."
-		},
-		{
-			"name": "Ssh",
-			"description": "The SSH resource allows you to manage SSH keys.\n"
 		},
 		{
 			"name": "Teams",
@@ -24671,7 +25110,7 @@
 			"description": "A workspace is where you create repositories, collaborate on\nyour code, and organize different streams of work in your Bitbucket\nCloud account. Workspaces replace the use of teams and users in API\ncalls.\n"
 		}
 	],
-	"x-revision": "6e8ad69baf7f",
+	"x-revision": "541f4db5487d",
 	"x-atlassian-narrative": {
 		"documents": [
 			{
@@ -24679,7 +25118,7 @@
 				"title": "Authentication methods",
 				"description": "How to authenticate API actions",
 				"icon": "data:image/svg+xml;base64,b'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTcuNjQ3MyAxODYuODEzOCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgaXNvbGF0aW9uOiBpc29sYXRlOwogICAgICB9CgogICAgICAuY2xzLTIgewogICAgICAgIGZpbGw6ICNkZTM1MGI7CiAgICAgIH0KCiAgICAgIC5jbHMtMyB7CiAgICAgICAgZmlsbDogI2ZmNTYzMDsKICAgICAgfQoKICAgICAgLmNscy00IHsKICAgICAgICBmaWxsOiAjZGZlMWU1OwogICAgICAgIG1peC1ibGVuZC1tb2RlOiBtdWx0aXBseTsKICAgICAgfQoKICAgICAgLmNscy01IHsKICAgICAgICBmaWxsOiAjZmFmYmZjOwogICAgICB9CgogICAgICAuY2xzLTYgewogICAgICAgIGZpbGw6ICNlYmVjZjA7CiAgICAgIH0KCiAgICAgIC5jbHMtNyB7CiAgICAgICAgZmlsbDogbm9uZTsKICAgICAgICBzdHJva2U6ICMwMDY1ZmY7CiAgICAgICAgc3Ryb2tlLW1pdGVybGltaXQ6IDEwOwogICAgICAgIHN0cm9rZS13aWR0aDogMnB4OwogICAgICB9CgogICAgICAuY2xzLTggewogICAgICAgIGZpbGw6ICM1ZTZjODQ7CiAgICAgIH0KCiAgICAgIC5jbHMtOSB7CiAgICAgICAgZmlsbDogIzI1Mzg1ODsKICAgICAgfQoKICAgICAgLmNscy0xMCB7CiAgICAgICAgZmlsbDogIzI2ODRmZjsKICAgICAgfQoKICAgICAgLmNscy0xMSB7CiAgICAgICAgZmlsbDogIzAwNjVmZjsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPHRpdGxlPlNlY3VyaXR5IHdpdGggS2V5PC90aXRsZT4KICA8ZyBjbGFzcz0iY2xzLTEiPgogICAgPGcgaWQ9IkxheWVyXzIiIGRhdGEtbmFtZT0iTGF5ZXIgMiI+CiAgICAgIDxnIGlkPSJPYmplY3RzIj4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik00Mi4wNjcyLDBoLjYxMTRhOCw4LDAsMCwxLDgsOFYyMy4yMzM4YTAsMCwwLDAsMSwwLDBIMzQuMDY3MmEwLDAsMCwwLDEsMCwwVjhBOCw4LDAsMCwxLDQyLjA2NzIsMFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMDguMjIsMGguNjExNGE4LDgsMCwwLDEsOCw4VjIzLjIzMzhhMCwwLDAsMCwxLDAsMEgxMDAuMjJhMCwwLDAsMCwxLDAsMFY4QTgsOCwwLDAsMSwxMDguMjIsMFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xNzQuMzcyMiwwaC42MTE0YTgsOCwwLDAsMSw4LDhWMjMuMjMzOGEwLDAsMCwwLDEsMCwwSDE2Ni4zNzIyYTAsMCwwLDAsMSwwLDBWOEE4LDgsMCwwLDEsMTc0LjM3MjIsMFoiLz4KICAgICAgICA8cmVjdCBjbGFzcz0iY2xzLTIiIHg9IjM0LjA2NzIiIHk9IjIzLjIzMzgiIHdpZHRoPSIxNjMuNTgiIGhlaWdodD0iMTYzLjU4Ii8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNDIuMDY3MiwwSDU5LjI5YTgsOCwwLDAsMSw4LDhWMjMuMjIyOGEwLDAsMCwwLDEsMCwwSDM0LjA2NzJhMCwwLDAsMCwxLDAsMFY4YTgsOCwwLDAsMSw4LThaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTA3LjI0NTgsMGgxNy4yMjI4YTgsOCwwLDAsMSw4LDhWMjMuMjIyOGEwLDAsMCwwLDEsMCwwSDk5LjI0NThhMCwwLDAsMCwxLDAsMFY4YTgsOCwwLDAsMSw4LThaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTcyLjQyNDQsMGgxNy4yMjI4YTgsOCwwLDAsMSw4LDhWMjMuMjIyOGEwLDAsMCwwLDEsMCwwSDE2NC40MjQ0YTAsMCwwLDAsMSwwLDBWOGE4LDgsMCwwLDEsOC04WiIvPgogICAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMyIgeD0iMTcuNDU1OCIgeT0iMjMuMjMzOCIgd2lkdGg9IjE2My41OCIgaGVpZ2h0PSIxNjMuNTgiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0yNS40NTU4LDBINDIuNjc4NmE4LDgsMCwwLDEsOCw4VjIzLjIyMjhhMCwwLDAsMCwxLDAsMEgxNy40NTU4YTAsMCwwLDAsMSwwLDBWOEE4LDgsMCwwLDEsMjUuNDU1OCwwWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTkwLjYzNDQsMGgxNy4yMjI4YTgsOCwwLDAsMSw4LDhWMjMuMjIyOGEwLDAsMCwwLDEsMCwwSDgyLjYzNDRhMCwwLDAsMCwxLDAsMFY4QTgsOCwwLDAsMSw5MC42MzQ0LDBaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0zIiBkPSJNMTU1LjgxMywwaDE3LjIyMjhhOCw4LDAsMCwxLDgsOFYyMy4yMjI4YTAsMCwwLDAsMSwwLDBIMTQ3LjgxM2EwLDAsMCwwLDEsMCwwVjhBOCw4LDAsMCwxLDE1NS44MTMsMFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0yNS40NTU4LDBINDIuNjc4NmE4LDgsMCwwLDEsOCw4VjIzLjIyMjhhMCwwLDAsMCwxLDAsMEgxNy40NTU4YTAsMCwwLDAsMSwwLDBWOEE4LDgsMCwwLDEsMjUuNDU1OCwwWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTkwLjYzNDQsMGgxNy4yMjI4YTgsOCwwLDAsMSw4LDhWMjMuMjIyOGEwLDAsMCwwLDEsMCwwSDgyLjYzNDRhMCwwLDAsMCwxLDAsMFY4QTgsOCwwLDAsMSw5MC42MzQ0LDBaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0zIiBkPSJNMTU1LjgxMywwaDE3LjIyMjhhOCw4LDAsMCwxLDgsOFYyMy4yMjI4YTAsMCwwLDAsMSwwLDBIMTQ3LjgxM2EwLDAsMCwwLDEsMCwwVjhBOCw4LDAsMCwxLDE1NS44MTMsMFoiLz4KICAgICAgICA8cmVjdCBjbGFzcz0iY2xzLTIiIHg9IjM1Ljc1OTYiIHk9IjU2LjgwNjUiIHdpZHRoPSIzMy4yMjI4IiBoZWlnaHQ9IjE1LjYwMzgiLz4KICAgICAgICA8cmVjdCBjbGFzcz0iY2xzLTIiIHg9IjEzMS4yMDE2IiB5PSIxMzYuOTYxNSIgd2lkdGg9IjMzLjIyMjgiIGhlaWdodD0iMTUuNjAzOCIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNCIgZD0iTTU3LjM3MDksNzEuNjAzNmg3MC43NWE5LDksMCwwLDEsOSw5djM1LjM3NDlhNDQuMzc0OCw0NC4zNzQ4LDAsMCwxLTQ0LjM3NDgsNDQuMzc0OGgwYTQ0LjM3NDgsNDQuMzc0OCwwLDAsMS00NC4zNzQ4LTQ0LjM3NDhWODAuNjAzNkE5LDksMCwwLDEsNTcuMzcwOSw3MS42MDM2WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNSIgZD0iTTY2LjM3MSw2Ni42NjE3aDcwLjc1YTksOSwwLDAsMSw5LDl2MzUuMzc0OWE0NC4zNzQ4LDQ0LjM3NDgsMCwwLDEtNDQuMzc0OCw0NC4zNzQ4aDBBNDQuMzc0OCw0NC4zNzQ4LDAsMCwxLDU3LjM3MSwxMTEuMDM2NlY3NS42NjE3YTksOSwwLDAsMSw5LTlaIi8+CiAgICAgICAgPHBhdGggaWQ9Il9SZWN0YW5nbGVfIiBkYXRhLW5hbWU9IiZsdDtSZWN0YW5nbGUmZ3Q7IiBjbGFzcz0iY2xzLTYiIGQ9Ik02MS4zNzEsNjYuNjYxN2g3MC43NWE5LDksMCwwLDEsOSw5djM1LjM3NDlhNDQuMzc0OCw0NC4zNzQ4LDAsMCwxLTQ0LjM3NDgsNDQuMzc0OGgwQTQ0LjM3NDgsNDQuMzc0OCwwLDAsMSw1Mi4zNzEsMTExLjAzNjZWNzUuNjYxN0E5LDksMCwwLDEsNjEuMzcxLDY2LjY2MTdaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy03IiBkPSJNOTYuNzQ1OSwxNDcuNzQ0MWEzNi43NDg3LDM2Ljc0ODcsMCwwLDEtMzYuNzA3NC0zNi43MDc0Vjc4LjA1ODRhMy43MzMzLDMuNzMzMywwLDAsMSwzLjcyOS0zLjcyOWg2NS45NTYzYTMuNzMzMywzLjczMzMsMCwwLDEsMy43MjksMy43Mjl2MzIuOTc4NEEzNi43NDg2LDM2Ljc0ODYsMCwwLDEsOTYuNzQ1OSwxNDcuNzQ0MVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0xMDAuNjg5MywxNjMuMzE2N1YxMTEuMDk3M2EzLjk0NDMsMy45NDQzLDAsMCwwLTcuODg4NywwdjUyLjIyYTIyLjUyNTIsMjIuNTI1MiwwLDAsMC0xOC41NDc5LDIyLjE0YzAsLjQ1Ni4wMTc4LjkwNzguMDQ0NywxLjM1NzFIODIuMjFjLS4wNDE0LS40NDc0LS4wNjg4LS44OTktLjA2ODgtMS4zNTcxYTE0LjYyLDE0LjYyLDAsMCwxLDE0LjU5NzQtMTQuNjA0MWwuMDA2MS4wMDA2LjAwNjgtLjAwMDdBMTQuNjIxMSwxNC42MjExLDAsMCwxLDExMS4zNSwxODUuNDU2NmMwLC40NTgxLS4wMjczLjkxLS4wNjg4LDEuMzU3MWg3LjkxMjhjLjAyNjktLjQ0OTMuMDQ0Ny0uOTAxMS4wNDQ3LTEuMzU3MUEyMi41MjU5LDIyLjUyNTksMCwwLDAsMTAwLjY4OTMsMTYzLjMxNjdaIi8+CiAgICAgICAgPHJlY3QgY2xhc3M9ImNscy0yIiB4PSIxNy40NTU4IiB5PSIzNi40NzAyIiB3aWR0aD0iMzMuMjIyOCIgaGVpZ2h0PSIxNS42MDM4Ii8+CiAgICAgICAgPHJlY3QgY2xhc3M9ImNscy0yIiB4PSIxNy40NTU4IiB5PSIxNTguMTIxNyIgd2lkdGg9IjMzLjIyMjgiIGhlaWdodD0iMTUuNjAzOCIvPgogICAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMiIgeD0iMTQ3LjgxMyIgeT0iMzYuNDcwMiIgd2lkdGg9IjMzLjIyMjgiIGhlaWdodD0iMTUuNjAzOCIvPgogICAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMiIgeD0iMTUwLjA2NDMiIHk9IjE1Ny41NTEzIiB3aWR0aD0iMzMuMjIyOCIgaGVpZ2h0PSIxNS42MDM4Ii8+CiAgICAgICAgPHBhdGggaWQ9Il9QYXRoXyIgZGF0YS1uYW1lPSImbHQ7UGF0aCZndDsiIGNsYXNzPSJjbHMtOCIgZD0iTTEwNy41MjU0LDEwMS4wMDI3YTExLjc3OTQsMTEuNzc5NCwwLDEsMC0xOS44Niw4LjU1NDhBNC4wNDE3LDQuMDQxNywwLDAsMSw4OC44NSwxMTMuNjJsLTIuMTA0LDcuMjY4MWEzLDMsMCwwLDAsMi44ODE3LDMuODM0MmgxMi4yMzcxYTMsMywwLDAsMCwyLjg4MTctMy44MzQybC0yLjA5NTktNy4yNGE0LjA3NDMsNC4wNzQzLDAsMCwxLDEuMTgwOC00LjA5NDVBMTEuNzE3MiwxMS43MTcyLDAsMCwwLDEwNy41MjU0LDEwMS4wMDI3WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtOSIgZD0iTTEwNC43NDYxLDEyMC44ODc3bC0yLjA5NTktNy4yNGE0LjA3NDQsNC4wNzQ0LDAsMCwxLDEuMTgwOC00LjA5NDUsMTEuNzYyOSwxMS43NjI5LDAsMCwwLTUuMDYtMTkuOTMxMywxMS45MSwxMS45MSwwLDAsMC04Ljc5OCwxMC45OTQ5LDExLjcxODUsMTEuNzE4NSwwLDAsMCwzLjY5MjksOC45NDFBNC4wNDE2LDQuMDQxNiwwLDAsMSw5NC44NSwxMTMuNjJsLTMuMjE0LDExLjEwMjNoMTAuMjI4OEEzLDMsMCwwLDAsMTA0Ljc0NjEsMTIwLjg4NzdaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xMCIgZD0iTTgxLjc5NzUsMTAwLjMxYTMuOTQzOSwzLjk0MzksMCwwLDAtMy45NDQzLTMuOTQ0M0g0MS4wNDE3YTMuOTQ0MywzLjk0NDMsMCwwLDAsMCw3Ljg4ODdINzcuODUzMkEzLjk0MzksMy45NDM5LDAsMCwwLDgxLjc5NzUsMTAwLjMxWiIvPgogICAgICAgIDxwYXRoIGlkPSJfUGF0aF8yIiBkYXRhLW5hbWU9IiZsdDtQYXRoJmd0OyIgY2xhc3M9ImNscy0xMSIgZD0iTTQxLjA0MTYsMTA0LjI1MzlIOTYuODUzMmEzLjk0NDMsMy45NDQzLDAsMCwwLDAtNy44ODg3SDQxLjA0MTZhMy45NDQzLDMuOTQ0MywwLDAsMCwwLDcuODg4N1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEwIiBkPSJNODEuNzk3NSwxMDAuMzFhMy45NDM5LDMuOTQzOSwwLDAsMC0zLjk0NDMtMy45NDQzSDQxLjA0MTdhMy45NDQzLDMuOTQ0MywwLDAsMCwwLDcuODg4N0g3Ny44NTMyQTMuOTQzOSwzLjk0MzksMCwwLDAsODEuNzk3NSwxMDAuMzFaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xMCIgZD0iTTIyLjQ5MzIsMTIyLjgwMjlBMjIuNDkyOSwyMi40OTI5LDAsMSwxLDQ0Ljk4NTgsMTAwLjMxLDIyLjUxODUsMjIuNTE4NSwwLDAsMSwyMi40OTMyLDEyMi44MDI5Wm0wLTM3LjA5NzJBMTQuNjA0MiwxNC42MDQyLDAsMSwwLDM3LjA5NzIsMTAwLjMxLDE0LjYyMDcsMTQuNjIwNywwLDAsMCwyMi40OTMyLDg1LjcwNTdaIi8+CiAgICAgIDwvZz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPgo='",
-				"body": "\nThe purpose of this section is to describe how to authenticate when making API calls using the Bitbucket REST API.\n\n-----\n\n* [Basic auth](#basic-auth)\n* [Access Tokens](#access-tokens)\n  * [Repository Access Tokens](#repository-access-tokens)\n  * [Project Access Tokens](#project-access-tokens)\n  * [Workspace Access Tokens](#workspace-access-tokens)\n* [App passwords](#app-passwords)\n* [OAuth 2.0](#oauth-2-0)\n  * [Making requests](#making-requests)\n  * [Repository cloning](#repository-cloning)\n  * [Refresh tokens](#refresh-tokens)\n* [Bitbucket OAuth 2.0 Scopes](#bitbucket-oauth-2-0-scopes)\n* [Forge App Scopes](#forge-app-scopes)\n\n---\n\n### Basic auth\n\nBasic HTTP Authentication as per [RFC-2617](https://tools.ietf.org/html/rfc2617) (Digest not supported).\nNote that Basic Auth is available only with username and [app password](https://bitbucket.org/account/settings/app-passwords/) as credentials.\n\n### Access Tokens\n\nAccess Tokens are passwords (or tokens) that provide access to a _single_ repository, project or workspace.\nThese tokens can authenticate with Bitbucket APIs for scripting, CI/CD tools, Bitbucket Cloud-connected apps,\nand Bitbucket Cloud integrations.\n\nAccess Tokens are linked to a repository, project, or workspace, not a user account.\nThe level of access provided by the token is set when a repository, or workspace admin creates it,\nby setting permission scopes.\n\nThere are three types of Access Token:\n\n* **Repository Access Tokens** can connect to a single repository, preventing them from accessing any other repositories or workspaces.\n* **Project Access Tokens** can connect to a single project, providing access to any repositories within the project.\n* **Workspace Access Tokens** can connect to a single workspace and have access to any projects and repositories within that workspace.\n\nWhen using Bitbucket APIs with an Access Token, the token will be treated as the \"user\" in the\nBitbucket UI and Bitbucket logs. This includes when using the Access Token to leave a comment on a pull request,\npush a commit, or merge a pull request. The Bitbucket UI and API responses will show the\nRepository/Project/Workspace Access Token as a user. The username shown in the Bitbucket UI is the Access\nToken _name_, and a custom icon is used to differentiate it from a regular user in the UI.\n\n#### Considerations for using Access Tokens\n\n* After creation, an Access Token can't be viewed or modified. The token's name, created date,\nlast accessed date, and scopes are visible on the repository, project, or workspace **Access Tokens** page.\n* Access Tokens can access a limited set of Bitbucket's permission scopes.\n* Provided you set the correct permission scopes, you can use an Access Token to clone (`repository`)\nand push (`repository:write`) code to the token's repository or the repositories the token can access.\n* You can't use an Access Token to log into the Bitbucket website.\n* Access Tokens don't require two-step verification.\n* You can set permission scopes (specific access rights) for each Access Token.\n* You can't use an Access Token to manipulate or query repository, project, or workspace permissions.\n* Access Tokens are not listed in any repository or workspace permission API response.\n* Access Tokens are deactivated when deleting the resource tied to it (a repository, project, or workspace).\nRepository Access Tokens are also revoked when transferring the repository to another workspace.\n* Any content created by the Access Token will persist after the Access Token has been revoked.\n* Access Tokens can interact with branch restriction APIs, but the token can't be configured as a user with merge access when using branch restrictions.\n\nThere are some APIs which are inaccessible for Access Tokens, these are:\n\n* [Add a repository deploy key](/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deploy-keys-post)\n* [Update a repository deploy key](/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deploy-keys-key-id-put)\n* [Delete a repository deploy key](/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deploy-keys-key-id-delete)\n\n#### Repository Access Tokens\n\nFor details on creating, managing, and using Repository Access Tokens, visit\n[Repository Access Tokens](https://support.atlassian.com/bitbucket-cloud/docs/repository-access-tokens/).\n\nThe available scopes for Repository Access Tokens are:\n\n- [`repository`](#repository)\n- [`repository:write`](#repository-write)\n- [`repository:admin`](#repository-admin)\n- [`repository:delete`](#repository-delete)\n- [`pullrequest`](#pullrequest)\n- [`pullrequest:write`](#pullrequest-write)\n- [`webhook`](#webhook)\n- [`pipeline`](#pipeline)\n- [`pipeline:write`](#pipeline-write)\n- [`pipeline:variable`](#pipeline-variable)\n- [`runner`](#runner)\n- [`runner:write`](#runner-write)\n\n#### Project Access Tokens\n\nFor details on creating, managing, and using Project Access Tokens, visit\n[Project Access Tokens](https://support.atlassian.com/bitbucket-cloud/docs/project-access-tokens/).\n\nThe available scopes for Project Access Tokens are:\n\n- [`project`](#project)\n- [`repository`](#repository)\n- [`repository:write`](#repository-write)\n- [`repository:admin`](#repository-admin)\n- [`repository:delete`](#repository-delete)\n- [`pullrequest`](#pullrequest)\n- [`pullrequest:write`](#pullrequest-write)\n- [`webhook`](#webhook)\n- [`pipeline`](#pipeline)\n- [`pipeline:write`](#pipeline-write)\n- [`pipeline:variable`](#pipeline-variable)\n- [`runner`](#runner)\n- [`runner:write`](#runner-write)\n\n#### Workspace Access Tokens\n\nFor details on creating, managing, and using Workspace Access Tokens, visit\n[Workspace Access Tokens](https://support.atlassian.com/bitbucket-cloud/docs/workspace-access-tokens/).\n\nThe available scopes for Workspace Access Tokens are:\n\n- [`project`](#project)\n- [`project:admin`](#project-admin)\n- [`repository`](#repository)\n- [`repository:write`](#repository-write)\n- [`repository:admin`](#repository-admin)\n- [`repository:delete`](#repository-delete)\n- [`pullrequest`](#pullrequest)\n- [`pullrequest:write`](#pullrequest-write)\n- [`webhook`](#webhook)\n- [`account`](#account)\n- [`pipeline`](#pipeline)\n- [`pipeline:write`](#pipeline-write)\n- [`pipeline:variable`](#pipeline-variable)\n- [`runner`](#runner)\n- [`runner:write`](#runner-write)\n\n### App passwords\n\nApp passwords allow users to make API calls to their Bitbucket account through apps such as Sourcetree.\n\nSome important points about app passwords:\n\n* You cannot view an app password or adjust permissions after you create the app password. Because app passwords are encrypted on our database and cannot be viewed by anyone. They are essentially designed to be disposable. If you need to change the scopes or lost the password just create a new one.\n* You cannot use them to log into your Bitbucket account.\n* You cannot use app passwords to manage team actions.\n\n    App passwords are tied to an individual account's credentials and should not be shared. If you're sharing your app password you're essentially giving direct, authenticated, access to everything that password has been scoped to do with the Bitbucket API's.\n\n* You can use them for API call authentication, even if you don't have two-step verification enabled.\n* You can set permission scopes (specific access rights) for each app password.\n\nFor details on creating, managing, and using App passwords, visit\n[App passwords](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/).\n\n### OAuth 2.0\n\nOur OAuth 2 implementation is merged in with our existing OAuth 1 in\nsuch a way that existing OAuth 1 consumers automatically become\nvalid OAuth 2 clients. The only thing you need to do is edit your\nexisting consumer and configure a callback URL.\n\nOnce that is in place, you'll have the following 2 URLs:\n\n    https://bitbucket.org/site/oauth2/authorize\n    https://bitbucket.org/site/oauth2/access_token\n\nFor obtaining access/bearer tokens, we support three of RFC-6749's grant\nflows, plus a custom Bitbucket flow for exchanging JWT tokens for access tokens.\nNote that Resource Owner Password Credentials Grant (4.3) is no longer supported.\n\n\n#### 1. Authorization Code Grant (4.1)\n\nThe full-blown 3-LO flow. Request authorization from the end user by\nsending their browser to:\n\n    https://bitbucket.org/site/oauth2/authorize?client_id={client_id}&response_type=code\n\nThe callback includes the `?code={}` query parameter that you can swap\nfor an access token:\n\n    $ curl -X POST -u \"client_id:secret\" \\\n      https://bitbucket.org/site/oauth2/access_token \\\n      -d grant_type=authorization_code -d code={code}\n\n\n#### 2. Implicit Grant (4.2)\n\nThis flow is useful for browser-based add-ons that operate without server-side backends.\n\nRequest the end user for authorization by directing the browser to:\n\n    https://bitbucket.org/site/oauth2/authorize?client_id={client_id}&response_type=token\n\nThat will redirect to your preconfigured callback URL with a fragment\ncontaining the access token\n(`#access_token={token}&token_type=bearer`) where your page's js can\npull it out of the URL.\n\n\n#### 3. Client Credentials Grant (4.4)\n\nSomewhat like our existing \"2-LO\" flow for OAuth 1. Obtain an access\ntoken that represents not an end user, but the owner of the\nclient/consumer:\n\n    $ curl -X POST -u \"client_id:secret\" \\\n      https://bitbucket.org/site/oauth2/access_token \\\n      -d grant_type=client_credentials\n\n\n#### 4. Bitbucket Cloud JWT Grant (urn:bitbucket:oauth2:jwt)\n\nIf your Atlassian Connect add-on uses JWT authentication, you can swap a\nJWT for an OAuth access token. The resulting access token represents the\naccount for which the add-on is installed.\n\nMake sure you send the JWT token in the Authorization request header\nusing the \"JWT\" scheme (case sensitive). Note that this custom scheme\nmakes this different from HTTP Basic Auth (and so you cannot use \"curl\n-u\").\n\n    $ curl -X POST -H \"Authorization: JWT {jwt_token}\" \\\n      https://bitbucket.org/site/oauth2/access_token \\\n      -d grant_type=urn:bitbucket:oauth2:jwt\n\n\n#### Making Requests\n\nOnce you have an access token, as per RFC-6750, you can use it in a request in any of\nthe following ways (in decreasing order of desirability):\n\n1. Send it in a request header: `Authorization: Bearer {access_token}`\n2. Include it in a (application/x-www-form-urlencoded) POST body as `access_token={access_token}`\n3. Put it in the query string of a non-POST: `?access_token={access_token}`\n\n\n#### Repository Cloning\n\nSince add-ons will not be able to upload their own SSH keys to clone\nwith, access tokens can be used as Basic HTTP Auth credentials to\nclone securely over HTTPS. This is much like GitHub, yet slightly\ndifferent:\n\n    $ git clone https://x-token-auth:{access_token}@bitbucket.org/user/repo.git\n\nThe literal string `x-token-auth` as a substitute for username is\nrequired (note the difference with GitHub where the actual token is in\nthe username field).\n\n\n#### Refresh Tokens\n\nOur access tokens expire in one hour. When this happens you'll get 401\nresponses.\n\nMost access tokens grant responses (Implicit and JWT excluded). Therefore, you should include a\nrefresh token that can then be used to generate a new access token,\nwithout the need for end user participation:\n\n    $ curl -X POST -u \"client_id:secret\" \\\n      https://bitbucket.org/site/oauth2/access_token \\\n      -d grant_type=refresh_token -d refresh_token={refresh_token}\n\n\n### Bitbucket OAuth 2.0 scopes\n\nBitbucket's API applies a number of privilege scopes to endpoints. In order to access an endpoint, a request will need to have the necessary scopes.\n\nOAuth 2.0 Scopes are applicable for OAuth 2, Access Tokens, and App passwords auth mechanisms as well as Bitbucket Connect apps.\n\nScopes are declared in the descriptor as a list of strings, with each string being the name of a unique scope.\n\nA descriptor lacking the `scopes` element is implicitly assumed to require all scopes and as a result, Bitbucket will require end users authorizing/installing the add-on\nto explicitly accept all scopes.\n\nOur best practice suggests you add only the scopes your add-on needs, but no more than it needs.\n\nInvalid scope strings will cause the descriptor to be rejected and the installation to fail.\n\nThe available scopes are:\n\n- [project](#project)\n- [project:write](#project-write)\n- [project:admin](#project-admin)\n- [repository](#repository)\n- [repository:write](#repository-write)\n- [repository:admin](#repository-admin)\n- [repository:delete](#repository-delete)\n- [pullrequest](#pullrequest)\n- [pullrequest:write](#pullrequest-write)\n- [issue](#issue)\n- [issue:write](#issue-write)\n- [wiki](#wiki)\n- [webhook](#webhook)\n- [snippet](#snippet)\n- [snippet:write](#snippet-write)\n- [email](#email)\n- [account](#account)\n- [account:write](#account-write)\n- [pipeline](#pipeline)\n- [pipeline:write](#pipeline-write)\n- [pipeline:variable](#pipeline-variable)\n- [runner](#runner)\n- [runner:write](#runner-write)\n\n#### project\n\nProvides access to view the project or projects.\nThis scope implies the [`repository`](#repository) scope, giving read access to all the repositories in a project or projects.\n\n#### project:write\n\nThis scope is deprecated, and has been made obsolete by `project:admin`. Please see the deprecation notice [here](/cloud/bitbucket/deprecation-notice-project-write-scope).\n\n#### project:admin\n\nProvides admin access to a project or projects. No distinction is made between public and private projects. This scope doesn't implicitly grant the [`project`](#project) scope or the [`repository:write`](#repository-write) scope on any repositories under the project. It gives access to the admin features of a project only, not direct access to its repositories' contents.\n\n* ability to create the project\n* ability to update the project\n* ability to delete the project\n\n#### repository\n\nProvides read access to a repository or repositories.\nNote that this scope does not give access to a repository's pull requests.\n\n* access to the repo's source code\n* clone over HTTPS\n* access the file browsing API\n* download zip archives of the repo's contents\n* the ability to view and use the issue tracker on any repo (created issues, comment, vote, etc)\n* the ability to view and use the wiki on any repo (create/edit pages)\n\n#### repository:write\n\nProvides write (not admin) access to a repository or repositories. No distinction is made between public and private repositories. This scope implicitly grants the [`repository`](#repository) scope, which does not need to be requested separately.\nThis scope alone does not give access to the pull requests API.\n\n* push access over HTTPS\n* fork repos\n\n#### repository:admin\n\nProvides admin access to a repository or repositories. No distinction is made between public and private repositories. This scope doesn't implicitly grant the [`repository`](#repository) or the [`repository:write`](#repository-write) scopes. It gives access to the admin features of a repo only, not direct access to its contents. This scope can be used or misused to grant read access to other users, who can then clone the repo, but users that need to read and write source code would also request explicit read or write.\nThis scope comes with access to the following functionality:\n\n* View and manipulate committer mappings\n* List and edit deploy keys\n* Ability to delete the repo\n* View and edit repo permissions\n* View and edit branch permissions\n* Import and export the issue tracker\n* Enable and disable the issue tracker\n* List and edit issue tracker version, milestones and components\n* Enable and disable the wiki\n* List and edit default reviewers\n* List and edit repo links (Jira/Bamboo/Custom)\n* List and edit the repository webhooks\n* Initiate a repo ownership transfer\n\n#### repository:delete\n\nProvides access to delete a repository or repositories.\n\n#### pullrequest\n\nProvides read access to pull requests.\nThis scope implies the [`repository`](#repository) scope, giving read access to the pull request's destination repository.\n\n* see and list pull requests\n* create and resolve tasks\n* comment on pull requests\n\n#### pullrequest:write\n\nImplicitly grants the [`pullrequest`](#pullrequest) scope and adds the ability to create, merge and decline pull requests.\nThis scope also implicitly grants the [`repository:write`](#repository-write) scope, giving write access to the pull request's destination repository. This is necessary to allow merging.\n\n* merge pull requests\n* decline pull requests\n* create pull requests\n* approve pull requests\n\n#### issue\n\nAbility to interact with issue trackers the way non-repo members can.\nThis scope doesn't implicitly grant any other scopes and doesn't give implicit access to the repository.\n\n* view, list and search issues\n* create new issues\n* comment on issues\n* watch issues\n* vote for issues\n\n#### issue:write\n\nThis scope implicitly grants the [`issue`](#issue) scope and adds the ability to transition and delete issues.\nThis scope doesn't implicitly grant any other scopes and doesn't give implicit access to the repository.\n\n* transition issues\n* delete issues\n\n#### wiki\n\nProvides access to wikis. This scope provides both read and write access (wikis are always editable by anyone with access to them).\nThis scope doesn't implicitly grant any other scopes and doesn't give implicit access to the repository.\n\n* view wikis\n* create pages\n* edit pages\n* push to wikis\n* clone wikis\n\n#### webhook\n\nGives access to webhooks. This scope is required for any webhook-related operation.\n\nThis scope gives read access to existing webhook subscriptions on all\nresources the authorization mechanism can access, without needing further scopes.\nFor example:\n\n- A client can list all existing webhook subscriptions on a repository. The [`repository`](#repository) scope is not required.\n- Existing webhook subscriptions for the issue tracker on a repo can be retrieved without the [`issue`](#issue) scope. All that is required is the `webhook` scope.\n\nTo create webhooks, the client will need read access to the resource. Such as: for [`issue:created`](#issue-created), the client will need to\nhave both the `webhook` and the [`issue`](#issue) scope.\n\n* list webhook subscriptions on any accessible repository, user, team, or snippet\n* create/update/delete webhook subscriptions.\n\n#### snippet\n\nProvides read access to snippets.\nNo distinction is made between public and private snippets (public snippets are accessible without any form of authentication).\n\n* view any snippet\n* create snippet comments\n\n#### snippet:write\n\nProvides write access to snippets.\nNo distinction is made between public and private snippets (public snippets are accessible without any form of authentication).\nThis scope implicitly grants the [`snippet`](#snippet) scope which does not need to be requested separately.\n\n* create snippets\n* edit snippets\n* delete snippets\n\n#### email\n\nAbility to see the user's primary email address. This should make it easier to use Bitbucket Cloud as a login provider for apps or external applications.\n\n#### account\n\nWhen used for:\n* **user-related APIs** — Gives read-only access to the user's account information.\nNote that this doesn't include any ability to change any of the data. This scope allows you to view the user's:\n  * email addresses\n  * language\n  * location\n  * website\n  * full name\n  * SSH keys\n  * user groups\n* **workspace-related APIs** — Grants access to view the workspace's:\n  * users\n  * user permissions\n  * projects\n\n#### account:write\n\nAbility to change properties on the user's account.\n\n* delete the authorizing user's account\n* manage the user's groups\n* change a user's email addresses\n* change username, display name and avatar\n\n#### pipeline\n\nGives read-only access to pipelines, steps, deployment environments and variables.\n\n#### pipeline:write\n\nGives write access to pipelines. This scope allows a user to:\n* Stop pipelines\n* Rerun failed pipelines\n* Resume halted pipelines\n* Trigger manual pipelines.\n\nThis scope is not needed to trigger a build using a push. Performing a `git push` (or equivalent actions) will trigger the build. The token doing the push only needs the [`repository:write`](#repository-write) scope.\n\nThis doesn't give write access to create variables.\n\n#### pipeline:variable\n\nGives write access to create variables in pipelines at the various levels:\n* Workspace\n* Repository\n* Deployment\n\n#### runner\n\nGives read-only access to pipelines runners setup against a workspace or repository.\n\n#### runner:write\n\nGives write access to create/edit/disable/delete pipelines runners setup against a workspace or repository.\n### Forge app scopes\n\nIn order for a Forge app integration to access Bitbucket API endpoints, it needs to include certain privilege scopes in the app manifest. These are different from Bitbucket OAuth 2.0 scopes.\n\nUnlike OAuth 2.0 scopes, Forge app scopes do not implicitly grant other scopes, for example, `write:repository:bitbucket` does not implicitly grant `read:repository:bitbucket`.\n\nOnly a subset of Bitbucket API endpoints are currently available for Forge app integrations. These will be labeled with Forge app scopes.\n\nOur best practice suggests you only add the scopes your app needs, but no more than it needs.\n\nThe available scopes are:\n\n- [`read:repository:bitbucket`](#read-repository-bitbucket)\n- [`write:repository:bitbucket`](#write-repository-bitbucket)\n- [`admin:repository:bitbucket`](#admin-repository-bitbucket)\n- [`delete:repository:bitbucket`](#delete-repository-bitbucket)\n- [`read:pullrequest:bitbucket`](#read-pullrequest-bitbucket)\n- [`write:pullrequest:bitbucket`](#write-pullrequest-bitbucket)\n- [`read:project:bitbucket`](#read-project-bitbucket)\n- [`admin:project:bitbucket`](#admin-project-bitbucket)\n- [`read:workspace:bitbucket`](#read-workspace-bitbucket)\n- [`read:user:bitbucket`](#read-user-bitbucket)\n- [`read:pipeline:bitbucket`](#read-pipeline-bitbucket)\n- [`write:pipeline:bitbucket`](#write-pipeline-bitbucket)\n- [`admin:pipeline:bitbucket`](#admin-pipeline-bitbucket)\n- [`read:runner:bitbucket`](#read-runner-bitbucket)\n- [`write:runner:bitbucket`](#write-runner-bitbucket)\n\n#### read:repository:bitbucket\n\nAllows viewing of repository data. Note that this scope does not give access to a repository's pull requests.\n* access to the repository's source code\n* access the file browsing API\n* access to certain repository configurations such as branching model, default reviewers, etc.\n\n#### write:repository:bitbucket\n\nAllows modification of repository data. No distinction is made between public and private repositories. This scope does not imply the `read:repository:bitbucket` scope, so you need to request that separately if required. This scope alone does not give access to the pull request API.\n* update/delete source, branches, tags, etc.\n* fork repositories\n\n#### admin:repository:bitbucket\n\nAllows admin activities on repositories. No distinction is made between public and private repositories. This scope does not implicitly grant the `read:repository:bitbucket` or the `write:repository:bitbucket` scopes. It gives access to the admin features of a repository only, not direct access to its contents. This scope does not allow modification of repository permissions. This scope comes with access to the following functionality:\n* create repository\n* view repository permissions\n* view and edit branch restrictions\n* edit branching model settings\n* edit default reviewers\n* view and edit inheritance state for repository settings\n\n#### delete:repository:bitbucket\nAllows deletion of repositories.\n\n#### read:pullrequest:bitbucket\nAllows viewing of pull requests, plus the ability to comment on pull requests.\n\nThis scope does not imply the `read:repository:bitbucket` scope. With this scope, you could retrieve some data specific to the source/destination repositories of a pull request using pull request endpoints, but it does not give access to repository API endpoints.\n\n#### write:pullrequest:bitbucket\nAllows the ability to create, update, approve, decline, and merge pull requests.\n\nThis scope does not imply the `write:repository:bitbucket` scope.\n\n#### read:project:bitbucket\nAllows viewing of project and project permission data.\n\n#### admin:project:bitbucket\nAllows the ability to create, update, and delete project. No distinction is made between public and private projects.\n\nThis scope does not implicitly grant the `read:project:bitbucket` scope or any repository scopes. It gives access to the admin features of a project only, not direct access to its repositories' contents.\n\n#### read:workspace:bitbucket\nAllows viewing of workspace and workspace permission data.\n\n#### read:user:bitbucket\nAllows viewing of user data. This scope is typically required for permission related endpoints.\n\n#### read:pipeline:bitbucket\nAllows read access to all pipeline information (pipelines, steps, caches, artifacts, logs, tests, code-insights).\n\n#### write:pipeline:bitbucket\nAllows running pipelines (i.e., start/stop/create pipeline) and uploading tests/code-insights.\n\nThis scope does not imply the `read:pipeline:bitbucket` scope.\n\n#### admin:pipeline:bitbucket\nAllows admin activities, such as creating pipeline variables.\n\nThis scope does not implicitly grant the `read:pipeline:bitbucket` or the `write:pipeline:bitbucket` scopes.\n\n#### read:runner:bitbucket\nAllows viewing of runners information.\n\n#### write:runner:bitbucket\nAllows runners management.\n\nThis scope does not imply the `read:runners:bitbucket` scope.\n"
+				"body": "\nThe purpose of this section is to describe how to authenticate when making API calls using the Bitbucket REST API.\n\n-----\n\n* [Basic auth](#basic-auth)\n* [Access Tokens](#access-tokens)\n  * [Repository Access Tokens](#repository-access-tokens)\n  * [Project Access Tokens](#project-access-tokens)\n  * [Workspace Access Tokens](#workspace-access-tokens)\n* [App passwords](#app-passwords)\n* [OAuth 2.0](#oauth-2-0)\n  * [Making requests](#making-requests)\n  * [Repository cloning](#repository-cloning)\n  * [Refresh tokens](#refresh-tokens)\n* [Bitbucket OAuth 2.0 Scopes](#bitbucket-oauth-2-0-scopes)\n* [Forge App Scopes](#forge-app-scopes)\n\n---\n\n### Basic auth\n\nBasic HTTP Authentication as per [RFC-2617](https://tools.ietf.org/html/rfc2617) (Digest not supported).\nNote that Basic Auth is available only with username and [app password](https://bitbucket.org/account/settings/app-passwords/) as credentials.\n\n### Access Tokens\n\nAccess Tokens are passwords (or tokens) that provide access to a _single_ repository, project or workspace.\nThese tokens can authenticate with Bitbucket APIs for scripting, CI/CD tools, Bitbucket Cloud-connected apps,\nand Bitbucket Cloud integrations.\n\nAccess Tokens are linked to a repository, project, or workspace, not a user account.\nThe level of access provided by the token is set when a repository, or workspace admin creates it,\nby setting permission scopes.\n\nThere are three types of Access Token:\n\n* **Repository Access Tokens** can connect to a single repository, preventing them from accessing any other repositories or workspaces.\n* **Project Access Tokens** can connect to a single project, providing access to any repositories within the project.\n* **Workspace Access Tokens** can connect to a single workspace and have access to any projects and repositories within that workspace.\n\nWhen using Bitbucket APIs with an Access Token, the token will be treated as the \"user\" in the\nBitbucket UI and Bitbucket logs. This includes when using the Access Token to leave a comment on a pull request,\npush a commit, or merge a pull request. The Bitbucket UI and API responses will show the\nRepository/Project/Workspace Access Token as a user. The username shown in the Bitbucket UI is the Access\nToken _name_, and a custom icon is used to differentiate it from a regular user in the UI.\n\n#### Considerations for using Access Tokens\n\n* After creation, an Access Token can't be viewed or modified. The token's name, created date,\nlast accessed date, and scopes are visible on the repository, project, or workspace **Access Tokens** page.\n* Access Tokens can access a limited set of Bitbucket's permission scopes.\n* Provided you set the correct permission scopes, you can use an Access Token to clone (`repository`)\nand push (`repository:write`) code to the token's repository or the repositories the token can access.\n* You can't use an Access Token to log into the Bitbucket website.\n* Access Tokens don't require two-step verification.\n* You can set permission scopes (specific access rights) for each Access Token.\n* You can't use an Access Token to manipulate or query repository, project, or workspace permissions.\n* Access Tokens are not listed in any repository or workspace permission API response.\n* Access Tokens are deactivated when deleting the resource tied to it (a repository, project, or workspace).\nRepository Access Tokens are also revoked when transferring the repository to another workspace.\n* Any content created by the Access Token will persist after the Access Token has been revoked.\n* Access Tokens can interact with branch restriction APIs, but the token can't be configured as a user with merge access when using branch restrictions.\n\nThere are some APIs which are inaccessible for Access Tokens, these are:\n\n* [Add a repository deploy key](/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deploy-keys-post)\n* [Update a repository deploy key](/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deploy-keys-key-id-put)\n* [Delete a repository deploy key](/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deploy-keys-key-id-delete)\n\n#### Repository Access Tokens\n\nFor details on creating, managing, and using Repository Access Tokens, visit\n[Repository Access Tokens](https://support.atlassian.com/bitbucket-cloud/docs/repository-access-tokens/).\n\nThe available scopes for Repository Access Tokens are:\n\n- [`repository`](#repository)\n- [`repository:write`](#repository-write)\n- [`repository:admin`](#repository-admin)\n- [`repository:delete`](#repository-delete)\n- [`pullrequest`](#pullrequest)\n- [`pullrequest:write`](#pullrequest-write)\n- [`webhook`](#webhook)\n- [`pipeline`](#pipeline)\n- [`pipeline:write`](#pipeline-write)\n- [`pipeline:variable`](#pipeline-variable)\n- [`runner`](#runner)\n- [`runner:write`](#runner-write)\n\n#### Project Access Tokens\n\nFor details on creating, managing, and using Project Access Tokens, visit\n[Project Access Tokens](https://support.atlassian.com/bitbucket-cloud/docs/project-access-tokens/).\n\nThe available scopes for Project Access Tokens are:\n\n- [`project`](#project)\n- [`repository`](#repository)\n- [`repository:write`](#repository-write)\n- [`repository:admin`](#repository-admin)\n- [`repository:delete`](#repository-delete)\n- [`pullrequest`](#pullrequest)\n- [`pullrequest:write`](#pullrequest-write)\n- [`webhook`](#webhook)\n- [`pipeline`](#pipeline)\n- [`pipeline:write`](#pipeline-write)\n- [`pipeline:variable`](#pipeline-variable)\n- [`runner`](#runner)\n- [`runner:write`](#runner-write)\n\n#### Workspace Access Tokens\n\nFor details on creating, managing, and using Workspace Access Tokens, visit\n[Workspace Access Tokens](https://support.atlassian.com/bitbucket-cloud/docs/workspace-access-tokens/).\n\nThe available scopes for Workspace Access Tokens are:\n\n- [`project`](#project)\n- [`project:admin`](#project-admin)\n- [`repository`](#repository)\n- [`repository:write`](#repository-write)\n- [`repository:admin`](#repository-admin)\n- [`repository:delete`](#repository-delete)\n- [`pullrequest`](#pullrequest)\n- [`pullrequest:write`](#pullrequest-write)\n- [`webhook`](#webhook)\n- [`account`](#account)\n- [`pipeline`](#pipeline)\n- [`pipeline:write`](#pipeline-write)\n- [`pipeline:variable`](#pipeline-variable)\n- [`runner`](#runner)\n- [`runner:write`](#runner-write)\n\n### App passwords\n\nApp passwords allow users to make API calls to their Bitbucket account through apps such as Sourcetree.\n\nSome important points about app passwords:\n\n* You cannot view an app password or adjust permissions after you create the app password. Because app passwords are encrypted on our database and cannot be viewed by anyone. They are essentially designed to be disposable. If you need to change the scopes or lost the password just create a new one.\n* You cannot use them to log into your Bitbucket account.\n* You cannot use app passwords to manage team actions.\n\n    App passwords are tied to an individual account's credentials and should not be shared. If you're sharing your app password you're essentially giving direct, authenticated, access to everything that password has been scoped to do with the Bitbucket API's.\n\n* You can use them for API call authentication, even if you don't have two-step verification enabled.\n* You can set permission scopes (specific access rights) for each app password.\n\nFor details on creating, managing, and using App passwords, visit\n[App passwords](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/).\n\n### OAuth 2.0\n\nOur OAuth 2 implementation is merged in with our existing OAuth 1 in\nsuch a way that existing OAuth 1 consumers automatically become\nvalid OAuth 2 clients. The only thing you need to do is edit your\nexisting consumer and configure a callback URL.\n\nOnce that is in place, you'll have the following 2 URLs:\n\n    https://bitbucket.org/site/oauth2/authorize\n    https://bitbucket.org/site/oauth2/access_token\n\nFor obtaining access/bearer tokens, we support three of RFC-6749's grant\nflows, plus a custom Bitbucket flow for exchanging JWT tokens for access tokens.\nNote that Resource Owner Password Credentials Grant (4.3) is no longer supported.\n\n\n#### 1. Authorization Code Grant (4.1)\n\nThe full-blown 3-LO flow. Request authorization from the end user by\nsending their browser to:\n\n    https://bitbucket.org/site/oauth2/authorize?client_id={client_id}&response_type=code\n\nThe callback includes the `?code={}` query parameter that you can swap\nfor an access token:\n\n    $ curl -X POST -u \"client_id:secret\" \\\n      https://bitbucket.org/site/oauth2/access_token \\\n      -d grant_type=authorization_code -d code={code}\n\n\n#### 2. Implicit Grant (4.2)\n\nThis flow is useful for browser-based add-ons that operate without server-side backends.\n\nRequest the end user for authorization by directing the browser to:\n\n    https://bitbucket.org/site/oauth2/authorize?client_id={client_id}&response_type=token\n\nThat will redirect to your preconfigured callback URL with a fragment\ncontaining the access token\n(`#access_token={token}&token_type=bearer`) where your page's js can\npull it out of the URL.\n\n\n#### 3. Client Credentials Grant (4.4)\n\nSomewhat like our existing \"2-LO\" flow for OAuth 1. Obtain an access\ntoken that represents not an end user, but the owner of the\nclient/consumer:\n\n    $ curl -X POST -u \"client_id:secret\" \\\n      https://bitbucket.org/site/oauth2/access_token \\\n      -d grant_type=client_credentials\n\n\n#### 4. Bitbucket Cloud JWT Grant (urn:bitbucket:oauth2:jwt)\n\nIf your Atlassian Connect add-on uses JWT authentication, you can swap a\nJWT for an OAuth access token. The resulting access token represents the\naccount for which the add-on is installed.\n\nMake sure you send the JWT token in the Authorization request header\nusing the \"JWT\" scheme (case sensitive). Note that this custom scheme\nmakes this different from HTTP Basic Auth (and so you cannot use \"curl\n-u\").\n\n    $ curl -X POST -H \"Authorization: JWT {jwt_token}\" \\\n      https://bitbucket.org/site/oauth2/access_token \\\n      -d grant_type=urn:bitbucket:oauth2:jwt\n\n\n#### Making Requests\n\nOnce you have an access token, as per RFC-6750, you can use it in a request in any of\nthe following ways (in decreasing order of desirability):\n\n1. Send it in a request header: `Authorization: Bearer {access_token}`\n2. Include it in a (application/x-www-form-urlencoded) POST body as `access_token={access_token}`\n3. Put it in the query string of a non-POST: `?access_token={access_token}`\n\n\n#### Repository Cloning\n\nSince add-ons will not be able to upload their own SSH keys to clone\nwith, access tokens can be used as Basic HTTP Auth credentials to\nclone securely over HTTPS. This is much like GitHub, yet slightly\ndifferent:\n\n    $ git clone https://x-token-auth:{access_token}@bitbucket.org/user/repo.git\n\nThe literal string `x-token-auth` as a substitute for username is\nrequired (note the difference with GitHub where the actual token is in\nthe username field).\n\n\n#### Refresh Tokens\n\nOur access tokens expire in one hour. When this happens you'll get 401\nresponses.\n\nMost access tokens grant responses (Implicit and JWT excluded). Therefore, you should include a\nrefresh token that can then be used to generate a new access token,\nwithout the need for end user participation:\n\n    $ curl -X POST -u \"client_id:secret\" \\\n      https://bitbucket.org/site/oauth2/access_token \\\n      -d grant_type=refresh_token -d refresh_token={refresh_token}\n\n\n### Bitbucket OAuth 2.0 scopes\n\nBitbucket's API applies a number of privilege scopes to endpoints. In order to access an endpoint, a request will need to have the necessary scopes.\n\nOAuth 2.0 Scopes are applicable for OAuth 2, Access Tokens, and App passwords auth mechanisms as well as Bitbucket Connect apps.\n\nScopes are declared in the descriptor as a list of strings, with each string being the name of a unique scope.\n\nA descriptor lacking the `scopes` element is implicitly assumed to require all scopes and as a result, Bitbucket will require end users authorizing/installing the add-on\nto explicitly accept all scopes.\n\nOur best practice suggests you add only the scopes your add-on needs, but no more than it needs.\n\nInvalid scope strings will cause the descriptor to be rejected and the installation to fail.\n\nThe available scopes are:\n\n- [project](#project)\n- [project:write](#project-write)\n- [project:admin](#project-admin)\n- [repository](#repository)\n- [repository:write](#repository-write)\n- [repository:admin](#repository-admin)\n- [repository:delete](#repository-delete)\n- [pullrequest](#pullrequest)\n- [pullrequest:write](#pullrequest-write)\n- [issue](#issue)\n- [issue:write](#issue-write)\n- [wiki](#wiki)\n- [webhook](#webhook)\n- [snippet](#snippet)\n- [snippet:write](#snippet-write)\n- [email](#email)\n- [account](#account)\n- [account:write](#account-write)\n- [pipeline](#pipeline)\n- [pipeline:write](#pipeline-write)\n- [pipeline:variable](#pipeline-variable)\n- [runner](#runner)\n- [runner:write](#runner-write)\n\n#### project\n\nProvides access to view the project or projects.\nThis scope implies the [`repository`](#repository) scope, giving read access to all the repositories in a project or projects.\n\n#### project:write\n\nThis scope is deprecated, and has been made obsolete by `project:admin`. Please see the deprecation notice [here](/cloud/bitbucket/deprecation-notice-project-write-scope).\n\n#### project:admin\n\nProvides admin access to a project or projects. No distinction is made between public and private projects. This scope doesn't implicitly grant the [`project`](#project) scope or the [`repository:write`](#repository-write) scope on any repositories under the project. It gives access to the admin features of a project only, not direct access to its repositories' contents.\n\n* ability to create the project\n* ability to update the project\n* ability to delete the project\n\n#### repository\n\nProvides read access to a repository or repositories.\nNote that this scope does not give access to a repository's pull requests.\n\n* access to the repo's source code\n* clone over HTTPS\n* access the file browsing API\n* download zip archives of the repo's contents\n* the ability to view and use the issue tracker on any repo (created issues, comment, vote, etc)\n* the ability to view and use the wiki on any repo (create/edit pages)\n\n#### repository:write\n\nProvides write (not admin) access to a repository or repositories. No distinction is made between public and private repositories. This scope implicitly grants the [`repository`](#repository) scope, which does not need to be requested separately.\nThis scope alone does not give access to the pull requests API.\n\n* push access over HTTPS\n* fork repos\n\n#### repository:admin\n\nProvides admin access to a repository or repositories. No distinction is made between public and private repositories. This scope doesn't implicitly grant the [`repository`](#repository) or the [`repository:write`](#repository-write) scopes. It gives access to the admin features of a repo only, not direct access to its contents. This scope can be used or misused to grant read access to other users, who can then clone the repo, but users that need to read and write source code would also request explicit read or write.\nThis scope comes with access to the following functionality:\n\n* View and manipulate committer mappings\n* List and edit deploy keys\n* Ability to delete the repo\n* View and edit repo permissions\n* View and edit branch permissions\n* Import and export the issue tracker\n* Enable and disable the issue tracker\n* List and edit issue tracker version, milestones and components\n* Enable and disable the wiki\n* List and edit default reviewers\n* List and edit repo links (Jira/Bamboo/Custom)\n* List and edit the repository webhooks\n* Initiate a repo ownership transfer\n\n#### repository:delete\n\nProvides access to delete a repository or repositories.\n\n#### pullrequest\n\nProvides read access to pull requests.\nThis scope implies the [`repository`](#repository) scope, giving read access to the pull request's destination repository.\n\n* see and list pull requests\n* create and resolve tasks\n* comment on pull requests\n\n#### pullrequest:write\n\nImplicitly grants the [`pullrequest`](#pullrequest) scope and adds the ability to create, merge and decline pull requests.\nThis scope also implicitly grants the [`repository:write`](#repository-write) scope, giving write access to the pull request's destination repository. This is necessary to allow merging.\n\n* merge pull requests\n* decline pull requests\n* create pull requests\n* approve pull requests\n\n#### issue\n\nAbility to interact with issue trackers the way non-repo members can.\nThis scope doesn't implicitly grant any other scopes and doesn't give implicit access to the repository.\n\n* view, list and search issues\n* create new issues\n* comment on issues\n* watch issues\n* vote for issues\n\n#### issue:write\n\nThis scope implicitly grants the [`issue`](#issue) scope and adds the ability to transition and delete issues.\nThis scope doesn't implicitly grant any other scopes and doesn't give implicit access to the repository.\n\n* transition issues\n* delete issues\n\n#### wiki\n\nProvides access to wikis. This scope provides both read and write access (wikis are always editable by anyone with access to them).\nThis scope doesn't implicitly grant any other scopes and doesn't give implicit access to the repository.\n\n* view wikis\n* create pages\n* edit pages\n* push to wikis\n* clone wikis\n\n#### webhook\n\nGives access to webhooks. This scope is required for any webhook-related operation.\n\nThis scope gives read access to existing webhook subscriptions on all\nresources the authorization mechanism can access, without needing further scopes.\nFor example:\n\n- A client can list all existing webhook subscriptions on a repository. The [`repository`](#repository) scope is not required.\n- Existing webhook subscriptions for the issue tracker on a repo can be retrieved without the [`issue`](#issue) scope. All that is required is the `webhook` scope.\n\nTo create webhooks, the client will need read access to the resource. Such as: for [`issue:created`](#issue-created), the client will need to\nhave both the `webhook` and the [`issue`](#issue) scope.\n\n* list webhook subscriptions on any accessible repository, user, team, or snippet\n* create/update/delete webhook subscriptions.\n\n#### snippet\n\nProvides read access to snippets.\nNo distinction is made between public and private snippets (public snippets are accessible without any form of authentication).\n\n* view any snippet\n* create snippet comments\n\n#### snippet:write\n\nProvides write access to snippets.\nNo distinction is made between public and private snippets (public snippets are accessible without any form of authentication).\nThis scope implicitly grants the [`snippet`](#snippet) scope which does not need to be requested separately.\n\n* create snippets\n* edit snippets\n* delete snippets\n\n#### email\n\nAbility to see the user's primary email address. This should make it easier to use Bitbucket Cloud as a login provider for apps or external applications.\n\n#### account\n\nWhen used for:\n* **user-related APIs** — Gives read-only access to the user's account information.\nNote that this doesn't include any ability to change any of the data. This scope allows you to view the user's:\n  * email addresses\n  * language\n  * location\n  * website\n  * full name\n  * SSH keys\n  * user groups\n* **workspace-related APIs** — Grants access to view the workspace's:\n  * users\n  * user permissions\n  * projects\n\n#### account:write\n\nAbility to change properties on the user's account.\n\n* delete the authorizing user's account\n* manage the user's groups\n* change a user's email addresses\n* change username, display name and avatar\n\n#### pipeline\n\nGives read-only access to pipelines, steps, deployment environments and variables.\n\n#### pipeline:write\n\nGives write access to pipelines. This scope allows a user to:\n* Stop pipelines\n* Rerun failed pipelines\n* Resume halted pipelines\n* Trigger manual pipelines.\n\nThis scope is not needed to trigger a build using a push. Performing a `git push` (or equivalent actions) will trigger the build. The token doing the push only needs the [`repository:write`](#repository-write) scope.\n\nThis doesn't give write access to create variables.\n\n#### pipeline:variable\n\nGives write access to create variables in pipelines at the various levels:\n* Workspace\n* Repository\n* Deployment\n\n#### runner\n\nGives read-only access to pipelines runners setup against a workspace or repository.\n\n#### runner:write\n\nGives write access to create/edit/disable/delete pipelines runners setup against a workspace or repository.\n### Forge app scopes\n\nIn order for a Forge app integration to access Bitbucket API endpoints, it needs to include certain privilege scopes in the app manifest. These are different from Bitbucket OAuth 2.0 scopes.\n\nUnlike OAuth 2.0 scopes, Forge app scopes do not implicitly grant other scopes, for example, `write:repository:bitbucket` does not implicitly grant `read:repository:bitbucket`.\n\nOnly a subset of Bitbucket API endpoints are currently available for Forge app integrations. These will be labeled with Forge app scopes.\n\nOur best practice suggests you only add the scopes your app needs, but no more than it needs.\n\nThe available scopes are:\n\n- [`read:repository:bitbucket`](#read-repository-bitbucket)\n- [`write:repository:bitbucket`](#write-repository-bitbucket)\n- [`admin:repository:bitbucket`](#admin-repository-bitbucket)\n- [`delete:repository:bitbucket`](#delete-repository-bitbucket)\n- [`read:pullrequest:bitbucket`](#read-pullrequest-bitbucket)\n- [`write:pullrequest:bitbucket`](#write-pullrequest-bitbucket)\n- [`read:project:bitbucket`](#read-project-bitbucket)\n- [`admin:project:bitbucket`](#admin-project-bitbucket)\n- [`read:workspace:bitbucket`](#read-workspace-bitbucket)\n- [`read:user:bitbucket`](#read-user-bitbucket)\n- [`read:pipeline:bitbucket`](#read-pipeline-bitbucket)\n- [`write:pipeline:bitbucket`](#write-pipeline-bitbucket)\n- [`admin:pipeline:bitbucket`](#admin-pipeline-bitbucket)\n- [`read:runner:bitbucket`](#read-runner-bitbucket)\n- [`write:runner:bitbucket`](#write-runner-bitbucket)\n\n#### read:repository:bitbucket\n\nAllows viewing of repository data. Note that this scope does not give access to a repository's pull requests.\n* access to the repository's source code\n* access the file browsing API\n* access to certain repository configurations such as branching model, default reviewers, etc.\n\n#### write:repository:bitbucket\n\nAllows modification of repository data. No distinction is made between public and private repositories. This scope does not imply the `read:repository:bitbucket` scope, so you need to request that separately if required. This scope alone does not give access to the pull request API.\n* update/delete source, branches, tags, etc.\n* fork repositories\n\n#### admin:repository:bitbucket\n\nAllows admin activities on repositories. No distinction is made between public and private repositories. This scope does not implicitly grant the `read:repository:bitbucket` or the `write:repository:bitbucket` scopes. It gives access to the admin features of a repository only, not direct access to its contents. This scope does not allow modification of repository permissions. This scope comes with access to the following functionality:\n* create repository\n* view repository permissions\n* view and edit branch restrictions\n* edit branching model settings\n* edit default reviewers\n* view and edit inheritance state for repository settings\n\n#### delete:repository:bitbucket\nAllows deletion of repositories.\n\n#### read:pullrequest:bitbucket\nAllows viewing of pull requests, plus the ability to comment on pull requests.\n\nThis scope does not imply the `read:repository:bitbucket` scope. With this scope, you could retrieve some data specific to the source/destination repositories of a pull request using pull request endpoints, but it does not give access to repository API endpoints.\n\n#### write:pullrequest:bitbucket\nAllows the ability to create, update, approve, decline, and merge pull requests.\n\nThis scope does not imply the `write:repository:bitbucket` scope.\n\n#### read:project:bitbucket\nAllows viewing of project and project permission data.\n\n#### admin:project:bitbucket\nAllows the ability to create, update, and delete project. No distinction is made between public and private projects.\n\nThis scope does not implicitly grant the `read:project:bitbucket` scope or any repository scopes. It gives access to the admin features of a project only, not direct access to its repositories' contents.\n\n#### read:workspace:bitbucket\nAllows viewing of workspace and workspace permission data.\n\n#### read:user:bitbucket\nAllows viewing of data related to the current user.\n\n#### read:pipeline:bitbucket\nAllows read access to all pipeline information (pipelines, steps, caches, artifacts, logs, tests, code-insights).\n\n#### write:pipeline:bitbucket\nAllows running pipelines (i.e., start/stop/create pipeline) and uploading tests/code-insights.\n\nThis scope does not imply the `read:pipeline:bitbucket` scope.\n\n#### admin:pipeline:bitbucket\nAllows admin activities, such as creating pipeline variables.\n\nThis scope does not implicitly grant the `read:pipeline:bitbucket` or the `write:pipeline:bitbucket` scopes.\n\n#### read:runner:bitbucket\nAllows viewing of runners information.\n\n#### write:runner:bitbucket\nAllows runners management.\n\nThis scope does not imply the `read:runners:bitbucket` scope.\n"
 			},
 			{
 				"anchor": "filtering",
@@ -24865,6 +25304,21 @@
 			}
 		},
 		"schemas": {
+			"application_property": {
+				"additionalProperties": true,
+				"type": "object",
+				"title": "Application Property",
+				"description": "An application property. It is a caller defined JSON object that Bitbucket will store and return. \nThe `_attributes` field at its top level can be used to control who is allowed to read and update the property. \nThe keys of the JSON object must match an allowed pattern. For details, \nsee [Application properties](/cloud/bitbucket/application-properties/).\n",
+				"properties": {
+					"_attributes": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": ["public", "read_only"]
+						}
+					}
+				}
+			},
 			"deployment_environment": {
 				"allOf": [
 					{
@@ -25279,21 +25733,6 @@
 					}
 				}
 			},
-			"application_property": {
-				"additionalProperties": true,
-				"type": "object",
-				"title": "Application Property",
-				"description": "An application property. It is a caller defined JSON object that Bitbucket will store and return. \nThe `_attributes` field at its top level can be used to control who is allowed to read and update the property. \nThe keys of the JSON object must match an allowed pattern. For details, \nsee [Application properties](/cloud/bitbucket/application-properties/).\n",
-				"properties": {
-					"_attributes": {
-						"type": "array",
-						"items": {
-							"type": "string",
-							"enum": ["public", "read_only"]
-						}
-					}
-				}
-			},
 			"paginated_pullrequests": {
 				"type": "object",
 				"title": "Paginated Pull Requests",
@@ -25335,117 +25774,255 @@
 				},
 				"additionalProperties": false
 			},
-			"search_code_search_result": {
+			"report": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/object"
+					},
+					{
+						"additionalProperties": true,
+						"type": "object",
+						"title": "Commit Report",
+						"description": "A report for a commit.",
+						"properties": {
+							"uuid": {
+								"type": "string",
+								"description": "The UUID that can be used to identify the report."
+							},
+							"title": {
+								"type": "string",
+								"description": "The title of the report."
+							},
+							"details": {
+								"type": "string",
+								"description": "A string to describe the purpose of the report."
+							},
+							"external_id": {
+								"type": "string",
+								"description": "ID of the report provided by the report creator. It can be used to identify the report as an alternative to it's generated uuid. It is not used by Bitbucket, but only by the report creator for updating or deleting this specific report. Needs to be unique."
+							},
+							"reporter": {
+								"type": "string",
+								"description": "A string to describe the tool or company who created the report."
+							},
+							"link": {
+								"type": "string",
+								"format": "uri",
+								"description": "A URL linking to the results of the report in an external tool."
+							},
+							"remote_link_enabled": {
+								"type": "boolean",
+								"description": "If enabled, a remote link is created in Jira for the issue associated with the commit the report belongs to."
+							},
+							"logo_url": {
+								"type": "string",
+								"format": "uri",
+								"description": "A URL to the report logo. If none is provided, the default insights logo will be used."
+							},
+							"report_type": {
+								"enum": ["SECURITY", "COVERAGE", "TEST", "BUG"],
+								"type": "string",
+								"description": "The type of the report."
+							},
+							"result": {
+								"enum": ["PASSED", "FAILED", "PENDING"],
+								"type": "string",
+								"description": "The state of the report. May be set to PENDING and later updated."
+							},
+							"data": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/report_data"
+								},
+								"description": "An array of data fields to display information on the report. Maximum 10."
+							},
+							"created_on": {
+								"type": "string",
+								"format": "date-time",
+								"description": "The timestamp when the report was created."
+							},
+							"updated_on": {
+								"type": "string",
+								"format": "date-time",
+								"description": "The timestamp when the report was updated."
+							}
+						}
+					}
+				],
+				"x-bb-default-fields": ["uuid", "commitHash"],
+				"x-bb-url": "/rest/2.0/accounts/{target_user.uuid}/repositories/{repository.uuid}/commits/{commitHash}/reports/{uuid}"
+			},
+			"report_data": {
 				"type": "object",
+				"title": "Report Data",
+				"description": "A key-value element that will be displayed along with the report.",
 				"properties": {
 					"type": {
+						"enum": [
+							"BOOLEAN",
+							"DATE",
+							"DURATION",
+							"LINK",
+							"NUMBER",
+							"PERCENTAGE",
+							"TEXT"
+						],
 						"type": "string",
-						"readOnly": true
+						"description": "The type of data contained in the value field. If not provided, then the value will be detected as a boolean, number or string."
 					},
-					"content_match_count": {
-						"type": "integer",
-						"format": "int64",
-						"readOnly": true
+					"title": {
+						"type": "string",
+						"description": "A string describing what this data field represents."
 					},
-					"content_matches": {
-						"type": "array",
-						"readOnly": true,
-						"items": {
-							"$ref": "#/components/schemas/search_content_match"
-						}
-					},
-					"path_matches": {
-						"type": "array",
-						"readOnly": true,
-						"items": {
-							"$ref": "#/components/schemas/search_segment"
-						}
-					},
-					"file": {
-						"$ref": "#/components/schemas/commit_file"
+					"value": {
+						"type": "object",
+						"description": "The value of the data element."
 					}
 				}
 			},
-			"search_content_match": {
-				"type": "object",
-				"properties": {
-					"lines": {
-						"type": "array",
-						"readOnly": true,
-						"items": {
-							"$ref": "#/components/schemas/search_line"
+			"report_annotation": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/object"
+					},
+					{
+						"additionalProperties": true,
+						"type": "object",
+						"title": "Report Annotation",
+						"description": "A report for a commit.",
+						"properties": {
+							"external_id": {
+								"type": "string",
+								"description": "ID of the annotation provided by the annotation creator. It can be used to identify the annotation as an alternative to it's generated uuid. It is not used by Bitbucket, but only by the annotation creator for updating or deleting this specific annotation. Needs to be unique."
+							},
+							"uuid": {
+								"type": "string",
+								"description": "The UUID that can be used to identify the annotation."
+							},
+							"annotation_type": {
+								"enum": ["VULNERABILITY", "CODE_SMELL", "BUG"],
+								"type": "string",
+								"description": "The type of the report."
+							},
+							"path": {
+								"type": "string",
+								"description": "The path of the file on which this annotation should be placed. This is the path of the file relative to the git repository. If no path is provided, then it will appear in the overview modal on all pull requests where the tip of the branch is the given commit, regardless of which files were modified."
+							},
+							"line": {
+								"type": "integer",
+								"description": "The line number that the annotation should belong to. If no line number is provided, then it will default to 0 and in a pull request it will appear at the top of the file specified by the path field.",
+								"minimum": 1
+							},
+							"summary": {
+								"type": "string",
+								"description": "The message to display to users."
+							},
+							"details": {
+								"type": "string",
+								"description": "The details to show to users when clicking on the annotation."
+							},
+							"result": {
+								"enum": ["PASSED", "FAILED", "SKIPPED", "IGNORED"],
+								"type": "string",
+								"description": "The state of the report. May be set to PENDING and later updated."
+							},
+							"severity": {
+								"enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+								"type": "string",
+								"description": "The severity of the annotation."
+							},
+							"link": {
+								"type": "string",
+								"format": "uri",
+								"description": "A URL linking to the annotation in an external tool."
+							},
+							"created_on": {
+								"type": "string",
+								"format": "date-time",
+								"description": "The timestamp when the report was created."
+							},
+							"updated_on": {
+								"type": "string",
+								"format": "date-time",
+								"description": "The timestamp when the report was updated."
+							}
 						}
 					}
-				}
+				],
+				"x-bb-default-fields": ["uuid"],
+				"x-bb-url": "/rest/2.0/accounts/{target_user.uuid}/repositories/{repository.uuid}/commits/{commit.hash}/reports/{reportUuid}/annotations/{uuid}"
 			},
-			"search_line": {
+			"paginated_reports": {
 				"type": "object",
+				"title": "Paginated Reports",
+				"description": "A paginated list of reports.",
 				"properties": {
-					"line": {
-						"type": "integer",
-						"format": "int32",
-						"readOnly": true
-					},
-					"segments": {
-						"type": "array",
-						"readOnly": true,
-						"items": {
-							"$ref": "#/components/schemas/search_segment"
-						}
-					}
-				}
-			},
-			"search_result_page": {
-				"type": "object",
-				"properties": {
-					"size": {
-						"type": "integer",
-						"format": "int64",
-						"readOnly": true
-					},
 					"page": {
 						"type": "integer",
-						"format": "int32",
-						"readOnly": true
+						"description": "Page number of the current results. This is an optional element that is not provided in all responses."
+					},
+					"values": {
+						"type": "array",
+						"minItems": 0,
+						"items": {
+							"$ref": "#/components/schemas/report"
+						},
+						"description": "The values of the current page."
+					},
+					"size": {
+						"type": "integer",
+						"description": "Total number of objects in the response. This is an optional element that is not provided in all responses, as it can be expensive to compute."
 					},
 					"pagelen": {
 						"type": "integer",
-						"format": "int32",
-						"readOnly": true
-					},
-					"query_substituted": {
-						"type": "boolean",
-						"readOnly": true
+						"description": "Current number of objects on the existing page. The default value is 10 with 100 being the maximum allowed value. Individual APIs may enforce different values."
 					},
 					"next": {
 						"type": "string",
 						"format": "uri",
-						"readOnly": true
+						"description": "Link to the next page if it exists. The last page of a collection does not have this value. Use this link to navigate the result set and refrain from constructing your own URLs."
 					},
 					"previous": {
 						"type": "string",
 						"format": "uri",
-						"readOnly": true
-					},
-					"values": {
-						"type": "array",
-						"readOnly": true,
-						"items": {
-							"$ref": "#/components/schemas/search_code_search_result"
-						}
+						"description": "Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs."
 					}
 				}
 			},
-			"search_segment": {
+			"paginated_annotations": {
 				"type": "object",
+				"title": "Paginated Annotations",
+				"description": "A paginated list of annotations.",
 				"properties": {
-					"text": {
-						"type": "string",
-						"readOnly": true
+					"page": {
+						"type": "integer",
+						"description": "Page number of the current results. This is an optional element that is not provided in all responses."
 					},
-					"match": {
-						"type": "boolean",
-						"readOnly": true
+					"values": {
+						"type": "array",
+						"minItems": 0,
+						"items": {
+							"$ref": "#/components/schemas/report_annotation"
+						},
+						"description": "The values of the current page."
+					},
+					"size": {
+						"type": "integer",
+						"description": "Total number of objects in the response. This is an optional element that is not provided in all responses, as it can be expensive to compute."
+					},
+					"pagelen": {
+						"type": "integer",
+						"description": "Current number of objects on the existing page. The default value is 10 with 100 being the maximum allowed value. Individual APIs may enforce different values."
+					},
+					"next": {
+						"type": "string",
+						"format": "uri",
+						"description": "Link to the next page if it exists. The last page of a collection does not have this value. Use this link to navigate the result set and refrain from constructing your own URLs."
+					},
+					"previous": {
+						"type": "string",
+						"format": "uri",
+						"description": "Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs."
 					}
 				}
 			},
@@ -26933,255 +27510,117 @@
 				},
 				"required": ["source", "uri"]
 			},
-			"report": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/object"
-					},
-					{
-						"additionalProperties": true,
-						"type": "object",
-						"title": "Commit Report",
-						"description": "A report for a commit.",
-						"properties": {
-							"uuid": {
-								"type": "string",
-								"description": "The UUID that can be used to identify the report."
-							},
-							"title": {
-								"type": "string",
-								"description": "The title of the report."
-							},
-							"details": {
-								"type": "string",
-								"description": "A string to describe the purpose of the report."
-							},
-							"external_id": {
-								"type": "string",
-								"description": "ID of the report provided by the report creator. It can be used to identify the report as an alternative to it's generated uuid. It is not used by Bitbucket, but only by the report creator for updating or deleting this specific report. Needs to be unique."
-							},
-							"reporter": {
-								"type": "string",
-								"description": "A string to describe the tool or company who created the report."
-							},
-							"link": {
-								"type": "string",
-								"format": "uri",
-								"description": "A URL linking to the results of the report in an external tool."
-							},
-							"remote_link_enabled": {
-								"type": "boolean",
-								"description": "If enabled, a remote link is created in Jira for the issue associated with the commit the report belongs to."
-							},
-							"logo_url": {
-								"type": "string",
-								"format": "uri",
-								"description": "A URL to the report logo. If none is provided, the default insights logo will be used."
-							},
-							"report_type": {
-								"enum": ["SECURITY", "COVERAGE", "TEST", "BUG"],
-								"type": "string",
-								"description": "The type of the report."
-							},
-							"result": {
-								"enum": ["PASSED", "FAILED", "PENDING"],
-								"type": "string",
-								"description": "The state of the report. May be set to PENDING and later updated."
-							},
-							"data": {
-								"type": "array",
-								"items": {
-									"$ref": "#/components/schemas/report_data"
-								},
-								"description": "An array of data fields to display information on the report. Maximum 10."
-							},
-							"created_on": {
-								"type": "string",
-								"format": "date-time",
-								"description": "The timestamp when the report was created."
-							},
-							"updated_on": {
-								"type": "string",
-								"format": "date-time",
-								"description": "The timestamp when the report was updated."
-							}
-						}
-					}
-				],
-				"x-bb-default-fields": ["uuid", "commitHash"],
-				"x-bb-url": "/rest/2.0/accounts/{target_user.uuid}/repositories/{repository.uuid}/commits/{commitHash}/reports/{uuid}"
-			},
-			"report_data": {
+			"search_code_search_result": {
 				"type": "object",
-				"title": "Report Data",
-				"description": "A key-value element that will be displayed along with the report.",
 				"properties": {
 					"type": {
-						"enum": [
-							"BOOLEAN",
-							"DATE",
-							"DURATION",
-							"LINK",
-							"NUMBER",
-							"PERCENTAGE",
-							"TEXT"
-						],
 						"type": "string",
-						"description": "The type of data contained in the value field. If not provided, then the value will be detected as a boolean, number or string."
+						"readOnly": true
 					},
-					"title": {
-						"type": "string",
-						"description": "A string describing what this data field represents."
+					"content_match_count": {
+						"type": "integer",
+						"format": "int64",
+						"readOnly": true
 					},
-					"value": {
-						"type": "object",
-						"description": "The value of the data element."
+					"content_matches": {
+						"type": "array",
+						"readOnly": true,
+						"items": {
+							"$ref": "#/components/schemas/search_content_match"
+						}
+					},
+					"path_matches": {
+						"type": "array",
+						"readOnly": true,
+						"items": {
+							"$ref": "#/components/schemas/search_segment"
+						}
+					},
+					"file": {
+						"$ref": "#/components/schemas/commit_file"
 					}
 				}
 			},
-			"report_annotation": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/object"
-					},
-					{
-						"additionalProperties": true,
-						"type": "object",
-						"title": "Report Annotation",
-						"description": "A report for a commit.",
-						"properties": {
-							"external_id": {
-								"type": "string",
-								"description": "ID of the annotation provided by the annotation creator. It can be used to identify the annotation as an alternative to it's generated uuid. It is not used by Bitbucket, but only by the annotation creator for updating or deleting this specific annotation. Needs to be unique."
-							},
-							"uuid": {
-								"type": "string",
-								"description": "The UUID that can be used to identify the annotation."
-							},
-							"annotation_type": {
-								"enum": ["VULNERABILITY", "CODE_SMELL", "BUG"],
-								"type": "string",
-								"description": "The type of the report."
-							},
-							"path": {
-								"type": "string",
-								"description": "The path of the file on which this annotation should be placed. This is the path of the file relative to the git repository. If no path is provided, then it will appear in the overview modal on all pull requests where the tip of the branch is the given commit, regardless of which files were modified."
-							},
-							"line": {
-								"type": "integer",
-								"description": "The line number that the annotation should belong to. If no line number is provided, then it will default to 0 and in a pull request it will appear at the top of the file specified by the path field.",
-								"minimum": 1
-							},
-							"summary": {
-								"type": "string",
-								"description": "The message to display to users."
-							},
-							"details": {
-								"type": "string",
-								"description": "The details to show to users when clicking on the annotation."
-							},
-							"result": {
-								"enum": ["PASSED", "FAILED", "SKIPPED", "IGNORED"],
-								"type": "string",
-								"description": "The state of the report. May be set to PENDING and later updated."
-							},
-							"severity": {
-								"enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
-								"type": "string",
-								"description": "The severity of the annotation."
-							},
-							"link": {
-								"type": "string",
-								"format": "uri",
-								"description": "A URL linking to the annotation in an external tool."
-							},
-							"created_on": {
-								"type": "string",
-								"format": "date-time",
-								"description": "The timestamp when the report was created."
-							},
-							"updated_on": {
-								"type": "string",
-								"format": "date-time",
-								"description": "The timestamp when the report was updated."
-							}
+			"search_content_match": {
+				"type": "object",
+				"properties": {
+					"lines": {
+						"type": "array",
+						"readOnly": true,
+						"items": {
+							"$ref": "#/components/schemas/search_line"
 						}
 					}
-				],
-				"x-bb-default-fields": ["uuid"],
-				"x-bb-url": "/rest/2.0/accounts/{target_user.uuid}/repositories/{repository.uuid}/commits/{commit.hash}/reports/{reportUuid}/annotations/{uuid}"
+				}
 			},
-			"paginated_reports": {
+			"search_line": {
 				"type": "object",
-				"title": "Paginated Reports",
-				"description": "A paginated list of reports.",
 				"properties": {
-					"page": {
+					"line": {
 						"type": "integer",
-						"description": "Page number of the current results. This is an optional element that is not provided in all responses."
+						"format": "int32",
+						"readOnly": true
 					},
-					"values": {
+					"segments": {
 						"type": "array",
-						"minItems": 0,
+						"readOnly": true,
 						"items": {
-							"$ref": "#/components/schemas/report"
-						},
-						"description": "The values of the current page."
-					},
-					"size": {
-						"type": "integer",
-						"description": "Total number of objects in the response. This is an optional element that is not provided in all responses, as it can be expensive to compute."
-					},
-					"pagelen": {
-						"type": "integer",
-						"description": "Current number of objects on the existing page. The default value is 10 with 100 being the maximum allowed value. Individual APIs may enforce different values."
-					},
-					"next": {
-						"type": "string",
-						"format": "uri",
-						"description": "Link to the next page if it exists. The last page of a collection does not have this value. Use this link to navigate the result set and refrain from constructing your own URLs."
-					},
-					"previous": {
-						"type": "string",
-						"format": "uri",
-						"description": "Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs."
+							"$ref": "#/components/schemas/search_segment"
+						}
 					}
 				}
 			},
-			"paginated_annotations": {
+			"search_result_page": {
 				"type": "object",
-				"title": "Paginated Annotations",
-				"description": "A paginated list of annotations.",
 				"properties": {
-					"page": {
-						"type": "integer",
-						"description": "Page number of the current results. This is an optional element that is not provided in all responses."
-					},
-					"values": {
-						"type": "array",
-						"minItems": 0,
-						"items": {
-							"$ref": "#/components/schemas/report_annotation"
-						},
-						"description": "The values of the current page."
-					},
 					"size": {
 						"type": "integer",
-						"description": "Total number of objects in the response. This is an optional element that is not provided in all responses, as it can be expensive to compute."
+						"format": "int64",
+						"readOnly": true
+					},
+					"page": {
+						"type": "integer",
+						"format": "int32",
+						"readOnly": true
 					},
 					"pagelen": {
 						"type": "integer",
-						"description": "Current number of objects on the existing page. The default value is 10 with 100 being the maximum allowed value. Individual APIs may enforce different values."
+						"format": "int32",
+						"readOnly": true
+					},
+					"query_substituted": {
+						"type": "boolean",
+						"readOnly": true
 					},
 					"next": {
 						"type": "string",
 						"format": "uri",
-						"description": "Link to the next page if it exists. The last page of a collection does not have this value. Use this link to navigate the result set and refrain from constructing your own URLs."
+						"readOnly": true
 					},
 					"previous": {
 						"type": "string",
 						"format": "uri",
-						"description": "Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs."
+						"readOnly": true
+					},
+					"values": {
+						"type": "array",
+						"readOnly": true,
+						"items": {
+							"$ref": "#/components/schemas/search_code_search_result"
+						}
+					}
+				}
+			},
+			"search_segment": {
+				"type": "object",
+				"properties": {
+					"text": {
+						"type": "string",
+						"readOnly": true
+					},
+					"match": {
+						"type": "boolean",
+						"readOnly": true
 					}
 				}
 			},
@@ -30460,6 +30899,28 @@
 					}
 				]
 			},
+			"committer": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/object"
+					},
+					{
+						"type": "object",
+						"title": "Committer",
+						"description": "The committer of a change in a repository",
+						"properties": {
+							"raw": {
+								"type": "string",
+								"description": "The raw committer value from the repository. This may be the only value available if the committer does not match a user in Bitbucket."
+							},
+							"user": {
+								"$ref": "#/components/schemas/account"
+							}
+						},
+						"additionalProperties": true
+					}
+				]
+			},
 			"base_commit": {
 				"allOf": [
 					{
@@ -30480,6 +30941,9 @@
 							},
 							"author": {
 								"$ref": "#/components/schemas/author"
+							},
+							"committer": {
+								"$ref": "#/components/schemas/committer"
 							},
 							"message": {
 								"type": "string"
@@ -31187,6 +31651,93 @@
 					}
 				]
 			},
+			"GPG_account_key": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/object"
+					},
+					{
+						"type": "object",
+						"title": "GPG Account Key",
+						"description": "Represents a GPG public key for a user.",
+						"properties": {
+							"owner": {
+								"$ref": "#/components/schemas/account"
+							},
+							"key": {
+								"type": "string",
+								"description": "The GPG key value in X format."
+							},
+							"key_id": {
+								"type": "string",
+								"description": "The unique identifier for the GPG key"
+							},
+							"fingerprint": {
+								"type": "string",
+								"description": "The GPG key fingerprint."
+							},
+							"parent_fingerprint": {
+								"type": "string",
+								"description": "The fingerprint of the parent key. This value is null unless the current key is a subkey."
+							},
+							"comment": {
+								"type": "string",
+								"description": "The comment parsed from the GPG key (if present)"
+							},
+							"name": {
+								"type": "string",
+								"description": "The user-defined label for the GPG key"
+							},
+							"expires_on": {
+								"type": "string",
+								"format": "date-time"
+							},
+							"created_on": {
+								"type": "string",
+								"format": "date-time"
+							},
+							"added_on": {
+								"type": "string",
+								"format": "date-time"
+							},
+							"last_used": {
+								"type": "string",
+								"format": "date-time"
+							},
+							"subkeys": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/GPG_account_key"
+								},
+								"minItems": 0,
+								"uniqueItems": true
+							},
+							"links": {
+								"type": "object",
+								"properties": {
+									"self": {
+										"type": "object",
+										"title": "Link",
+										"description": "A link to a resource related to this object.",
+										"properties": {
+											"href": {
+												"type": "string",
+												"format": "uri"
+											},
+											"name": {
+												"type": "string"
+											}
+										},
+										"additionalProperties": false
+									}
+								},
+								"additionalProperties": false
+							}
+						},
+						"additionalProperties": true
+					}
+				]
+			},
 			"paginated_deploy_keys": {
 				"type": "object",
 				"title": "Paginated Deploy Keys",
@@ -31221,6 +31772,47 @@
 						"type": "array",
 						"items": {
 							"$ref": "#/components/schemas/deploy_key"
+						},
+						"minItems": 0,
+						"uniqueItems": true
+					}
+				},
+				"additionalProperties": false
+			},
+			"paginated_gpg_user_keys": {
+				"type": "object",
+				"title": "Paginated GPG User Keys",
+				"description": "A paginated list of GPG keys.",
+				"properties": {
+					"size": {
+						"type": "integer",
+						"description": "Total number of objects in the response. This is an optional element that is not provided in all responses, as it can be expensive to compute.",
+						"minimum": 0
+					},
+					"page": {
+						"type": "integer",
+						"description": "Page number of the current results. This is an optional element that is not provided in all responses.",
+						"minimum": 1
+					},
+					"pagelen": {
+						"type": "integer",
+						"description": "Current number of objects on the existing page. The default value is 10 with 100 being the maximum allowed value. Individual APIs may enforce different values.",
+						"minimum": 1
+					},
+					"next": {
+						"type": "string",
+						"description": "Link to the next page if it exists. The last page of a collection does not have this value. Use this link to navigate the result set and refrain from constructing your own URLs.",
+						"format": "uri"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs.",
+						"format": "uri"
+					},
+					"values": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/GPG_account_key"
 						},
 						"minItems": 0,
 						"uniqueItems": true

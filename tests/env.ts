@@ -1,77 +1,21 @@
-import { config } from "dotenv"
-import path from "path"
+import { envBool, envString, envUrl, loadEnv } from "@natoboram/load_env"
 
 /**
  * @see https://nodejs.org/en/learn/getting-started/nodejs-the-difference-between-development-and-production
  * @see https://vitest.dev/guide/migration.html#envs
  */
-export type NodeEnv = (typeof nodeEnvs)[keyof typeof nodeEnvs]
-export type ProcessEnv = typeof process.env
+type NodeEnv = (typeof NodeEnv)[keyof typeof NodeEnv]
 
-interface LoadedEnv extends ProcessEnv {
-	readonly NODE_ENV: NodeEnv
+function isNodeEnv(value: unknown): value is NodeEnv {
+	return Object.values<unknown>(NodeEnv).includes(value)
 }
 
-function envString(key: string) {
-	const value = parsed[key]
-	if (!value) throw new Error(`$${key} is missing`)
-	return value
-}
-
-function envUrl(key: string) {
-	const str = envString(key)
-	try {
-		return new URL(str)
-	} catch (error) {
-		throw new Error(`$${key} is not a URL: ${str}`, { cause: error })
-	}
-}
-
-export function isNodeEnv(value: unknown): value is NodeEnv {
-	return Object.values<unknown>(nodeEnvs).includes(value)
-}
-
-/** Loads environment variables from the `.env` files. `NODE_ENV` has to be
- * set in the environment and will not be picked up from there.
- *
- * If `NODE_ENV` is not set, it will default to `development`.
- *
- * Environment variables are loaded in the following order:
- *
- * 1. `.env.development.local`
- * 2. `.env.development`
- * 3. `.env.local`
- * 4. `.env`
- */
-function loadEnv(): LoadedEnv {
-	const cwd = process.cwd()
-	const NODE_ENV = toNodeEnv(process.env.NODE_ENV?.trim())
-
-	const { parsed, error } = config({
-		path: [
-			path.resolve(cwd, `.env.${NODE_ENV}.local`),
-			path.resolve(cwd, `.env.${NODE_ENV}`),
-			path.resolve(cwd, ".env.local"),
-			path.resolve(cwd, ".env"),
-		],
-	})
-
-	if (!parsed)
-		throw new Error("Environment variables could not be loaded.", {
-			cause: error,
-		})
-
-	const merged = Object.assign(parsed, process.env, { NODE_ENV })
-	process.env = merged
-	return merged
-}
-
-export function toNodeEnv(value: unknown): NodeEnv {
+function toNodeEnv(value: unknown): NodeEnv {
 	if (isNodeEnv(value)) return value
-	return nodeEnvs.development
+	return NodeEnv.development
 }
 
-const nodeEnvs = {
+const NodeEnv = {
 	development: "development",
 	production: "production",
 	/**
@@ -80,18 +24,32 @@ const nodeEnvs = {
 	 */
 	test: "test",
 } as const
+
 const parsed = loadEnv()
+
+export const NODE_ENV = toNodeEnv(parsed.NODE_ENV)
+
 export const BITBUCKET_CLOUD_URL = envUrl("BITBUCKET_CLOUD_URL")
 export const BITBUCKET_CLOUD_USERNAME = envString("BITBUCKET_CLOUD_USERNAME")
 export const BITBUCKET_CLOUD_APP_PASSWORD = envString(
 	"BITBUCKET_CLOUD_APP_PASSWORD",
 )
+
 export const BITBUCKET_SERVER_URL = envUrl("BITBUCKET_SERVER_URL")
 export const BITBUCKET_SERVER_TOKEN = envString("BITBUCKET_SERVER_TOKEN")
-export const NODE_ENV = parsed.NODE_ENV
 export const BITBUCKET_SERVER_TEST_PROJECT_KEY = envString(
 	"BITBUCKET_SERVER_TEST_PROJECT_KEY",
 )
 export const BITBUCKET_SERVER_TEST_PROJECT_NAME = envString(
 	"BITBUCKET_SERVER_TEST_PROJECT_NAME",
 )
+
+export const SKIP_BITBUCKET_CLOUD = envBool("SKIP_BITBUCKET_CLOUD")
+
+/** Considering that single instance for a single user costs 2300 USD annually,
+ * most people aren't going to have a Bitbucket Data Center instance to test on.
+ * Therefore, end-to-end tests for Bitbucket Data Center are skipped by default.
+ *
+ * @see https://www.atlassian.com/software/bitbucket/enterprise
+ */
+export const SKIP_BITBUCKET_SERVER = envBool("SKIP_BITBUCKET_SERVER")

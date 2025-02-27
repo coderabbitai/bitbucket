@@ -33,13 +33,14 @@
 	"scripts": {
 		"build": "tsc",
 		"clean": "rm -rf dist docs node_modules tsconfig.tsbuildinfo",
-		"dev": "tsx ./src/main.ts",
+		"dev": "node ./src/main.ts",
 		"docs": "typedoc",
 		"format": "prettier --write .",
 		"lint": "eslint . && markdownlint-cli2 \"**/*.md\" && prettier --check .",
 		"lint:fix": "eslint --fix --quiet .; markdownlint-cli2 \"**/*.md\" --fix; prettier --list-different --write .",
 		"start": "node dist/main.js",
-		"test": "vitest",
+		"test": "vitest run",
+		"test:watch": "vitest",
 		"openapi-typescript": "pnpm run openapi-typescript:cloud && pnpm run openapi-typescript:server",
 		"preopenapi-typescript:cloud": "curl --output ./src/cloud/openapi/swagger.v3.json https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json",
 		"openapi-typescript:cloud": "openapi-typescript ./src/cloud/openapi/swagger.v3.json --output ./src/cloud/openapi/openapi-typescript.ts --immutable --empty-objects-unknown --alphabetize --root-types",
@@ -49,24 +50,24 @@
 		"postopenapi-typescript:server": "ts-autofix ./src/server/openapi && pnpm run lint:fix"
 	},
 	"dependencies": {
-		"openapi-fetch": "^0.13.0"
+		"openapi-fetch": "^0.13.4"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.14.0",
-		"@types/node": "^22.9.0",
-		"dotenv": "^16.4.5",
-		"eslint": "^9.14.0",
-		"eslint-config-prettier": "^9.1.0",
-		"globals": "^15.12.0",
+		"@eslint/js": "^9.21.0",
+		"@natoboram/load_env": "^1.0.0",
+		"@types/node": "^22.13.5",
+		"dotenv": "^16.4.7",
+		"eslint": "^9.21.0",
+		"eslint-config-prettier": "^10.0.2",
+		"globals": "^16.0.0",
 		"markdownlint-cli2": "^0.17.2",
-		"openapi-typescript": "^7.4.2",
-		"prettier": "^3.3.3",
+		"openapi-typescript": "^7.6.1",
+		"prettier": "^3.5.2",
 		"ts-autofix": "^1.0.0",
-		"tsx": "^4.19.2",
-		"typedoc": "^0.27.6",
-		"typescript": "5.7.3",
-		"typescript-eslint": "^8.13.0",
-		"vitest": "^3.0.4"
+		"typedoc": "^0.27.9",
+		"typescript": "5.8.1-rc",
+		"typescript-eslint": "^8.25.0",
+		"vitest": "^3.0.7"
 	},
 	"type": "module",
 	"exports": {

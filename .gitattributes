@@ -1,0 +1,5 @@
+pnpm-lock.yaml linguist-generated
+src/cloud/openapi/openapi-typescript.ts linguist-generated
+src/cloud/openapi/swagger.v3.json linguist-generated
+src/server/openapi/openapi-typescript.ts linguist-generated
+src/server/openapi/swagger.v3.json linguist-generated
