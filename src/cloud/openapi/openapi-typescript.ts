@@ -665,72 +665,6 @@ export interface paths {
 		readonly patch?: never
 		readonly trace?: never
 	}
-	readonly "/pullrequests/{selected_user}": {
-		readonly parameters: {
-			readonly query?: never
-			readonly header?: never
-			readonly path: {
-				/** @description This can either be the username of the pull request author, the author's UUID
-				 *     surrounded by curly-braces, for example: `{account UUID}`, or the author's Atlassian ID.
-				 *      */
-				readonly selected_user: string
-			}
-			readonly cookie?: never
-		}
-		/**
-		 * List pull requests for a user
-		 * @deprecated
-		 * @description Returns all pull requests authored by the specified user.
-		 *
-		 *     By default only open pull requests are returned. This can be controlled
-		 *     using the `state` query parameter. To retrieve pull requests that are
-		 *     in one of multiple states, repeat the `state` parameter for each
-		 *     individual state.
-		 *
-		 *     This endpoint also supports filtering and sorting of the results. See
-		 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.
-		 */
-		readonly get: {
-			readonly parameters: {
-				readonly query?: {
-					/** @description Only return pull requests that are in this state. This parameter can be repeated. */
-					readonly state?: "DECLINED" | "MERGED" | "OPEN" | "SUPERSEDED"
-				}
-				readonly header?: never
-				readonly path: {
-					/** @description This can either be the username of the pull request author, the author's UUID
-					 *     surrounded by curly-braces, for example: `{account UUID}`, or the author's Atlassian ID.
-					 *      */
-					readonly selected_user: string
-				}
-				readonly cookie?: never
-			}
-			readonly requestBody?: never
-			readonly responses: {
-				/** @description All pull requests authored by the specified user. */
-				readonly 200: {
-					headers: Readonly<Record<string, unknown>>
-					content: {
-						readonly "application/json": components["schemas"]["paginated_pullrequests"]
-					}
-				}
-				/** @description If the specified user does not exist. */
-				readonly 404: {
-					headers: Readonly<Record<string, unknown>>
-					content: {
-						readonly "application/json": components["schemas"]["error"]
-					}
-				}
-			}
-		}
-		readonly put?: never
-		readonly post?: never
-		readonly delete?: never
-		readonly options?: never
-		readonly head?: never
-		readonly patch?: never
-		readonly trace?: never
-	}
 	readonly "/repositories": {
 		readonly parameters: {
 			readonly query?: never
@@ -2684,6 +2618,20 @@ export interface paths {
 		 *     For example, one could use `https://foo.com/builds/{repository.full_name}`
 		 *     which Bitbucket will turn into `https://foo.com/builds/foo/bar` at render time.
 		 *     The context variables available are `repository` and `commit`.
+		 *
+		 *     To associate a commit status to a pull request, the refname field must be set to the source branch
+		 *     of the pull request.
+		 *
+		 *     Example:
+		 *     ```
+		 *     curl https://api.bitbucket.org/2.0/repositories/my-workspace/my-repo/commit/e10dae226959c2194f2b07b077c07762d93821cf/statuses/build/           -X POST -u jdoe -H 'Content-Type: application/json'           -d '{
+		 *         "key": "MY-BUILD",
+		 *         "state": "SUCCESSFUL",
+		 *         "description": "42 tests passed",
+		 *         "url": "https://www.example.org/my-build-result",
+		 *         "refname": "my-pr-branch"
+		 *       }'
+		 *     ```
 		 */
 		readonly post: {
 			readonly parameters: {
@@ -5568,12 +5516,10 @@ export interface paths {
 			}
 			readonly requestBody?: never
 			readonly responses: {
-				/** @description The issue object. */
-				readonly 200: {
+				/** @description Indicates the issue was deleted successfully. */
+				readonly 204: {
 					headers: Readonly<Record<string, unknown>>
-					content: {
-						readonly "application/json": components["schemas"]["issue"]
-					}
+					content?: never
 				}
 				/** @description When the authenticated user isn't authorized to delete the issue. */
 				readonly 403: {
@@ -8078,7 +8024,12 @@ export interface paths {
 		}
 		/**
 		 * List pipelines
-		 * @description Find pipelines
+		 * @description Find pipelines in a repository.
+		 *
+		 *     Note that unlike other endpoints in the Bitbucket API, this endpoint utilizes query parameters to allow filtering
+		 *     and sorting of returned results. See [query parameters](#api-repositories-workspace-repo-slug-pipelines-get-request-Query%20parameters)
+		 *     for specific details.
+		 *
 		 */
 		readonly get: operations["getPipelinesForRepository"]
 		readonly put?: never
@@ -15682,6 +15633,238 @@ export interface paths {
 		readonly patch?: never
 		readonly trace?: never
 	}
+	readonly "/users/{selected_user}/gpg-keys": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+				 *     surrounded by curly-braces, for example: `{account UUID}`.
+				 *      */
+				readonly selected_user: string
+			}
+			readonly cookie?: never
+		}
+		/**
+		 * List GPG keys
+		 * @description Returns a paginated list of the user's GPG public keys.
+		 *     The `key` and `subkeys` fields can also be requested from the endpoint.
+		 *     See [Partial Responses](/cloud/bitbucket/rest/intro/#partial-response) for more details.
+		 */
+		readonly get: {
+			readonly parameters: {
+				readonly query?: never
+				readonly header?: never
+				readonly path: {
+					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					 *     surrounded by curly-braces, for example: `{account UUID}`.
+					 *      */
+					readonly selected_user: string
+				}
+				readonly cookie?: never
+			}
+			readonly requestBody?: never
+			readonly responses: {
+				/** @description A list of the GPG keys associated with the account. */
+				readonly 200: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["paginated_gpg_user_keys"]
+					}
+				}
+				/** @description If the specified user's keys are not accessible to the current user */
+				readonly 403: {
+					headers: Readonly<Record<string, unknown>>
+					content?: never
+				}
+				/** @description If the specified user does not exist */
+				readonly 404: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+			}
+		}
+		readonly put?: never
+		/**
+		 * Add a new GPG key
+		 * @description Adds a new GPG public key to the specified user account and returns the resulting key.
+		 *
+		 *     Example:
+		 *
+		 *     ```
+		 *     $ curl -X POST -H "Content-Type: application/json" -d
+		 *     '{"key": "<insert GPG Key>"}'
+		 *     https://api.bitbucket.org/2.0/users/{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}/gpg-keys
+		 *     ```
+		 */
+		readonly post: {
+			readonly parameters: {
+				readonly query?: never
+				readonly header?: never
+				readonly path: {
+					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					 *     surrounded by curly-braces, for example: `{account UUID}`.
+					 *      */
+					readonly selected_user: string
+				}
+				readonly cookie?: never
+			}
+			/** @description The new GPG key object. */
+			readonly requestBody?: {
+				readonly content: {
+					readonly "application/json": components["schemas"]["GPG_account_key"]
+				}
+			}
+			readonly responses: {
+				/** @description The newly created GPG key. */
+				readonly 201: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["GPG_account_key"]
+					}
+				}
+				/** @description If the submitted key or related value is invalid */
+				readonly 400: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+				/** @description If the current user does not have permission to add a key for the specified user */
+				readonly 403: {
+					headers: Readonly<Record<string, unknown>>
+					content?: never
+				}
+				/** @description If the specified user does not exist */
+				readonly 404: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+			}
+		}
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
+	readonly "/users/{selected_user}/gpg-keys/{fingerprint}": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description A GPG key fingerprint.
+				 *      */
+				readonly fingerprint: string
+				/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+				 *     surrounded by curly-braces, for example: `{account UUID}`.
+				 *      */
+				readonly selected_user: string
+			}
+			readonly cookie?: never
+		}
+		/**
+		 * Get a GPG key
+		 * @description Returns a specific GPG public key belonging to a user.
+		 *     The `key` and `subkeys` fields can also be requested from the endpoint.
+		 *     See [Partial Responses](/cloud/bitbucket/rest/intro/#partial-response) for more details.
+		 */
+		readonly get: {
+			readonly parameters: {
+				readonly query?: never
+				readonly header?: never
+				readonly path: {
+					/** @description A GPG key fingerprint.
+					 *      */
+					readonly fingerprint: string
+					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					 *     surrounded by curly-braces, for example: `{account UUID}`.
+					 *      */
+					readonly selected_user: string
+				}
+				readonly cookie?: never
+			}
+			readonly requestBody?: never
+			readonly responses: {
+				/** @description The specific GPG key matching the user and fingerprint. */
+				readonly 200: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["GPG_account_key"]
+					}
+				}
+				/** @description If the specified user's keys are not accessible to the current user */
+				readonly 403: {
+					headers: Readonly<Record<string, unknown>>
+					content?: never
+				}
+				/** @description If the specified user does not exist */
+				readonly 404: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+			}
+		}
+		readonly put?: never
+		readonly post?: never
+		/**
+		 * Delete a GPG key
+		 * @description Deletes a specific GPG public key from a user's account.
+		 */
+		readonly delete: {
+			readonly parameters: {
+				readonly query?: never
+				readonly header?: never
+				readonly path: {
+					/** @description A GPG key fingerprint.
+					 *      */
+					readonly fingerprint: string
+					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					 *     surrounded by curly-braces, for example: `{account UUID}`.
+					 *      */
+					readonly selected_user: string
+				}
+				readonly cookie?: never
+			}
+			readonly requestBody?: never
+			readonly responses: {
+				/** @description The key has been deleted */
+				readonly 204: {
+					headers: Readonly<Record<string, unknown>>
+					content?: never
+				}
+				/** @description If the submitted key or related value is invalid */
+				readonly 400: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+				/** @description If the current user does not have permission to delete a key for the specified user, or the submitted key is a subkey */
+				readonly 403: {
+					headers: Readonly<Record<string, unknown>>
+					content?: never
+				}
+				/** @description If the specified key does not exist */
+				readonly 404: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+			}
+		}
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
 	readonly "/users/{selected_user}/pipelines_config/variables": {
 		readonly parameters: {
 			readonly query?: never
@@ -18926,6 +19109,7 @@ export interface components {
 		} & (Omit<components["schemas"]["object"], "type"> &
 			(Readonly<Record<string, unknown>> & {
 				readonly author?: components["schemas"]["author"]
+				readonly committer?: components["schemas"]["committer"]
 				/** Format: date-time */
 				readonly date?: string
 				readonly hash?: string
@@ -19271,6 +19455,14 @@ export interface components {
 				/** @description The commit status' id. */
 				readonly uuid?: string
 			}))
+		readonly committer: {
+			readonly type: "committer"
+		} & (Omit<components["schemas"]["object"], "type"> &
+			(Readonly<Record<string, unknown>> & {
+				/** @description The raw committer value from the repository. This may be the only value available if the committer does not match a user in Bitbucket. */
+				readonly raw?: string
+				readonly user?: components["schemas"]["account"]
+			}))
 		readonly component: {
 			readonly type: "component"
 		} & (Omit<components["schemas"]["object"], "type"> &
@@ -19554,6 +19746,44 @@ export interface components {
 			readonly send_email?: boolean
 			readonly type: string
 		}
+		readonly GPG_account_key: {
+			readonly type: "GPG_account_key"
+		} & (Omit<components["schemas"]["object"], "type"> &
+			(Readonly<Record<string, unknown>> & {
+				/** Format: date-time */
+				readonly added_on?: string
+				/** @description The comment parsed from the GPG key (if present) */
+				readonly comment?: string
+				/** Format: date-time */
+				readonly created_on?: string
+				/** Format: date-time */
+				readonly expires_on?: string
+				/** @description The GPG key fingerprint. */
+				readonly fingerprint?: string
+				/** @description The GPG key value in X format. */
+				readonly key?: string
+				/** @description The unique identifier for the GPG key */
+				readonly key_id?: string
+				/** Format: date-time */
+				readonly last_used?: string
+				readonly links?: {
+					/**
+					 * Link
+					 * @description A link to a resource related to this object.
+					 */
+					readonly self?: {
+						/** Format: uri */
+						readonly href?: string
+						readonly name?: string
+					}
+				}
+				/** @description The user-defined label for the GPG key */
+				readonly name?: string
+				readonly owner?: components["schemas"]["account"]
+				/** @description The fingerprint of the parent key. This value is null unless the current key is a subkey. */
+				readonly parent_fingerprint?: string
+				readonly subkeys?: readonly components["schemas"]["GPG_account_key"][]
+			}))
 		readonly group: {
 			readonly type: "group"
 		} & (Omit<components["schemas"]["object"], "type"> &
@@ -20244,6 +20474,29 @@ export interface components {
 			/** @description Total number of objects in the response. This is an optional element that is not provided in all responses, as it can be expensive to compute. */
 			readonly size?: number
 			readonly values?: readonly components["schemas"]["commit_file"][]
+		}
+		/**
+		 * Paginated GPG User Keys
+		 * @description A paginated list of GPG keys.
+		 */
+		readonly paginated_gpg_user_keys: {
+			/**
+			 * Format: uri
+			 * @description Link to the next page if it exists. The last page of a collection does not have this value. Use this link to navigate the result set and refrain from constructing your own URLs.
+			 */
+			readonly next?: string
+			/** @description Page number of the current results. This is an optional element that is not provided in all responses. */
+			readonly page?: number
+			/** @description Current number of objects on the existing page. The default value is 10 with 100 being the maximum allowed value. Individual APIs may enforce different values. */
+			readonly pagelen?: number
+			/**
+			 * Format: uri
+			 * @description Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs.
+			 */
+			readonly previous?: string
+			/** @description Total number of objects in the response. This is an optional element that is not provided in all responses, as it can be expensive to compute. */
+			readonly size?: number
+			readonly values?: readonly components["schemas"]["GPG_account_key"][]
 		}
 		/**
 		 * Paginated Hook Events
@@ -23035,6 +23288,7 @@ export type SchemaCommit = components["schemas"]["commit"]
 export type SchemaCommitComment = components["schemas"]["commit_comment"]
 export type SchemaCommitFile = components["schemas"]["commit_file"]
 export type SchemaCommitstatus = components["schemas"]["commitstatus"]
+export type SchemaCommitter = components["schemas"]["committer"]
 export type SchemaComponent = components["schemas"]["component"]
 export type SchemaDefaultReviewerAndType =
 	components["schemas"]["default_reviewer_and_type"]
@@ -23066,6 +23320,7 @@ export type SchemaEffectiveRepoBranchingModel =
 	components["schemas"]["effective_repo_branching_model"]
 export type SchemaError = components["schemas"]["error"]
 export type SchemaExportOptions = components["schemas"]["export_options"]
+export type SchemaGpgAccountKey = components["schemas"]["GPG_account_key"]
 export type SchemaGroup = components["schemas"]["group"]
 export type SchemaHookEvent = components["schemas"]["hook_event"]
 export type SchemaIssue = components["schemas"]["issue"]
@@ -23105,6 +23360,8 @@ export type SchemaPaginatedDiffstats =
 export type SchemaPaginatedEnvironments =
 	components["schemas"]["paginated_environments"]
 export type SchemaPaginatedFiles = components["schemas"]["paginated_files"]
+export type SchemaPaginatedGpgUserKeys =
+	components["schemas"]["paginated_gpg_user_keys"]
 export type SchemaPaginatedHookEvents =
 	components["schemas"]["paginated_hook_events"]
 export type SchemaPaginatedIssueAttachments =
@@ -24120,7 +24377,49 @@ export interface operations {
 	}
 	readonly getPipelinesForRepository: {
 		readonly parameters: {
-			readonly query?: never
+			readonly query?: {
+				/** @description The creation date to filter by. */
+				readonly created_on?: string
+				/** @description The UUID of the creator of the pipeline to filter by. */
+				readonly "creator.uuid"?: string
+				/** @description The page number of elements to retrieve. */
+				readonly page?: number
+				/** @description The maximum number of results to return. */
+				readonly pagelen?: number
+				/** @description The attribute name to sort on. */
+				readonly sort?: "created_on" | "creator.uuid" | "run_creation_date"
+				/** @description The pipeline status to filter by. */
+				readonly status?:
+					| "BUILDING"
+					| "ERROR"
+					| "FAILED"
+					| "HALTED"
+					| "PARSING"
+					| "PASSED"
+					| "PAUSED"
+					| "PENDING"
+					| "STOPPED"
+					| "UNKNOWN"
+				/** @description The name of the branch to filter by. */
+				readonly "target.branch"?: string
+				/** @description The revision to filter by. */
+				readonly "target.commit.hash"?: string
+				/** @description The reference name to filter by. */
+				readonly "target.ref_name"?: string
+				/** @description The type of the reference to filter by. */
+				readonly "target.ref_type"?: "ANNOTATED_TAG" | "BRANCH" | "TAG"
+				/** @description The pipeline pattern to filter by. */
+				readonly "target.selector.pattern"?: string
+				/** @description The type of pipeline to filter by. */
+				readonly "target.selector.type"?:
+					| "BRANCH"
+					| "CUSTOM"
+					| "DEFAULT"
+					| "PULLREQUESTS"
+					| "TAG"
+				/** @description The trigger type to filter by. */
+				readonly trigger_type?: "MANUAL" | "PARENT_STEP" | "PUSH" | "SCHEDULED"
+			}
 			readonly header?: never
 			readonly path: {
 				/** @description The repository. */
@@ -25167,6 +25466,11 @@ export interface operations {
 					readonly "application/octet-stream": components["schemas"]["error"]
 				}
 			}
+			/** @description After the step is completed, the log is moved to long term storage and a redirection to the log file is returned. */
+			readonly 307: {
+				headers: Readonly<Record<string, unknown>>
+				content?: never
+			}
 			/** @description A pipeline with the given UUID does not exist, a step with the given UUID does not exist in the pipeline or a log file does not exist for the given step. */
 			readonly 404: {
 				headers: Readonly<Record<string, unknown>>
@@ -25205,6 +25509,11 @@ export interface operations {
 		readonly responses: {
 			/** @description The raw log file for the build container or service container. */
 			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content?: never
+			}
+			/** @description After the step is completed, the log is moved to long term storage and a redirection to the log file is returned. */
+			readonly 307: {
 				headers: Readonly<Record<string, unknown>>
 				content?: never
 			}
