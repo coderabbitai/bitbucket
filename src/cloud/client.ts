@@ -1,6 +1,6 @@
 import type { Client, ClientOptions } from "openapi-fetch"
 import createClient from "openapi-fetch"
-import type { paths } from "./openapi/index.ts"
+import type { paths } from "./interfaces/paths.ts"
 
 /**
  * Creates an `openapi-fetch` client using {@link createClient}.
