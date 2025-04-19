@@ -8868,6 +8868,7 @@ export interface paths {
 		 *
 		 *     * `description` - a string
 		 *     * `close_source_branch` - boolean that specifies if the source branch should be closed upon merging
+		 *     * `draft` - boolean that specifies whether the pull request is a draft
 		 */
 		readonly post: {
 			readonly parameters: {
@@ -16053,7 +16054,12 @@ export interface paths {
 		 */
 		readonly post: {
 			readonly parameters: {
-				readonly query?: never
+				readonly query?: {
+					/** @description The date or date-time of when the key will expire,
+					 *     in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+					 *     Example: `YYYY-MM-DDTHH:mm:ss.sssZ` */
+					readonly expires_on?: string
+				}
 				readonly header?: never
 				readonly path: {
 					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
@@ -22107,6 +22113,8 @@ export interface components {
 				 */
 				readonly created_on?: string
 				readonly destination?: components["schemas"]["pullrequest_endpoint"]
+				/** @description A boolean flag indicating whether the pull request is a draft. */
+				readonly draft?: boolean
 				/** @description The pull request's unique ID. Note that pull request IDs are only unique within their associated repository. */
 				readonly id?: number
 				readonly links?: {
@@ -22874,6 +22882,10 @@ export interface components {
 			readonly type: "ssh_account_key"
 		} & (Omit<components["schemas"]["ssh_key"], "type"> &
 			(Readonly<Record<string, unknown>> & {
+				/** Format: date-time */
+				readonly expires_on?: string
+				/** @description The SSH key fingerprint in SHA-256 format. */
+				readonly fingerprint?: string
 				readonly owner?: components["schemas"]["account"]
 			}))
 		readonly ssh_key: {
