@@ -1649,7 +1649,7 @@
 		"/repositories/{workspace}/{repo_slug}/branching-model/settings": {
 			"get": {
 				"tags": ["Branching model"],
-				"description": "Return the branching model configuration for a repository. The returned\nobject:\n\n1. Always has a `development` property for the development branch.\n2. Always a `production` property for the production branch. The\n   production branch can be disabled.\n3. The `branch_types` contains all the branch types.\n\nThis is the raw configuration for the branching model. A client\nwishing to see the branching model with its actual current branches may\nfind the [active model API](/cloud/bitbucket/rest/api-group-branching-model/#api-repositories-workspace-repo-slug-branching-model-get) more useful.",
+				"description": "Return the branching model configuration for a repository. The returned\nobject:\n\n1. Always has a `development` property for the development branch.\n2. Always a `production` property for the production branch. The\n   production branch can be disabled.\n3. The `branch_types` contains all the branch types.\n4. `default_branch_deletion` indicates whether branches will be\n    deleted by default on merge.\n\nThis is the raw configuration for the branching model. A client\nwishing to see the branching model with its actual current branches may\nfind the [active model API](/cloud/bitbucket/rest/api-group-branching-model/#api-repositories-workspace-repo-slug-branching-model-get) more useful.",
 				"summary": "Get the branching model config for a repository",
 				"responses": {
 					"200": {
@@ -1700,7 +1700,8 @@
 												"self": {
 													"href": "https://api.bitbucket.org/.../branching-model/settings"
 												}
-											}
+											},
+											"default_branch_deletion": "false"
 										}
 									}
 								}
@@ -1759,7 +1760,7 @@
 			},
 			"put": {
 				"tags": ["Branching model"],
-				"description": "Update the branching model configuration for a repository.\n\nThe `development` branch can be configured to a specific branch or to\ntrack the main branch. When set to a specific branch it must\ncurrently exist. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. A request without a\n`development` property will leave the development branch unchanged.\n\nIt is possible for the `development` branch to be invalid. This\nhappens when it points at a specific branch that has been\ndeleted. This is indicated in the `is_valid` field for the branch. It is\nnot possible to update the settings for `development` if that\nwould leave the branch in an invalid state. Such a request will be\nrejected.\n\nThe `production` branch can be a specific branch, the main\nbranch or disabled. When set to a specific branch it must currently\nexist. The `enabled` property can be used to enable (`true`) or\ndisable (`false`) it. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. A request without a\n`production` property will leave the production branch unchanged.\n\nIt is possible for the `production` branch to be invalid. This\nhappens when it points at a specific branch that has been\ndeleted. This is indicated in the `is_valid` field for the branch. A\nrequest that would leave `production` enabled and invalid will be\nrejected. It is possible to update `production` and make it invalid if\nit would also be left disabled.\n\nThe `branch_types` property contains the branch types to be updated.\nOnly the branch types passed will be updated. All updates will be\nrejected if it would leave the branching model in an invalid state.\nFor branch types this means that:\n\n1. The prefixes for all enabled branch types are valid. For example,\n   it is not possible to use '*' inside a Git prefix.\n2. A prefix of an enabled branch type must not be a prefix of another\n   enabled branch type. This is to ensure that a branch can be easily\n   classified by its prefix unambiguously.\n\nIt is possible to store an invalid prefix if that branch type would be\nleft disabled. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. Each branch type must\nhave a `kind` property to identify it.\n\nThere is currently a side effect when using this API endpoint. If the\nrepository is inheriting branching model settings from its project,\nupdating the branching model for this repository will disable the\nproject setting inheritance.\n\n\nWe have deprecated this side effect and will remove it on 1 August 2022.",
+				"description": "Update the branching model configuration for a repository.\n\nThe `development` branch can be configured to a specific branch or to\ntrack the main branch. When set to a specific branch it must\ncurrently exist. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. A request without a\n`development` property will leave the development branch unchanged.\n\nIt is possible for the `development` branch to be invalid. This\nhappens when it points at a specific branch that has been\ndeleted. This is indicated in the `is_valid` field for the branch. It is\nnot possible to update the settings for `development` if that\nwould leave the branch in an invalid state. Such a request will be\nrejected.\n\nThe `production` branch can be a specific branch, the main\nbranch or disabled. When set to a specific branch it must currently\nexist. The `enabled` property can be used to enable (`true`) or\ndisable (`false`) it. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. A request without a\n`production` property will leave the production branch unchanged.\n\nIt is possible for the `production` branch to be invalid. This\nhappens when it points at a specific branch that has been\ndeleted. This is indicated in the `is_valid` field for the branch. A\nrequest that would leave `production` enabled and invalid will be\nrejected. It is possible to update `production` and make it invalid if\nit would also be left disabled.\n\nThe `branch_types` property contains the branch types to be updated.\nOnly the branch types passed will be updated. All updates will be\nrejected if it would leave the branching model in an invalid state.\nFor branch types this means that:\n\n1. The prefixes for all enabled branch types are valid. For example,\n   it is not possible to use '*' inside a Git prefix.\n2. A prefix of an enabled branch type must not be a prefix of another\n   enabled branch type. This is to ensure that a branch can be easily\n   classified by its prefix unambiguously.\n\nIt is possible to store an invalid prefix if that branch type would be\nleft disabled. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. Each branch type must\nhave a `kind` property to identify it.\n\nThe `default_branch_deletion` property is a string. The value of `true`\nindicates to delete branches by default. The value of `false` indicates\nthat branches will not be deleted by default. A request without a\n`default_branch_deletion` property will leave it unchanged. Other values\nwould be ignored.\n\nThere is currently a side effect when using this API endpoint. If the\nrepository is inheriting branching model settings from its project,\nupdating the branching model for this repository will disable the\nproject setting inheritance.\n\n\nWe have deprecated this side effect and will remove it on 1 August 2022.",
 				"summary": "Update the branching model config for a repository",
 				"responses": {
 					"200": {
@@ -1799,7 +1800,8 @@
 													"kind": "release",
 													"enabled": false
 												}
-											]
+											],
+											"default_branch_deletion": "true"
 										}
 									}
 								}
@@ -23058,7 +23060,7 @@
 		"/workspaces/{workspace}/projects/{project_key}/branching-model/settings": {
 			"get": {
 				"tags": ["Branching model"],
-				"description": "Return the branching model configuration for a project. The returned\nobject:\n\n1. Always has a `development` property for the development branch.\n2. Always a `production` property for the production branch. The\n   production branch can be disabled.\n3. The `branch_types` contains all the branch types.\n\n\nThis is the raw configuration for the branching model. A client\nwishing to see the branching model with its actual current branches may find the\n[active model API](#api-workspaces-workspace-projects-project-key-branching-model-get)\nmore useful.",
+				"description": "Return the branching model configuration for a project. The returned\nobject:\n\n1. Always has a `development` property for the development branch.\n2. Always a `production` property for the production branch. The\n   production branch can be disabled.\n3. The `branch_types` contains all the branch types.\n4. `default_branch_deletion` indicates whether branches will be\n    deleted by default on merge.\n\n\nThis is the raw configuration for the branching model. A client\nwishing to see the branching model with its actual current branches may find the\n[active model API](#api-workspaces-workspace-projects-project-key-branching-model-get)\nmore useful.",
 				"summary": "Get the branching model config for a project",
 				"responses": {
 					"200": {
@@ -23107,7 +23109,8 @@
 												"self": {
 													"href": "https://api.bitbucket.org/.../branching-model/settings"
 												}
-											}
+											},
+											"default_branch_deletion": "false"
 										}
 									}
 								}
@@ -23166,7 +23169,7 @@
 			},
 			"put": {
 				"tags": ["Branching model"],
-				"description": "Update the branching model configuration for a project.\n\nThe `development` branch can be configured to a specific branch or to\ntrack the main branch. Any branch name can be supplied, but will only\nsuccessfully be applied to a repository via inheritance if that branch\nexists for that repository. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. A request without a\n`development` property will leave the development branch unchanged.\n\nThe `production` branch can be a specific branch, the main\nbranch or disabled. Any branch name can be supplied, but will only\nsuccessfully be applied to a repository via inheritance if that branch\nexists for that repository. The `enabled` property can be used to enable (`true`)\nor disable (`false`) it. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. A request without a\n`production` property will leave the production branch unchanged.\n\nThe `branch_types` property contains the branch types to be updated.\nOnly the branch types passed will be updated. All updates will be\nrejected if it would leave the branching model in an invalid state.\nFor branch types this means that:\n\n1. The prefixes for all enabled branch types are valid. For example,\n   it is not possible to use '*' inside a Git prefix.\n2. A prefix of an enabled branch type must not be a prefix of another\n   enabled branch type. This is to ensure that a branch can be easily\n   classified by its prefix unambiguously.\n\nIt is possible to store an invalid prefix if that branch type would be\nleft disabled. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. Each branch type must\nhave a `kind` property to identify it.",
+				"description": "Update the branching model configuration for a project.\n\nThe `development` branch can be configured to a specific branch or to\ntrack the main branch. Any branch name can be supplied, but will only\nsuccessfully be applied to a repository via inheritance if that branch\nexists for that repository. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. A request without a\n`development` property will leave the development branch unchanged.\n\nThe `production` branch can be a specific branch, the main\nbranch or disabled. Any branch name can be supplied, but will only\nsuccessfully be applied to a repository via inheritance if that branch\nexists for that repository. The `enabled` property can be used to enable (`true`)\nor disable (`false`) it. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. A request without a\n`production` property will leave the production branch unchanged.\n\nThe `branch_types` property contains the branch types to be updated.\nOnly the branch types passed will be updated. All updates will be\nrejected if it would leave the branching model in an invalid state.\nFor branch types this means that:\n\n1. The prefixes for all enabled branch types are valid. For example,\n   it is not possible to use '*' inside a Git prefix.\n2. A prefix of an enabled branch type must not be a prefix of another\n   enabled branch type. This is to ensure that a branch can be easily\n   classified by its prefix unambiguously.\n\nIt is possible to store an invalid prefix if that branch type would be\nleft disabled. Only the passed properties will be updated. The\nproperties not passed will be left unchanged. Each branch type must\nhave a `kind` property to identify it.\n\nThe `default_branch_deletion` property is a string. The value of `true`\nindicates to delete branches by default. The value of `false` indicates\nthat branches will not be deleted by default. A request without a\n`default_branch_deletion` property will leave it unchanged. Other values\nwould be ignored.",
 				"summary": "Update the branching model config for a project",
 				"responses": {
 					"200": {
@@ -23206,7 +23209,8 @@
 													"kind": "release",
 													"enabled": false
 												}
-											]
+											],
+											"default_branch_deletion": "false"
 										}
 									}
 								}
@@ -25129,7 +25133,7 @@
 			"description": "A workspace is where you create repositories, collaborate on\nyour code, and organize different streams of work in your Bitbucket\nCloud account. Workspaces replace the use of teams and users in API\ncalls.\n"
 		}
 	],
-	"x-revision": "32491c199f63",
+	"x-revision": "fa7e8ae6f41f",
 	"x-atlassian-narrative": {
 		"documents": [
 			{
@@ -30843,6 +30847,10 @@
 							"draft": {
 								"type": "boolean",
 								"description": "A boolean flag indicating whether the pull request is a draft."
+							},
+							"queued": {
+								"type": "boolean",
+								"description": "A boolean flag indicating whether the pull request is queued"
 							}
 						},
 						"additionalProperties": true

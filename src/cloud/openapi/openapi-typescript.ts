@@ -1589,6 +1589,8 @@ export interface paths {
 		 *     2. Always a `production` property for the production branch. The
 		 *        production branch can be disabled.
 		 *     3. The `branch_types` contains all the branch types.
+		 *     4. `default_branch_deletion` indicates whether branches will be
+		 *         deleted by default on merge.
 		 *
 		 *     This is the raw configuration for the branching model. A client
 		 *     wishing to see the branching model with its actual current branches may
@@ -1688,6 +1690,12 @@ export interface paths {
 		 *     left disabled. Only the passed properties will be updated. The
 		 *     properties not passed will be left unchanged. Each branch type must
 		 *     have a `kind` property to identify it.
+		 *
+		 *     The `default_branch_deletion` property is a string. The value of `true`
+		 *     indicates to delete branches by default. The value of `false` indicates
+		 *     that branches will not be deleted by default. A request without a
+		 *     `default_branch_deletion` property will leave it unchanged. Other values
+		 *     would be ignored.
 		 *
 		 *     There is currently a side effect when using this API endpoint. If the
 		 *     repository is inheriting branching model settings from its project,
@@ -17681,6 +17689,8 @@ export interface paths {
 		 *     2. Always a `production` property for the production branch. The
 		 *        production branch can be disabled.
 		 *     3. The `branch_types` contains all the branch types.
+		 *     4. `default_branch_deletion` indicates whether branches will be
+		 *         deleted by default on merge.
 		 *
 		 *
 		 *     This is the raw configuration for the branching model. A client
@@ -17770,6 +17780,12 @@ export interface paths {
 		 *     left disabled. Only the passed properties will be updated. The
 		 *     properties not passed will be left unchanged. Each branch type must
 		 *     have a `kind` property to identify it.
+		 *
+		 *     The `default_branch_deletion` property is a string. The value of `true`
+		 *     indicates to delete branches by default. The value of `false` indicates
+		 *     that branches will not be deleted by default. A request without a
+		 *     `default_branch_deletion` property will leave it unchanged. Other values
+		 *     would be ignored.
 		 */
 		readonly put: {
 			readonly parameters: {
@@ -22227,6 +22243,8 @@ export interface components {
 				 *             id.
 				 *              */
 				readonly participants?: readonly components["schemas"]["participant"][]
+				/** @description A boolean flag indicating whether the pull request is queued */
+				readonly queued?: boolean
 				/** @description Explains why a pull request was declined. This field is only applicable to pull requests in rejected state. */
 				readonly reason?: string
 				/**
