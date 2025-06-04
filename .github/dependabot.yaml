@@ -19,6 +19,9 @@ updates:
         update-types:
           - minor
         dependency-type: production
+      openapi:
+        patterns:
+          - "*openapi*"
       eslint:
         patterns:
           - "*eslint*"
