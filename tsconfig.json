@@ -61,5 +61,5 @@
 		"skipLibCheck": true
 	},
 	"include": ["src"],
-	"exclude": ["eslint.config.js", "tests"]
+	"exclude": ["eslint.config.ts", "tests"]
 }
