@@ -25,7 +25,7 @@ const NodeEnv = {
 	test: "test",
 } as const
 
-const parsed = loadEnv()
+const parsed = await loadEnv()
 
 export const NODE_ENV = toNodeEnv(parsed.NODE_ENV)
 
