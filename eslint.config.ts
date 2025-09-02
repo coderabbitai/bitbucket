@@ -1,12 +1,13 @@
 import eslint from "@eslint/js"
 import prettier from "eslint-config-prettier"
-import globals from "globals"
+import { browser, node } from "globals"
 import tseslint from "typescript-eslint"
+import { defineConfig } from "eslint/config"
 
-export default tseslint.config(
+export default defineConfig(
 	{
 		languageOptions: {
-			globals: { ...globals.browser, ...globals.node },
+			globals: { ...browser, ...node },
 			parserOptions: { project: "./tsconfig.eslint.json" },
 		},
 	},
