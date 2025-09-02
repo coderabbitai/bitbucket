@@ -56,7 +56,7 @@
 		"@eslint/js": "^9.21.0",
 		"@natoboram/load_env": "^1.0.0",
 		"@types/node": "^24.0.10",
-		"@typescript/native-preview": "7.0.0-dev.20250801.1",
+		"@typescript/native-preview": "7.0.0-dev.20250901.1",
 		"dotenv": "^17.0.1",
 		"eslint": "^9.21.0",
 		"eslint-config-prettier": "^10.0.2",
