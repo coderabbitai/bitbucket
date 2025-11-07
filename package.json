@@ -50,7 +50,7 @@
 		"postopenapi-typescript:server": "ts-autofix ./src/server/openapi && pnpm run lint:fix"
 	},
 	"dependencies": {
-		"openapi-fetch": "~0.14.0"
+		"openapi-fetch": "~0.15.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.21.0",
