@@ -25,6 +25,8 @@ updates:
       eslint:
         patterns:
           - "*eslint*"
+          - globals
+          - jiti
       prettier:
         patterns:
           - "*prettier*"
@@ -41,3 +43,7 @@ updates:
       timezone: America/Toronto
     commit-message:
       prefix: "⬆️ "
+    groups:
+      actions:
+        patterns:
+          - actions/*
