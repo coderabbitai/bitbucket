@@ -3,8 +3,10 @@ import type { paths as openapi } from "../openapi/openapi-typescript.ts"
 /**
  * Overrides Bitbucket Cloud's OpenAPI schema.
  */
-export interface paths
-	extends Omit<openapi, "/repositories/{workspace}/{repo_slug}/refs/branches"> {
+export interface paths extends Omit<
+	openapi,
+	"/repositories/{workspace}/{repo_slug}/refs/branches"
+> {
 	readonly "/repositories/{workspace}/{repo_slug}/refs/branches": Omit<
 		openapi["/repositories/{workspace}/{repo_slug}/refs/branches"],
 		"post"

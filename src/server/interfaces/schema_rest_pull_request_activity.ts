@@ -9,20 +9,17 @@ export type SchemaRestPullRequestActivity =
 	| SchemaRestPullRequestActivityUpdated
 type User = SchemaRestPullRequestActivityBase["user"]
 
-export interface SchemaRestPullRequestActivityCommented
-	extends SchemaRestPullRequestActivityBase {
+export interface SchemaRestPullRequestActivityCommented extends SchemaRestPullRequestActivityBase {
 	readonly action: "COMMENTED"
 	readonly comment?: SchemaRestComment
 	readonly commentAnchor?: SchemaRestComment["anchor"]
 }
 
-export interface SchemaRestPullRequestActivityOpened
-	extends SchemaRestPullRequestActivityBase {
+export interface SchemaRestPullRequestActivityOpened extends SchemaRestPullRequestActivityBase {
 	readonly action: "OPENED"
 }
 
-export interface SchemaRestPullRequestActivityUpdated
-	extends SchemaRestPullRequestActivityBase {
+export interface SchemaRestPullRequestActivityUpdated extends SchemaRestPullRequestActivityBase {
 	readonly action: "UPDATED"
 	readonly addedReviewers: User[]
 	readonly removedReviewers: User[]
