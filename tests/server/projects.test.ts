@@ -1,4 +1,5 @@
 import { describe, test } from "vitest"
+import type { SchemaRestProject } from "../../src/server/openapi/index.ts"
 import {
 	BITBUCKET_SERVER_TEST_PROJECT_KEY,
 	BITBUCKET_SERVER_TEST_PROJECT_NAME,
@@ -19,7 +20,8 @@ describe.skipIf(SKIP_BITBUCKET_SERVER)("Projects", () => {
 		})
 		expect(page.data?.size).toBeTypeOf("number")
 
-		const found = page.data?.values?.find(p => p.key === key)
+		const values: ArrayLike<SchemaRestProject> = page.data?.values ?? []
+		const found = Array.from(values).find(p => p.key === key)
 		expect(found).toMatchObject({ key, name })
 	})
 

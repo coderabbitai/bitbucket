@@ -31,7 +31,7 @@
 	},
 	"repository": "github:coderabbitai/bitbucket",
 	"scripts": {
-		"build": "tsgo",
+		"build": "tsgo --build",
 		"clean": "rm -rf dist docs node_modules tsconfig.tsbuildinfo",
 		"dev": "node ./src/main.ts",
 		"docs": "typedoc",
@@ -50,26 +50,26 @@
 		"postopenapi-typescript:server": "ts-autofix ./src/server/openapi && pnpm run lint:fix"
 	},
 	"dependencies": {
-		"openapi-fetch": "~0.15.0"
+		"openapi-fetch": "~0.17.0"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.21.0",
+		"@eslint/js": "^10.0.1",
 		"@natoboram/load_env": "^2.0.0",
-		"@types/node": "^25.0.3",
-		"@typescript/native-preview": "7.0.0-dev.20260201.1",
-		"dotenv": "^17.0.1",
-		"eslint": "^9.21.0",
-		"eslint-config-prettier": "^10.0.2",
-		"globals": "^17.0.0",
-		"jiti": "^2.4.2",
+		"@types/node": "^25.9.3",
+		"@typescript/native-preview": "7.0.0-dev.20260614.1",
+		"dotenv": "^17.4.2",
+		"eslint": "^10.5.0",
+		"eslint-config-prettier": "^10.1.8",
+		"globals": "^17.6.0",
+		"jiti": "^2.7.0",
 		"markdownlint-cli2": "^0.22.1",
-		"openapi-typescript": "^7.8.0",
-		"prettier": "^3.5.2",
+		"openapi-typescript": "^7.13.0",
+		"prettier": "^3.8.4",
 		"ts-autofix": "^1.0.0",
-		"typedoc": "^0.28.1",
-		"typescript": "5.9.3",
-		"typescript-eslint": "^8.25.0",
-		"vitest": "^4.0.18"
+		"typedoc": "^0.28.19",
+		"typescript": "6.0.3",
+		"typescript-eslint": "^8.61.0",
+		"vitest": "^4.1.8"
 	},
 	"type": "module",
 	"exports": {
