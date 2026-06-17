@@ -1,4 +1,4 @@
-export function fromBase64(base64: string): Uint8Array | string {
+export function fromBase64(base64: string): string {
 	const string = atob(base64)
 	const bytes = Uint8Array.from(string, v => v.codePointAt(0) ?? 0)
 	return new TextDecoder().decode(bytes)
