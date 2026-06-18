@@ -15,6 +15,7 @@
 		"rootDir": "./src",
 		"moduleResolution": "NodeNext",
 		"typeRoots": ["./node_modules/@types", "./src/types"],
+		"types": ["node"],
 		"rewriteRelativeImportExtensions": true,
 		"resolvePackageJsonExports": true,
 		"resolvePackageJsonImports": true,
@@ -61,5 +62,9 @@
 		"skipLibCheck": true
 	},
 	"include": ["src"],
-	"exclude": ["eslint.config.ts", "tests"]
+	"exclude": ["eslint.config.ts", "src/cloud", "src/server", "tests"],
+	"references": [
+		{ "path": "src/cloud/tsconfig.json" },
+		{ "path": "src/server/tsconfig.json" }
+	]
 }

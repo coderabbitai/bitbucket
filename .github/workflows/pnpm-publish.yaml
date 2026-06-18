@@ -6,18 +6,16 @@ on:
       - v*
 
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-
+  build:
     permissions:
-      contents: write # Upload the release files
-      id-token: write # Add `--provenance`
-      packages: write # Publish the package
+      contents: read
 
-    if: github.actor != 'nektos/act'
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: pnpm/action-setup@v6
         with:
           version: latest
@@ -27,25 +25,105 @@ jobs:
           node-version: latest
       - run: pnpm install
       - run: pnpm build
+      - run: pnpm pack --pack-gzip-level 9
 
-      - uses: actions/setup-node@v6
+      - if: github.actor != 'nektos/act'
+        uses: actions/upload-artifact@v7
         with:
-          registry-url: https://npm.pkg.github.com
-          scope: "@coderabbitai"
-      - run: pnpm publish --access public --no-git-checks --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: coderabbitai-bitbucket-${{ github.ref_name }}.tgz
+          path: coderabbitai-bitbucket-*.tgz
+          compression-level: 9
+          if-no-files-found: error
 
+  publish-npm:
+    permissions:
+      id-token: write # Add `--provenance`
+
+    needs: build
+    if: github.actor != 'nektos/act'
+    runs-on: ubuntu-latest
+
+    environment:
+      name: npm-public-registry
+      url: ${{ steps.url.outputs.url }}
+
+    steps:
+      - uses: pnpm/action-setup@v6
+        with:
+          version: latest
       - uses: actions/setup-node@v6
         with:
           registry-url: https://registry.npmjs.org
           scope: "@coderabbitai"
-      - run: pnpm publish --access public --no-git-checks --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.CODERABBIT_NPM_TOKEN }}
 
-      - run: pnpm pack --pack-gzip-level 9
-      - run: gh release create "$VERSION" --generate-notes --title "$VERSION" --verify-tag coderabbitai-bitbucket-*.tgz
+      - uses: actions/download-artifact@v8
+        with:
+          name: coderabbitai-bitbucket-${{ github.ref_name }}.tgz
+
+      - run: pnpm publish coderabbitai-bitbucket-*.tgz --access public --no-git-checks --provenance
+
+      - id: url
+        run: echo "url=https://www.npmjs.com/package/@coderabbitai/bitbucket/v/${VERSION#v}" >> "$GITHUB_OUTPUT"
+        env:
+          VERSION: ${{ github.ref_name }}
+
+  publish-github:
+    permissions:
+      id-token: write # Add `--provenance`
+      packages: write # Publish the package
+
+    needs: build
+    if: github.actor != 'nektos/act'
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-packages-registry
+      url: ${{ steps.url.outputs.url }}
+
+    steps:
+      - uses: pnpm/action-setup@v6
+        with:
+          version: latest
+      - uses: actions/setup-node@v6
+        with:
+          registry-url: https://npm.pkg.github.com
+          scope: "@coderabbitai"
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: coderabbitai-bitbucket-${{ github.ref_name }}.tgz
+
+      - run: pnpm publish coderabbitai-bitbucket-*.tgz --access public --no-git-checks --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: url
+        run: |
+          url=$(gh api '/users/coderabbitai/packages/npm/bitbucket/versions' | jq -r --arg NAME "${VERSION#v}" '.[] | select(.name == $NAME) | .html_url')
+          echo "url=$url" >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ github.ref_name }}
+
+  release:
+    permissions:
+      contents: write # Upload the release files
+
+    needs: build
+    if: github.actor != 'nektos/act'
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-releases
+      url: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.ref_name }}
+
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: coderabbitai-bitbucket-${{ github.ref_name }}.tgz
+
+      - run: gh release create "$VERSION" --generate-notes --repo "$REPO" --title "$VERSION" --verify-tag coderabbitai-bitbucket-*.tgz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
           VERSION: ${{ github.ref_name }}

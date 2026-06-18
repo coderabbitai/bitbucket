@@ -152,6 +152,79 @@ export interface paths {
 		readonly patch?: never
 		readonly trace?: never
 	}
+	readonly "/addon/{addon_key}/client-key": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description The Connect addon key as defined in an application descriptor. */
+				readonly addon_key: string
+			}
+			readonly cookie?: never
+		}
+		/**
+		 * Get the client key of a Connect addon
+		 * @description Get the client key of the Connect addon associated with a Forge app install via forgeAppId linkage.
+		 *
+		 *     This endpoint is part of the Connect -> Forge migration tooling. It is intended to be used by a Forge app
+		 *     using `asApp().requestBitbucket()` only.
+		 *     Prerequisite: app developer needs to register the linkage between their Connect and Forge app by setting
+		 *     `forgeAppId` in the Connect addon descriptor to `app.id` from Forge app manifest, then update the installations.
+		 *     If the request came from an installation of a registered Forge app, the client key of the linked Connect addon
+		 *     installed in the same workspace will be returned.
+		 *
+		 *     ```
+		 *     api.asApp().requestBitbucket(route`/2.0/addon/{addon-key}/client-key`)
+		 *     ```
+		 */
+		readonly get: {
+			readonly parameters: {
+				readonly query?: never
+				readonly header?: never
+				readonly path: {
+					/** @description The Connect addon key as defined in an application descriptor. */
+					readonly addon_key: string
+				}
+				readonly cookie?: never
+			}
+			readonly requestBody?: never
+			readonly responses: {
+				/** @description The client key of the Connect addon linked to the Forge app installation where the request was made */
+				readonly 200: {
+					headers: Readonly<Record<string, unknown>>
+					content?: never
+				}
+				/** @description Invalid authentication. */
+				readonly 401: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+				/** @description Improper authorization. */
+				readonly 403: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+				/** @description The Connect addon or the Forge app does not exist. */
+				readonly 404: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+			}
+		}
+		readonly put?: never
+		readonly post?: never
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
 	readonly "/addon/linkers": {
 		readonly parameters: {
 			readonly query?: never
@@ -161,8 +234,11 @@ export interface paths {
 		}
 		/**
 		 * List linkers for an app
+		 * @deprecated
 		 * @description Gets a list of all [linkers](/cloud/bitbucket/modules/linker/)
 		 *     for the authenticated application.
+		 *
+		 *     This endpoint is deprecated and will be removed by May 2026.
 		 */
 		readonly get: {
 			readonly parameters: {
@@ -200,24 +276,31 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
-				 *     as defined in an application descriptor. */
+				/**
+				 * @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
+				 *     as defined in an application descriptor.
+				 */
 				readonly linker_key: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Get a linker for an app
+		 * @deprecated
 		 * @description Gets a [linker](/cloud/bitbucket/modules/linker/) specified by `linker_key`
 		 *     for the authenticated application.
+		 *
+		 *     This endpoint is deprecated and will be removed by May 2026.
 		 */
 		readonly get: {
 			readonly parameters: {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
-					 *     as defined in an application descriptor. */
+					/**
+					 * @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
+					 *     as defined in an application descriptor.
+					 */
 					readonly linker_key: string
 				}
 				readonly cookie?: never
@@ -258,14 +341,17 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
-				 *     as defined in an application descriptor. */
+				/**
+				 * @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
+				 *     as defined in an application descriptor.
+				 */
 				readonly linker_key: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * List linker values for a linker
+		 * @deprecated
 		 * @description Gets a list of all [linker](/cloud/bitbucket/modules/linker/) values for the
 		 *     specified linker of the authenticated application.
 		 *
@@ -275,14 +361,18 @@ export interface paths {
 		 *     which will be translated to `([\w\-]+)`. A value must match this pattern.
 		 *
 		 *     [Read more about linker values](/cloud/bitbucket/modules/linker/#usingthebitbucketapitosupplyvalues)
+		 *
+		 *     This endpoint is deprecated and will be removed by May 2026.
 		 */
 		readonly get: {
 			readonly parameters: {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
-					 *     as defined in an application descriptor. */
+					/**
+					 * @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
+					 *     as defined in an application descriptor.
+					 */
 					readonly linker_key: string
 				}
 				readonly cookie?: never
@@ -312,6 +402,7 @@ export interface paths {
 		}
 		/**
 		 * Update a linker value
+		 * @deprecated
 		 * @description Bulk update [linker](/cloud/bitbucket/modules/linker/) values for the specified
 		 *     linker of the authenticated application.
 		 *
@@ -321,14 +412,18 @@ export interface paths {
 		 *     which will be translated to `([\w\-]+)`. A value must match this pattern.
 		 *
 		 *     [Read more about linker values](/cloud/bitbucket/modules/linker/#usingthebitbucketapitosupplyvalues)
+		 *
+		 *     This endpoint is deprecated and will be removed by May 2026.
 		 */
 		readonly put: {
 			readonly parameters: {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
-					 *     as defined in an application descriptor. */
+					/**
+					 * @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
+					 *     as defined in an application descriptor.
+					 */
 					readonly linker_key: string
 				}
 				readonly cookie?: never
@@ -365,6 +460,7 @@ export interface paths {
 		}
 		/**
 		 * Create a linker value
+		 * @deprecated
 		 * @description Creates a [linker](/cloud/bitbucket/modules/linker/) value for the specified
 		 *     linker of authenticated application.
 		 *
@@ -374,14 +470,18 @@ export interface paths {
 		 *     which will be translated to `([\w\-]+)`. A value must match this pattern.
 		 *
 		 *     [Read more about linker values](/cloud/bitbucket/modules/linker/#usingthebitbucketapitosupplyvalues)
+		 *
+		 *     This endpoint is deprecated and will be removed by May 2026.
 		 */
 		readonly post: {
 			readonly parameters: {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
-					 *     as defined in an application descriptor. */
+					/**
+					 * @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
+					 *     as defined in an application descriptor.
+					 */
 					readonly linker_key: string
 				}
 				readonly cookie?: never
@@ -418,16 +518,21 @@ export interface paths {
 		}
 		/**
 		 * Delete all linker values
+		 * @deprecated
 		 * @description Delete all [linker](/cloud/bitbucket/modules/linker/) values for the
 		 *     specified linker of the authenticated application.
+		 *
+		 *     This endpoint is deprecated and will be removed by May 2026.
 		 */
 		readonly delete: {
 			readonly parameters: {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
-					 *     as defined in an application descriptor. */
+					/**
+					 * @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
+					 *     as defined in an application descriptor.
+					 */
 					readonly linker_key: string
 				}
 				readonly cookie?: never
@@ -465,8 +570,10 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
-				 *     as defined in an application descriptor. */
+				/**
+				 * @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
+				 *     as defined in an application descriptor.
+				 */
 				readonly linker_key: string
 				/** @description The numeric ID of the linker value. */
 				readonly value_id: number
@@ -475,16 +582,21 @@ export interface paths {
 		}
 		/**
 		 * Get a linker value
+		 * @deprecated
 		 * @description Get a single [linker](/cloud/bitbucket/modules/linker/) value
 		 *     of the authenticated application.
+		 *
+		 *     This endpoint is deprecated and will be removed by May 2026.
 		 */
 		readonly get: {
 			readonly parameters: {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
-					 *     as defined in an application descriptor. */
+					/**
+					 * @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
+					 *     as defined in an application descriptor.
+					 */
 					readonly linker_key: string
 					/** @description The numeric ID of the linker value. */
 					readonly value_id: number
@@ -518,16 +630,21 @@ export interface paths {
 		readonly post?: never
 		/**
 		 * Delete a linker value
+		 * @deprecated
 		 * @description Delete a single [linker](/cloud/bitbucket/modules/linker/) value
 		 *     of the authenticated application.
+		 *
+		 *     This endpoint is deprecated and will be removed by May 2026.
 		 */
 		readonly delete: {
 			readonly parameters: {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
-					 *     as defined in an application descriptor. */
+					/**
+					 * @description The unique key of a [linker module](/cloud/bitbucket/modules/linker/)
+					 *     as defined in an application descriptor.
+					 */
 					readonly linker_key: string
 					/** @description The numeric ID of the linker value. */
 					readonly value_id: number
@@ -674,7 +791,11 @@ export interface paths {
 		}
 		/**
 		 * List public repositories
-		 * @description Returns a paginated list of all public repositories.
+		 * @deprecated
+		 * @description **This endpoint is deprecated. Please use the
+		 *     [workspace scoped alternative](/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-get).**
+		 *
+		 *     Returns a paginated list of all public repositories.
 		 *
 		 *     This endpoint also supports filtering and sorting of the results. See
 		 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.
@@ -682,24 +803,27 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description Filter the results to include only repositories created on or
+					/**
+					 * @description Filter the results to include only repositories created on or
 					 *     after this [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601)
-					 *      timestamp. Example: `YYYY-MM-DDTHH:mm:ss.sssZ` */
+					 *      timestamp. Example: `YYYY-MM-DDTHH:mm:ss.sssZ`
+					 */
 					readonly after?: string
-					/** @description Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					/**
+					 * @description Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
 					 *     `role` parameter must also be specified.
-					 *      */
+					 */
 					readonly q?: string
-					/** @description Filters the result based on the authenticated user's role on each repository.
+					/**
+					 * @description Filters the result based on the authenticated user's role on each repository.
 					 *
 					 *     * **member**: returns repositories to which the user has explicit read access
 					 *     * **contributor**: returns repositories to which the user has explicit write access
 					 *     * **admin**: returns repositories to which the user has explicit administrator access
 					 *     * **owner**: returns all repositories owned by the current user
-					 *      */
+					 */
 					readonly role?: "admin" | "contributor" | "member" | "owner"
-					/** @description Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
-					 *      */
+					/** @description Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
 					readonly sort?: string
 				}
 				readonly header?: never
@@ -730,9 +854,10 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -754,29 +879,26 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
-					 *      */
+					/** @description Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
 					readonly q?: string
-					/** @description
-					 *     Filters the result based on the authenticated user's role on each repository.
+					/**
+					 * @description Filters the result based on the authenticated user's role on each repository.
 					 *
 					 *     * **member**: returns repositories to which the user has explicit read access
 					 *     * **contributor**: returns repositories to which the user has explicit write access
 					 *     * **admin**: returns repositories to which the user has explicit administrator access
 					 *     * **owner**: returns all repositories owned by the current user
-					 *      */
+					 */
 					readonly role?: "admin" | "contributor" | "member" | "owner"
-					/** @description
-					 *     Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
-					 *              */
+					/** @description Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -819,13 +941,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -839,13 +963,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -900,22 +1026,25 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
 			}
-			/** @description The repository that is to be updated.
+			/**
+			 * @description The repository that is to be updated.
 			 *
 			 *     Note that the elements "owner" and "full_name" are ignored since the
 			 *     URL implies them.
-			 *      */
+			 */
 			readonly requestBody?: {
 				readonly content: {
 					readonly "application/json": components["schemas"]["repository"]
@@ -925,8 +1054,10 @@ export interface paths {
 				/** @description The existing repository has been updated */
 				readonly 200: {
 					headers: {
-						/** @description The location of the repository. This header is only
-						 *     provided when the repository's name is changed. */
+						/**
+						 * @description The location of the repository. This header is only
+						 *     provided when the repository's name is changed.
+						 */
 						readonly Location?: string
 						readonly [name: string]: unknown
 					}
@@ -1000,13 +1131,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1050,22 +1183,25 @@ export interface paths {
 		readonly delete: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description If a repository has been moved to a new location, use this parameter to
+					/**
+					 * @description If a repository has been moved to a new location, use this parameter to
 					 *     show users a friendly message in the Bitbucket UI that the repository
 					 *     has moved to a new location. However, a GET to this endpoint will still
 					 *     return a 404.
-					 *      */
+					 */
 					readonly redirect_to?: string
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1103,13 +1239,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -1129,13 +1267,15 @@ export interface paths {
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1226,13 +1366,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1287,13 +1429,15 @@ export interface paths {
 			readonly path: {
 				/** @description The restriction rule's id */
 				readonly id: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -1309,13 +1453,15 @@ export interface paths {
 				readonly path: {
 					/** @description The restriction rule's id */
 					readonly id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1367,13 +1513,15 @@ export interface paths {
 				readonly path: {
 					/** @description The restriction rule's id */
 					readonly id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1427,13 +1575,15 @@ export interface paths {
 				readonly path: {
 					/** @description The restriction rule's id */
 					readonly id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1477,13 +1627,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -1513,13 +1665,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1569,13 +1723,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -1601,13 +1757,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1710,13 +1868,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1774,13 +1934,15 @@ export interface paths {
 			readonly path: {
 				/** @description The commit's SHA1. */
 				readonly commit: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -1796,13 +1958,15 @@ export interface paths {
 				readonly path: {
 					/** @description The commit's SHA1. */
 					readonly commit: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1840,13 +2004,15 @@ export interface paths {
 			readonly path: {
 				/** @description The commit's SHA1. */
 				readonly commit: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -1869,13 +2035,15 @@ export interface paths {
 				readonly path: {
 					/** @description The commit's SHA1. */
 					readonly commit: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1914,13 +2082,15 @@ export interface paths {
 				readonly path: {
 					/** @description The commit's SHA1. */
 					readonly commit: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -1953,13 +2123,15 @@ export interface paths {
 			readonly path: {
 				/** @description The commit's SHA1. */
 				readonly commit: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -1976,26 +2148,30 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description Query string to narrow down the response as per
+					/**
+					 * @description Query string to narrow down the response as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
-					 *      */
+					 */
 					readonly q?: string
-					/** @description Field by which the results should be sorted as per
+					/**
+					 * @description Field by which the results should be sorted as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
-					 *      */
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
 					/** @description The commit's SHA1. */
 					readonly commit: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -2033,13 +2209,15 @@ export interface paths {
 				readonly path: {
 					/** @description The commit's SHA1. */
 					readonly commit: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -2087,13 +2265,15 @@ export interface paths {
 				readonly comment_id: number
 				/** @description The commit's SHA1. */
 				readonly commit: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -2111,13 +2291,15 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The commit's SHA1. */
 					readonly commit: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -2153,13 +2335,15 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The commit's SHA1. */
 					readonly commit: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -2207,13 +2391,15 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The commit's SHA1. */
 					readonly commit: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -2366,7 +2552,6 @@ export interface paths {
 		 *     | TEXT | String | The value will be read as a JSON string and will be displayed as-is |
 		 *
 		 *     Please refer to the [Code Insights documentation](https://confluence.atlassian.com/bitbucket/code-insights-994316785.html) for more information.
-		 *
 		 */
 		readonly put: operations["createOrUpdateReport"]
 		readonly post?: never
@@ -2433,7 +2618,6 @@ export interface paths {
 		 *     severity: HIGH, MEDIUM, LOW, CRITICAL
 		 *
 		 *     Please refer to the [Code Insights documentation](https://confluence.atlassian.com/bitbucket/code-insights-994316785.html) for more information.
-		 *
 		 */
 		readonly post: operations["bulkCreateOrUpdateAnnotations"]
 		readonly delete?: never
@@ -2481,7 +2665,6 @@ export interface paths {
 		 *     severity: HIGH, MEDIUM, LOW, CRITICAL
 		 *
 		 *     Please refer to the [Code Insights documentation](https://confluence.atlassian.com/bitbucket/code-insights-994316785.html) for more information.
-		 *
 		 */
 		readonly put: operations["createOrUpdateAnnotation"]
 		readonly post?: never
@@ -2502,13 +2685,15 @@ export interface paths {
 			readonly path: {
 				/** @description The commit's SHA1. */
 				readonly commit: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -2520,31 +2705,36 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description Query string to narrow down the response as per
+					/**
+					 * @description Query string to narrow down the response as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
-					 *      */
+					 */
 					readonly q?: string
-					/** @description If specified, only return commit status objects that were either
+					/**
+					 * @description If specified, only return commit status objects that were either
 					 *     created without a refname, or were created with the specified refname
-					 *      */
+					 */
 					readonly refname?: string
-					/** @description Field by which the results should be sorted as per
+					/**
+					 * @description Field by which the results should be sorted as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
 					 *     Defaults to `created_on`.
-					 *      */
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
 					/** @description The commit's SHA1. */
 					readonly commit: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -2587,13 +2777,15 @@ export interface paths {
 			readonly path: {
 				/** @description The commit's SHA1. */
 				readonly commit: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -2648,13 +2840,15 @@ export interface paths {
 				readonly path: {
 					/** @description The commit's SHA1. */
 					readonly commit: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -2702,13 +2896,15 @@ export interface paths {
 				readonly commit: string
 				/** @description The build status' unique key */
 				readonly key: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -2726,13 +2922,15 @@ export interface paths {
 					readonly commit: string
 					/** @description The build status' unique key */
 					readonly key: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -2785,13 +2983,15 @@ export interface paths {
 					readonly commit: string
 					/** @description The build status' unique key */
 					readonly key: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -2836,13 +3036,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -2900,13 +3102,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -2943,13 +3147,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -2983,15 +3189,17 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
 				/** @description A commit SHA1 or ref name. */
 				readonly revision: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -3042,15 +3250,17 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
 					/** @description A commit SHA1 or ref name. */
 					readonly revision: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3087,15 +3297,17 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
 					/** @description A commit SHA1 or ref name. */
 					readonly revision: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3129,19 +3341,22 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * List components
+		 * @deprecated
 		 * @description Returns the components that have been defined in the issue tracker.
 		 *
 		 *     This resource is only available on repositories that have the issue
@@ -3152,13 +3367,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3196,19 +3413,22 @@ export interface paths {
 			readonly path: {
 				/** @description The component's id */
 				readonly component_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Get a component for issues
+		 * @deprecated
 		 * @description Returns the specified issue tracker component object.
 		 */
 		readonly get: {
@@ -3218,13 +3438,15 @@ export interface paths {
 				readonly path: {
 					/** @description The component's id */
 					readonly component_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3260,13 +3482,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -3285,13 +3509,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3327,17 +3553,20 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the username or the UUID of the default reviewer,
+				/**
+				 * @description This can either be the username or the UUID of the default reviewer,
 				 *     surrounded by curly-braces, for example: `{account UUID}`.
-				 *      */
+				 */
 				readonly target_username: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -3355,17 +3584,20 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the username or the UUID of the default reviewer,
+					/**
+					 * @description This can either be the username or the UUID of the default reviewer,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly target_username: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3407,17 +3639,20 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the username or the UUID of the default reviewer,
+					/**
+					 * @description This can either be the username or the UUID of the default reviewer,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly target_username: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3464,17 +3699,20 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the username or the UUID of the default reviewer,
+					/**
+					 * @description This can either be the username or the UUID of the default reviewer,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly target_username: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3512,13 +3750,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -3532,13 +3772,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3591,13 +3833,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3643,13 +3887,15 @@ export interface paths {
 			readonly path: {
 				/** @description The key ID matching the deploy key. */
 				readonly key_id: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -3665,13 +3911,15 @@ export interface paths {
 				readonly path: {
 					/** @description The key ID matching the deploy key. */
 					readonly key_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3701,7 +3949,7 @@ export interface paths {
 		}
 		/**
 		 * Update a repository deploy key
-		 * @description Create a new deploy key in a repository.
+		 * @description Update an existing deploy key in a repository.
 		 *
 		 *     The same key needs to be passed in but the comment and label can change.
 		 *
@@ -3724,13 +3972,15 @@ export interface paths {
 				readonly path: {
 					/** @description The key ID matching the deploy key. */
 					readonly key_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3777,13 +4027,15 @@ export interface paths {
 				readonly path: {
 					/** @description The key ID matching the deploy key. */
 					readonly key_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -3907,17 +4159,20 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
+				/**
+				 * @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
 				 *     notation (e.g. `3a8b42..9ff173`).
-				 *      */
+				 */
 				readonly spec: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -3970,7 +4225,8 @@ export interface paths {
 					readonly context?: number
 					/** @description Generate diffs that ignore whitespace. */
 					readonly ignore_whitespace?: boolean
-					/** @description This parameter is deprecated. The 'topic' parameter should be used
+					/**
+					 * @description This parameter is deprecated. The 'topic' parameter should be used
 					 *     instead. The 'merge' and 'topic' parameters cannot be both used at
 					 *     the same time.
 					 *
@@ -3978,33 +4234,44 @@ export interface paths {
 					 *     destination commit, and then a diff from the
 					 *     destination to the merge result is returned. If false,
 					 *     a simple 'two dot' diff between the source and
-					 *     destination is returned. True if omitted. */
+					 *     destination is returned. True if omitted.
+					 */
 					readonly merge?: boolean
-					/** @description Limit the diff to a particular file (this parameter
-					 *     can be repeated for multiple paths). */
+					/**
+					 * @description Limit the diff to a particular file (this parameter
+					 *     can be repeated for multiple paths).
+					 */
 					readonly path?: string
 					/** @description Whether to perform rename detection, true if omitted. */
 					readonly renames?: boolean
-					/** @description If true, returns 2-way 'three-dot' diff.
+					/**
+					 * @description If true, returns 2-way 'three-dot' diff.
 					 *     This is a diff between the source commit and the merge base
 					 *     of the source commit and the destination commit.
 					 *     If false, a simple 'two dot' diff between the source and
-					 *     destination is returned. */
+					 *     destination is returned.
+					 *
+					 *     If omitted, defaults to true, ie. a 2 way 'three-dot'
+					 *     diff is returned.
+					 */
 					readonly topic?: boolean
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
+					/**
+					 * @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
 					 *     notation (e.g. `3a8b42..9ff173`).
-					 *      */
+					 */
 					readonly spec: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -4016,12 +4283,14 @@ export interface paths {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
 				}
-				/** @description If the diff was too large and timed out.
+				/**
+				 * @description If the diff was too large and timed out.
 				 *
 				 *     Since this endpoint does not employ any form of pagination, but
 				 *     instead returns the diff as a single document, it can run into
 				 *     trouble on very large diffs. If Bitbucket times out in cases
-				 *     like these, a 555 status code is returned. */
+				 *     like these, a 555 status code is returned.
+				 */
 				readonly 555: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -4043,7 +4312,8 @@ export interface paths {
 			readonly query?: {
 				/** @description Generate diffs that ignore whitespace */
 				readonly ignore_whitespace?: boolean
-				/** @description This parameter is deprecated. The 'topic' parameter should be used
+				/**
+				 * @description This parameter is deprecated. The 'topic' parameter should be used
 				 *     instead. The 'merge' and 'topic' parameters cannot be both used at
 				 *     the same time.
 				 *
@@ -4051,33 +4321,41 @@ export interface paths {
 				 *     destination commit, and then a diffstat from the
 				 *     destination to the merge result is returned. If false,
 				 *     a simple 'two dot' diffstat between the source and
-				 *     destination is returned. True if omitted. */
+				 *     destination is returned. True if omitted.
+				 */
 				readonly merge?: boolean
-				/** @description Limit the diffstat to a particular file (this parameter
-				 *     can be repeated for multiple paths). */
+				/**
+				 * @description Limit the diffstat to a particular file (this parameter
+				 *     can be repeated for multiple paths).
+				 */
 				readonly path?: string
 				/** @description Whether to perform rename detection, true if omitted. */
 				readonly renames?: boolean
-				/** @description If true, returns 2-way 'three-dot' diff.
+				/**
+				 * @description If true, returns 2-way 'three-dot' diff.
 				 *     This is a diff between the source commit and the merge base
 				 *     of the source commit and the destination commit.
 				 *     If false, a simple 'two dot' diff between the source and
-				 *     destination is returned. */
+				 *     destination is returned.
+				 */
 				readonly topic?: boolean
 			}
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
+				/**
+				 * @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
 				 *     notation (e.g. `3a8b42..9ff173`).
-				 *      */
+				 */
 				readonly spec: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -4114,7 +4392,8 @@ export interface paths {
 				readonly query?: {
 					/** @description Generate diffs that ignore whitespace */
 					readonly ignore_whitespace?: boolean
-					/** @description This parameter is deprecated. The 'topic' parameter should be used
+					/**
+					 * @description This parameter is deprecated. The 'topic' parameter should be used
 					 *     instead. The 'merge' and 'topic' parameters cannot be both used at
 					 *     the same time.
 					 *
@@ -4122,33 +4401,41 @@ export interface paths {
 					 *     destination commit, and then a diffstat from the
 					 *     destination to the merge result is returned. If false,
 					 *     a simple 'two dot' diffstat between the source and
-					 *     destination is returned. True if omitted. */
+					 *     destination is returned. True if omitted.
+					 */
 					readonly merge?: boolean
-					/** @description Limit the diffstat to a particular file (this parameter
-					 *     can be repeated for multiple paths). */
+					/**
+					 * @description Limit the diffstat to a particular file (this parameter
+					 *     can be repeated for multiple paths).
+					 */
 					readonly path?: string
 					/** @description Whether to perform rename detection, true if omitted. */
 					readonly renames?: boolean
-					/** @description If true, returns 2-way 'three-dot' diff.
+					/**
+					 * @description If true, returns 2-way 'three-dot' diff.
 					 *     This is a diff between the source commit and the merge base
 					 *     of the source commit and the destination commit.
 					 *     If false, a simple 'two dot' diff between the source and
-					 *     destination is returned. */
+					 *     destination is returned.
+					 */
 					readonly topic?: boolean
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
+					/**
+					 * @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
 					 *     notation (e.g. `3a8b42..9ff173`).
-					 *      */
+					 */
 					readonly spec: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -4184,13 +4471,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -4204,13 +4493,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -4250,13 +4541,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -4304,13 +4597,15 @@ export interface paths {
 			readonly path: {
 				/** @description Name of the file. */
 				readonly filename: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -4332,13 +4627,15 @@ export interface paths {
 				readonly path: {
 					/** @description Name of the file. */
 					readonly filename: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -4379,13 +4676,15 @@ export interface paths {
 				readonly path: {
 					/** @description Name of the file. */
 					readonly filename: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -4423,13 +4722,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -4440,13 +4741,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -4496,13 +4799,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -4520,13 +4825,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -4625,6 +4932,82 @@ export interface paths {
 		readonly patch?: never
 		readonly trace?: never
 	}
+	readonly "/repositories/{workspace}/{repo_slug}/file-conflicts/{spec}": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
+				 *     surrounded by curly-braces, for example: `{repository UUID}`.
+				 */
+				readonly repo_slug: string
+				/**
+				 * @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
+				 *     notation (e.g. `3a8b42..9ff173`).
+				 */
+				readonly spec: string
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
+				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
+				 */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		/**
+		 * Get file conflicts for a commit spec
+		 * @description Get file conflicts for a commit spec
+		 */
+		readonly get: {
+			readonly parameters: {
+				readonly query?: never
+				readonly header?: never
+				readonly path: {
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
+					 *     surrounded by curly-braces, for example: `{repository UUID}`.
+					 */
+					readonly repo_slug: string
+					/**
+					 * @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
+					 *     notation (e.g. `3a8b42..9ff173`).
+					 */
+					readonly spec: string
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
+					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
+					 */
+					readonly workspace: string
+				}
+				readonly cookie?: never
+			}
+			readonly requestBody?: never
+			readonly responses: {
+				/** @description A paginated list of file conflicts */
+				readonly 200: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["paginated_file_conflicts"]
+					}
+				}
+				/** @description If the spec cannot be resolved, which may be due to an invalid spec, or commits/refs not present in the repository */
+				readonly 404: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+			}
+		}
+		readonly put?: never
+		readonly post?: never
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
 	readonly "/repositories/{workspace}/{repo_slug}/filehistory/{commit}/{path}": {
 		readonly parameters: {
 			readonly query?: never
@@ -4634,13 +5017,15 @@ export interface paths {
 				readonly commit: string
 				/** @description Path to the file. */
 				readonly path: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -4678,19 +5063,21 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response as per
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
+					/**
+					 * @description Query string to narrow down the response as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
 					readonly q?: string
-					/** @description
-					 *     When `true`, Bitbucket will follow the history of the file across
+					/**
+					 * @description When `true`, Bitbucket will follow the history of the file across
 					 *     renames (this is the default behavior). This can be turned off by
-					 *     specifying `false`. */
+					 *     specifying `false`.
+					 */
 					readonly renames?: string
-					/** @description
-					 *     Name of a response property sort the result by as per
+					/**
+					 * @description Name of a response property sort the result by as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#sorting-query-results).
-					 *      */
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
@@ -4699,13 +5086,15 @@ export interface paths {
 					readonly commit: string
 					/** @description Path to the file. */
 					readonly path: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -4741,13 +5130,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -4760,30 +5151,31 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
-					 *      */
+					/** @description Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
 					readonly q?: string
-					/** @description Filters the result based on the authenticated user's role on each repository.
+					/**
+					 * @description Filters the result based on the authenticated user's role on each repository.
 					 *
 					 *     * **member**: returns repositories to which the user has explicit read access
 					 *     * **contributor**: returns repositories to which the user has explicit write access
 					 *     * **admin**: returns repositories to which the user has explicit administrator access
 					 *     * **owner**: returns all repositories owned by the current user
-					 *      */
+					 */
 					readonly role?: "admin" | "contributor" | "member" | "owner"
-					/** @description Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
-					 *      */
+					/** @description Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -4865,13 +5257,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -4907,13 +5301,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -4927,13 +5323,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5005,13 +5403,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5056,15 +5456,17 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
 				/** @description Installed webhook's ID */
 				readonly uid: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -5079,15 +5481,17 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
 					/** @description Installed webhook's ID */
 					readonly uid: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5136,15 +5540,17 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
 					/** @description Installed webhook's ID */
 					readonly uid: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5185,15 +5591,17 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
 					/** @description Installed webhook's ID */
 					readonly uid: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5231,19 +5639,22 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * List issues
+		 * @deprecated
 		 * @description Returns the issues in the issue tracker.
 		 */
 		readonly get: {
@@ -5251,13 +5662,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5283,6 +5696,7 @@ export interface paths {
 		readonly put?: never
 		/**
 		 * Create an issue
+		 * @deprecated
 		 * @description Creates a new issue.
 		 *
 		 *     This call requires authentication. Private repositories or private
@@ -5296,13 +5710,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5361,19 +5777,22 @@ export interface paths {
 			readonly path: {
 				/** @description The issue id */
 				readonly issue_id: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Get an issue
+		 * @deprecated
 		 * @description Returns the specified issue.
 		 */
 		readonly get: {
@@ -5383,13 +5802,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5428,6 +5849,7 @@ export interface paths {
 		}
 		/**
 		 * Update an issue
+		 * @deprecated
 		 * @description Modifies the issue.
 		 *
 		 *     ```
@@ -5462,13 +5884,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5501,6 +5925,7 @@ export interface paths {
 		readonly post?: never
 		/**
 		 * Delete an issue
+		 * @deprecated
 		 * @description Deletes the specified issue. This requires write access to the
 		 *     repository.
 		 */
@@ -5511,13 +5936,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5557,19 +5984,22 @@ export interface paths {
 			readonly path: {
 				/** @description The issue id */
 				readonly issue_id: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * List attachments for an issue
+		 * @deprecated
 		 * @description Returns all attachments for this issue.
 		 *
 		 *     This returns the files' meta data. This does not return the files'
@@ -5584,13 +6014,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5621,6 +6053,7 @@ export interface paths {
 		readonly put?: never
 		/**
 		 * Upload an attachment to an issue
+		 * @deprecated
 		 * @description Upload new issue attachments.
 		 *
 		 *     To upload files, perform a `multipart/form-data` POST containing one
@@ -5636,13 +6069,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5692,19 +6127,22 @@ export interface paths {
 				readonly issue_id: string
 				/** @description Path to the file. */
 				readonly path: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Get attachment for an issue
+		 * @deprecated
 		 * @description Returns the contents of the specified file attachment.
 		 *
 		 *     Note that this endpoint does not return a JSON response, but instead
@@ -5723,13 +6161,15 @@ export interface paths {
 					readonly issue_id: string
 					/** @description Path to the file. */
 					readonly path: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5762,6 +6202,7 @@ export interface paths {
 		readonly post?: never
 		/**
 		 * Delete an attachment for an issue
+		 * @deprecated
 		 * @description Deletes an attachment.
 		 */
 		readonly delete: {
@@ -5773,13 +6214,15 @@ export interface paths {
 					readonly issue_id: string
 					/** @description Path to the file. */
 					readonly path: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5817,19 +6260,22 @@ export interface paths {
 			readonly path: {
 				/** @description The issue id */
 				readonly issue_id: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * List changes on an issue
+		 * @deprecated
 		 * @description Returns the list of all changes that have been made to the specified
 		 *     issue. Changes are returned in chronological order with the oldest
 		 *     change first.
@@ -5867,28 +6313,31 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response. See
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for details. */
+					/**
+					 * @description Query string to narrow down the response. See
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for details.
+					 */
 					readonly q?: string
-					/** @description
-					 *     Name of a response property to sort results. See
+					/**
+					 * @description Name of a response property to sort results. See
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#sorting-query-results)
 					 *     for details.
-					 *      */
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -5914,6 +6363,7 @@ export interface paths {
 		readonly put?: never
 		/**
 		 * Modify the state of an issue
+		 * @deprecated
 		 * @description Makes a change to the specified issue.
 		 *
 		 *     For example, to change an issue's state and assignee, create a new
@@ -5960,13 +6410,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6027,19 +6479,22 @@ export interface paths {
 				readonly change_id: string
 				/** @description The issue id */
 				readonly issue_id: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Get issue change object
+		 * @deprecated
 		 * @description Returns the specified issue change object.
 		 *
 		 *     This resource is only available on repositories that have the issue
@@ -6054,13 +6509,15 @@ export interface paths {
 					readonly change_id: string
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6098,19 +6555,22 @@ export interface paths {
 			readonly path: {
 				/** @description The issue id */
 				readonly issue_id: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * List comments on an issue
+		 * @deprecated
 		 * @description Returns a paginated list of all comments that were made on the
 		 *     specified issue.
 		 *
@@ -6123,22 +6583,25 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response as per
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
+					/**
+					 * @description Query string to narrow down the response as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
 					readonly q?: string
 				}
 				readonly header?: never
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6157,6 +6620,7 @@ export interface paths {
 		readonly put?: never
 		/**
 		 * Create a comment on an issue
+		 * @deprecated
 		 * @description Creates a new issue comment.
 		 *
 		 *     ```
@@ -6173,13 +6637,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6200,7 +6666,7 @@ export interface paths {
 					}
 					content?: never
 				}
-				/** @description If the input was invalid, or if the comment being created is detected as spam  */
+				/** @description If the input was invalid, or if the comment being created is detected as spam */
 				readonly 400: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -6224,19 +6690,22 @@ export interface paths {
 				readonly comment_id: number
 				/** @description The issue id */
 				readonly issue_id: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Get a comment on an issue
+		 * @deprecated
 		 * @description Returns the specified issue comment object.
 		 */
 		readonly get: {
@@ -6248,13 +6717,15 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6272,6 +6743,7 @@ export interface paths {
 		}
 		/**
 		 * Update a comment on an issue
+		 * @deprecated
 		 * @description Updates the content of the specified issue comment. Note that only
 		 *     the `content.raw` field can be modified.
 		 *
@@ -6291,13 +6763,15 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6316,7 +6790,7 @@ export interface paths {
 						readonly "application/json": components["schemas"]["issue_comment"]
 					}
 				}
-				/** @description If the input was invalid, or if the update to the comment is detected as spam  */
+				/** @description If the input was invalid, or if the update to the comment is detected as spam */
 				readonly 400: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -6328,6 +6802,7 @@ export interface paths {
 		readonly post?: never
 		/**
 		 * Delete a comment on an issue
+		 * @deprecated
 		 * @description Deletes the specified comment.
 		 */
 		readonly delete: {
@@ -6339,13 +6814,15 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6371,19 +6848,22 @@ export interface paths {
 			readonly path: {
 				/** @description The issue id */
 				readonly issue_id: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Check if current user voted for an issue
+		 * @deprecated
 		 * @description Check whether the authenticated user has voted for this issue.
 		 *     A 204 status code indicates that the user has voted, while a 404
 		 *     implies they haven't.
@@ -6395,13 +6875,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6433,6 +6915,7 @@ export interface paths {
 		}
 		/**
 		 * Vote for an issue
+		 * @deprecated
 		 * @description Vote for this issue.
 		 *
 		 *     To cast your vote, do an empty PUT. The 204 status code indicates that
@@ -6445,13 +6928,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6484,6 +6969,7 @@ export interface paths {
 		readonly post?: never
 		/**
 		 * Remove vote for an issue
+		 * @deprecated
 		 * @description Retract your vote.
 		 */
 		readonly delete: {
@@ -6493,13 +6979,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6527,19 +7015,22 @@ export interface paths {
 			readonly path: {
 				/** @description The issue id */
 				readonly issue_id: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Check if current user is watching a issue
+		 * @deprecated
 		 * @description Indicated whether or not the authenticated user is watching this
 		 *     issue.
 		 */
@@ -6550,13 +7041,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6588,6 +7081,7 @@ export interface paths {
 		}
 		/**
 		 * Watch an issue
+		 * @deprecated
 		 * @description Start watching this issue.
 		 *
 		 *     To start watching this issue, do an empty PUT. The 204 status code
@@ -6600,13 +7094,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6639,6 +7135,7 @@ export interface paths {
 		readonly post?: never
 		/**
 		 * Stop watching an issue
+		 * @deprecated
 		 * @description Stop watching this issue.
 		 */
 		readonly delete: {
@@ -6648,13 +7145,15 @@ export interface paths {
 				readonly path: {
 					/** @description The issue id */
 					readonly issue_id: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6694,13 +7193,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -6709,6 +7210,7 @@ export interface paths {
 		readonly put?: never
 		/**
 		 * Export issues
+		 * @deprecated
 		 * @description A POST request to this endpoint initiates a new background celery task that archives the repo's issues.
 		 *
 		 *     When the job has been accepted, it will return a 202 (Accepted) along with a unique url to this job in the
@@ -6719,18 +7221,20 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
 			}
-			/** @description The options to apply to the export. Available options include `project_key` and `project_name` which, if specified, are used as the project key and name in the exported Jira json format. Option `send_email` specifies whether an email should be sent upon export result. Option `include_attachments` specifies whether attachments are included in the export. */
+			/** @description The options to apply to the export. Available options include `project_key` and `project_name` which, if specified, are used as the Jira space key and name in the exported Jira json format. Option `send_email` specifies whether an email should be sent upon export result. Option `include_attachments` specifies whether attachments are included in the export. */
 			readonly requestBody?: {
 				readonly content: {
 					readonly "application/json": components["schemas"]["export_options"]
@@ -6778,21 +7282,24 @@ export interface paths {
 			readonly path: {
 				/** @description The name of the repo */
 				readonly repo_name: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
 				/** @description The ID of the export task */
 				readonly task_id: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Check issue export status
+		 * @deprecated
 		 * @description This endpoint is used to poll for the progress of an issue export
 		 *     job and return the zip file after the job is complete.
 		 *     As long as the job is running, this will return a 202 response
@@ -6812,15 +7319,17 @@ export interface paths {
 				readonly path: {
 					/** @description The name of the repo */
 					readonly repo_name: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
 					/** @description The ID of the export task */
 					readonly task_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6870,19 +7379,22 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Check issue import status
+		 * @deprecated
 		 * @description When using GET, this endpoint reports the status of the current import task.
 		 *
 		 *     After the job has been scheduled, but before it starts executing, the endpoint
@@ -6897,13 +7409,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -6950,6 +7464,7 @@ export interface paths {
 		readonly put?: never
 		/**
 		 * Import issues
+		 * @deprecated
 		 * @description A POST request to this endpoint will import the zip file given by the archive parameter into the repository. All
 		 *     existing issues will be deleted and replaced by the contents of the imported zip file.
 		 *
@@ -6965,13 +7480,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7026,16 +7543,17 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description A commit range using double dot notation (e.g. `3a8b42..9ff173`).
-				 *      */
+				/** @description A commit range using double dot notation (e.g. `3a8b42..9ff173`). */
 				readonly revspec: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -7053,16 +7571,17 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description A commit range using double dot notation (e.g. `3a8b42..9ff173`).
-					 *      */
+					/** @description A commit range using double dot notation (e.g. `3a8b42..9ff173`). */
 					readonly revspec: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7112,19 +7631,22 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * List milestones
+		 * @deprecated
 		 * @description Returns the milestones that have been defined in the issue tracker.
 		 *
 		 *     This resource is only available on repositories that have the issue
@@ -7135,13 +7657,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7179,19 +7703,22 @@ export interface paths {
 			readonly path: {
 				/** @description The milestone's id */
 				readonly milestone_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Get a milestone
+		 * @deprecated
 		 * @description Returns the specified issue tracker milestone object.
 		 */
 		readonly get: {
@@ -7201,13 +7728,15 @@ export interface paths {
 				readonly path: {
 					/** @description The milestone's id */
 					readonly milestone_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7243,13 +7772,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -7260,13 +7791,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7289,20 +7822,21 @@ export interface paths {
 				}
 			}
 		}
-		/** Set the inheritance state for repository settings
-		 *                      */
+		/** Set the inheritance state for repository settings */
 		readonly put: {
 			readonly parameters: {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7335,17 +7869,20 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
+				/**
+				 * @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
 				 *     notation (e.g. `3a8b42..9ff173`).
-				 *      */
+				 */
 				readonly spec: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -7375,17 +7912,20 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
+					/**
+					 * @description A commit SHA (e.g. `3a8b42`) or a commit range using double dot
 					 *     notation (e.g. `3a8b42..9ff173`).
-					 *      */
+					 */
 					readonly spec: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7397,12 +7937,14 @@ export interface paths {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
 				}
-				/** @description If the diff was too large and timed out.
+				/**
+				 * @description If the diff was too large and timed out.
 				 *
 				 *     Since this endpoint does not employ any form of pagination, but
 				 *     instead returns the diff as a single document, it can run into
 				 *     trouble on very large diffs. If Bitbucket times out in cases
-				 *     like these, a 555 status code is returned. */
+				 *     like these, a 555 status code is returned.
+				 */
 				readonly 555: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -7424,13 +7966,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -7445,13 +7989,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7503,13 +8049,15 @@ export interface paths {
 			readonly path: {
 				/** @description Slug of the requested group. */
 				readonly group_slug: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -7534,13 +8082,15 @@ export interface paths {
 				readonly path: {
 					/** @description Slug of the requested group. */
 					readonly group_slug: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7598,13 +8148,15 @@ export interface paths {
 				readonly path: {
 					/** @description Slug of the requested group. */
 					readonly group_slug: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7671,13 +8223,15 @@ export interface paths {
 				readonly path: {
 					/** @description Slug of the requested group. */
 					readonly group_slug: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7722,13 +8276,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -7743,13 +8299,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7799,17 +8357,20 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the UUID of the account, surrounded by curly-braces, for
+				/**
+				 * @description This can either be the UUID of the account, surrounded by curly-braces, for
 				 *     example: `{account UUID}`, OR an Atlassian Account ID.
-				 *      */
+				 */
 				readonly selected_user_id: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -7832,17 +8393,20 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the UUID of the account, surrounded by curly-braces, for
+					/**
+					 * @description This can either be the UUID of the account, surrounded by curly-braces, for
 					 *     example: `{account UUID}`, OR an Atlassian Account ID.
-					 *      */
+					 */
 					readonly selected_user_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7898,17 +8462,20 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the UUID of the account, surrounded by curly-braces, for
+					/**
+					 * @description This can either be the UUID of the account, surrounded by curly-braces, for
 					 *     example: `{account UUID}`, OR an Atlassian Account ID.
-					 *      */
+					 */
 					readonly selected_user_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -7973,17 +8540,20 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the UUID of the account, surrounded by curly-braces, for
+					/**
+					 * @description This can either be the UUID of the account, surrounded by curly-braces, for
 					 *     example: `{account UUID}`, OR an Atlassian Account ID.
-					 *      */
+					 */
 					readonly selected_user_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -8037,34 +8607,37 @@ export interface paths {
 		 *     Note that unlike other endpoints in the Bitbucket API, this endpoint utilizes query parameters to allow filtering
 		 *     and sorting of returned results. See [query parameters](#api-repositories-workspace-repo-slug-pipelines-get-request-Query%20parameters)
 		 *     for specific details.
-		 *
 		 */
 		readonly get: operations["getPipelinesForRepository"]
 		readonly put?: never
 		/**
 		 * Run a pipeline
 		 * @description Endpoint to create and initiate a pipeline.
-		 *     There are a couple of different options to initiate a pipeline, where the payload of the request will determine which type of pipeline will be instantiated.
-		 *     # Trigger a Pipeline for a branch
+		 *     There are a number of different options to initiate a pipeline, where the payload of the request will determine which type of pipeline will be instantiated.
+		 *
+		 *     ## Trigger a pipeline for a branch
+		 *
 		 *     One way to trigger pipelines is by specifying the branch for which you want to trigger a pipeline.
 		 *     The specified branch will be used to determine which pipeline definition from the `bitbucket-pipelines.yml` file will be applied to initiate the pipeline. The pipeline will then do a clone of the repository and checkout the latest revision of the specified branch.
 		 *
 		 *     ### Example
 		 *
 		 *     ```
-		 *     $ curl -X POST -is -u username:password \
-		 *       -H 'Content-Type: application/json' \
-		 *      https://api.bitbucket.org/2.0/repositories/jeroendr/meat-demo2/pipelines/ \
-		 *       -d '
-		 *       {
-		 *         "target": {
-		 *           "ref_type": "branch",
-		 *           "type": "pipeline_ref_target",
-		 *           "ref_name": "master"
-		 *         }
-		 *       }'
+		 *     $ curl -X POST -is -u '{atlassian_account_email}:{api_token}' \
+		 *           -H 'Content-Type: application/json' \
+		 *           https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines/ \
+		 *           -d '
+		 *           {
+		 *             "target": {
+		 *               "ref_type": "branch",
+		 *               "type": "pipeline_ref_target",
+		 *               "ref_name": "master"
+		 *             }
+		 *           }'
 		 *     ```
-		 *     # Trigger a Pipeline for a commit on a branch or tag
+		 *
+		 *     ## Trigger a pipeline for a commit on a branch or tag
+		 *
 		 *     You can initiate a pipeline for a specific commit and in the context of a specified reference (e.g. a branch, tag or bookmark).
 		 *     The specified reference will be used to determine which pipeline definition from the bitbucket-pipelines.yml file will be applied to initiate the pipeline. The pipeline will clone the repository and then do a checkout the specified reference.
 		 *
@@ -8078,143 +8651,270 @@ export interface paths {
 		 *     ### Example
 		 *
 		 *     ```
-		 *     $ curl -X POST -is -u username:password \
-		 *       -H 'Content-Type: application/json' \
-		 *       https://api.bitbucket.org/2.0/repositories/jeroendr/meat-demo2/pipelines/ \
-		 *       -d '
-		 *       {
-		 *         "target": {
-		 *           "commit": {
-		 *             "type": "commit",
-		 *             "hash": "ce5b7431602f7cbba007062eeb55225c6e18e956"
-		 *           },
-		 *           "ref_type": "branch",
-		 *           "type": "pipeline_ref_target",
-		 *           "ref_name": "master"
-		 *         }
-		 *       }'
+		 *     $ curl -X POST -is -u '{atlassian_account_email}:{api_token}' \
+		 *           -H 'Content-Type: application/json' \
+		 *           https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines/ \
+		 *           -d '
+		 *           {
+		 *             "target": {
+		 *               "commit": {
+		 *                 "type": "commit",
+		 *                 "hash": "ce5b7431602f7cbba007062eeb55225c6e18e956"
+		 *               },
+		 *               "ref_type": "branch",
+		 *               "type": "pipeline_ref_target",
+		 *               "ref_name": "master"
+		 *             }
+		 *           }'
 		 *     ```
-		 *     # Trigger a specific pipeline definition for a commit
+		 *
+		 *     ## Trigger a specific pipeline definition for a commit
+		 *
 		 *     You can trigger a specific pipeline that is defined in your `bitbucket-pipelines.yml` file for a specific commit.
 		 *     In addition to the commit revision, you specify the type and pattern of the selector that identifies the pipeline definition. The resulting pipeline will then clone the repository and checkout the specified revision.
 		 *
 		 *     ### Example
 		 *
 		 *     ```
-		 *     $ curl -X POST -is -u username:password \
-		 *       -H 'Content-Type: application/json' \
-		 *      https://api.bitbucket.org/2.0/repositories/jeroendr/meat-demo2/pipelines/ \
-		 *      -d '
-		 *       {
-		 *          "target": {
-		 *           "commit": {
-		 *              "hash":"a3c4e02c9a3755eccdc3764e6ea13facdf30f923",
-		 *              "type":"commit"
-		 *            },
-		 *             "selector": {
-		 *                "type":"custom",
-		 *                   "pattern":"Deploy to production"
+		 *     $ curl -X POST -is -u '{atlassian_account_email}:{api_token}' \
+		 *           -H 'Content-Type: application/json' \
+		 *           https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines/ \
+		 *           -d '
+		 *           {
+		 *             "target": {
+		 *               "commit": {
+		 *                 "hash":"a3c4e02c9a3755eccdc3764e6ea13facdf30f923",
+		 *                 "type":"commit"
 		 *               },
-		 *             "type":"pipeline_commit_target"
-		 *        }
-		 *       }'
+		 *               "selector": {
+		 *                 "type":"custom",
+		 *                 "pattern":"Deploy to production"
+		 *               },
+		 *               "type":"pipeline_commit_target"
+		 *             }
+		 *           }'
 		 *     ```
-		 *     # Trigger a specific pipeline definition for a commit on a branch or tag
+		 *
+		 *     ## Trigger a specific pipeline definition for a commit on a branch or tag
+		 *
 		 *     You can trigger a specific pipeline that is defined in your `bitbucket-pipelines.yml` file for a specific commit in the context of a specified reference.
 		 *     In addition to the commit revision, you specify the type and pattern of the selector that identifies the pipeline definition, as well as the reference information. The resulting pipeline will then clone the repository a checkout the specified reference.
 		 *
 		 *     ### Example
 		 *
 		 *     ```
-		 *     $ curl -X POST -is -u username:password \
-		 *       -H 'Content-Type: application/json' \
-		 *      https://api.bitbucket.org/2.0/repositories/jeroendr/meat-demo2/pipelines/ \
-		 *      -d '
-		 *       {
-		 *          "target": {
-		 *           "commit": {
-		 *              "hash":"a3c4e02c9a3755eccdc3764e6ea13facdf30f923",
-		 *              "type":"commit"
-		 *            },
-		 *            "selector": {
-		 *               "type": "custom",
-		 *               "pattern": "Deploy to production"
-		 *            },
-		 *            "type": "pipeline_ref_target",
-		 *            "ref_name": "master",
-		 *            "ref_type": "branch"
-		 *          }
-		 *       }'
+		 *     $ curl -X POST -is -u '{atlassian_account_email}:{api_token}' \
+		 *           -H 'Content-Type: application/json' \
+		 *           https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines/ \
+		 *           -d '
+		 *           {
+		 *             "target": {
+		 *               "commit": {
+		 *                 "hash":"a3c4e02c9a3755eccdc3764e6ea13facdf30f923",
+		 *                 "type":"commit"
+		 *               },
+		 *               "selector": {
+		 *                 "type": "custom",
+		 *                 "pattern": "Deploy to production"
+		 *               },
+		 *               "type": "pipeline_ref_target",
+		 *               "ref_name": "master",
+		 *               "ref_type": "branch"
+		 *             }
+		 *           }'
 		 *     ```
 		 *
+		 *     ## Trigger a custom pipeline with variables
 		 *
-		 *     # Trigger a custom pipeline with variables
 		 *     In addition to triggering a custom pipeline that is defined in your `bitbucket-pipelines.yml` file as shown in the examples above, you can specify variables that will be available for your build. In the request, provide a list of variables, specifying the following for each variable: key, value, and whether it should be secured or not (this field is optional and defaults to not secured).
 		 *
 		 *     ### Example
 		 *
 		 *     ```
-		 *     $ curl -X POST -is -u username:password \
-		 *       -H 'Content-Type: application/json' \
-		 *      https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines/ \
-		 *      -d '
-		 *       {
-		 *         "target": {
-		 *           "type": "pipeline_ref_target",
-		 *           "ref_type": "branch",
-		 *           "ref_name": "master",
-		 *           "selector": {
-		 *             "type": "custom",
-		 *             "pattern": "Deploy to production"
-		 *           }
-		 *         },
-		 *         "variables": [
+		 *     $ curl -X POST -is -u '{atlassian_account_email}:{api_token}' \
+		 *           -H 'Content-Type: application/json' \
+		 *           https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines/ \
+		 *           -d '
 		 *           {
-		 *             "key": "var1key",
-		 *             "value": "var1value",
-		 *             "secured": true
-		 *           },
-		 *           {
-		 *             "key": "var2key",
-		 *             "value": "var2value"
-		 *           }
-		 *         ]
-		 *       }'
+		 *             "target": {
+		 *               "type": "pipeline_ref_target",
+		 *               "ref_type": "branch",
+		 *               "ref_name": "master",
+		 *               "selector": {
+		 *                 "type": "custom",
+		 *                 "pattern": "Deploy to production"
+		 *               }
+		 *             },
+		 *             "variables": [
+		 *               {
+		 *                 "key": "var1key",
+		 *                 "value": "var1value",
+		 *                 "secured": true
+		 *               },
+		 *               {
+		 *                 "key": "var2key",
+		 *                 "value": "var2value"
+		 *               }
+		 *             ]
+		 *           }'
 		 *     ```
 		 *
-		 *     # Trigger a pull request pipeline
+		 *     ## Trigger a pull request pipeline
 		 *
 		 *     You can also initiate a pipeline for a specific pull request.
 		 *
 		 *     ### Example
 		 *
 		 *     ```
-		 *     $ curl -X POST -is -u username:password \
-		 *       -H 'Content-Type: application/json' \
-		 *      https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines/ \
-		 *      -d '
-		 *       {
-		 *         "target": {
-		 *           "type": "pipeline_pullrequest_target",
-		 *           "source": "pull-request-branch",
-		 *           "destination": "master",
-		 *           "destination_commit": {
-		 *             "hash": "9f848b7"
-		 *           },
-		 *           "commit": {
-		 *             "hash": "1a372fc"
-		 *           },
-		 *           "pullrequest": {
-		 *             "id": "3"
-		 *           },
-		 *           "selector": {
-		 *             "type": "pull-requests",
-		 *             "pattern": "**"
-		 *           }
-		 *         }
-		 *       }'
+		 *     $ curl -X POST -is -u '{atlassian_account_email}:{api_token}' \
+		 *           -H 'Content-Type: application/json' \
+		 *           https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines/ \
+		 *           -d '
+		 *           {
+		 *             "target": {
+		 *               "type": "pipeline_pullrequest_target",
+		 *               "source": "pull-request-branch",
+		 *               "destination": "master",
+		 *               "destination_commit": {
+		 *                 "hash": "9f848b7"
+		 *               },
+		 *               "commit": {
+		 *                 "hash": "1a372fc"
+		 *               },
+		 *               "pullrequest": {
+		 *                 "id": "3"
+		 *               },
+		 *               "selector": {
+		 *                 "type": "pull-requests",
+		 *                 "pattern": "**"
+		 *               }
+		 *             }
+		 *           }'
 		 *     ```
 		 *
+		 *     # On-demand pipeline
+		 *
+		 *     By default, pipelines run using the YAML in the repository’s `bitbucket-pipelines.yml` configuration file.
+		 *     With an _on-demand_ pipeline, you include the pipeline’s YAML in the request body. That YAML applies only
+		 *     to that run and overrides the YAML in `bitbucket-pipelines.yml`.
+		 *
+		 *     Just like with regular pipelines, there is a number of different options to initiate an on-demand pipeline.
+		 *     However, since the payload contains YAML configuration in this case, _query parameters_ are used to supply
+		 *     the necessary metadata to determine which type of pipeline will be instantiated. These query parameters
+		 *     are derived from the JSON equivalent by turning each property into a key-value pair with the JSON path
+		 *     of the property as the new key.
+		 *
+		 *     ## Trigger on-demand pipeline for a branch
+		 *
+		 *     You can initiate an on-demand pipeline for a specific branch. This branch will be used to determine
+		 *     which pipeline definition from the supplied YAML configuration will be applied to initiate the pipeline.
+		 *     The pipeline will then do a clone of the repository and check out the latest revision of the specified branch.
+		 *
+		 *     To trigger an on-demand pipeline for a _branch_ the requesting user must have **write permission** for
+		 *     that branch (which can be limited by [branch restrictions](https://support.atlassian.com/bitbucket-cloud/docs/use-branch-permissions/)).
+		 *
+		 *     ### Example
+		 *
+		 *     ```
+		 *     $ curl -X POST -is -u '{atlassian_account_email}:{api_token}' \
+		 *           -H 'Content-Type: application/yaml' \
+		 *           https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines?target.type=pipeline_ref_target&target.ref_type=branch&target.ref_name=master \
+		 *           -d '
+		 *     pipelines:
+		 *       default:
+		 *         - step:
+		 *             script:
+		 *               - echo This is an on-demand pipeline'
+		 *     ```
+		 *
+		 *     ## Trigger on-demand pipeline for a commit on a branch or tag
+		 *
+		 *     You can initiate an on-demand pipeline for a specific commit and in the context of a specified reference
+		 *     (branch or tag). The specified reference will be used to determine which pipeline definition from the supplied
+		 *     YAML configuration will be applied to initiate the pipeline. The pipeline will clone the repository and
+		 *     check out the specified reference.
+		 *
+		 *     To trigger an on-demand pipeline for a _branch_ the requesting user must have **write permission** for
+		 *     that branch (which can be limited by [branch restrictions](https://support.atlassian.com/bitbucket-cloud/docs/use-branch-permissions/)).
+		 *
+		 *     ### Example
+		 *
+		 *     ```
+		 *     $ curl -X POST -is -u '{atlassian_account_email}:{api_token}' \
+		 *           -H 'Content-Type: application/yaml' \
+		 *           https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines?target.type=pipeline_ref_target&target.ref_type=branch&target.ref_name=master&target.commit.hash=ce5b7431602f7cbba007062eeb55225c6e18e956 \
+		 *           -d '
+		 *     pipelines:
+		 *       default:
+		 *         - step:
+		 *             script:
+		 *               - echo This is an on-demand pipeline'
+		 *     ```
+		 *
+		 *     ## Trigger a specific on-demand pipeline definition for a commit
+		 *
+		 *     You can trigger a specific pipeline that is defined in the supplied YAML configuration for a specific commit.
+		 *     In addition to the commit revision, you specify the type and pattern of the selector that identifies
+		 *     the pipeline definition. The resulting pipeline will then clone the repository and checkout the specified revision.
+		 *
+		 *     ### Example
+		 *
+		 *     ```
+		 *     $ curl -X POST -is -u '{atlassian_account_email}:{api_token}' \
+		 *           -H 'Content-Type: application/yaml' \
+		 *           https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines?target.type=pipeline_commit_target&target.commit.hash=a3c4e02c9a3755eccdc3764e6ea13facdf30f923&target.selector.type=custom&target.selector.pattern=security-scan \
+		 *           -d '
+		 *     pipelines:
+		 *       custom:
+		 *         security-scan:
+		 *           - step:
+		 *               script:
+		 *                 - echo Run on-demand security scan
+		 *     ```
+		 *
+		 *     ## Trigger a custom on-demand pipeline with variables
+		 *
+		 *     In addition to triggering a custom on-demand pipeline that is defined in the supplied YAML configuration
+		 *     as shown in the examples above, you can specify variables that will be available for your build.
+		 *     In the request, provide each variable as an indexed set of query parameters representing its key, value,
+		 *     and whether it should be secured or not (this field is optional and defaults to not secured).
+		 *
+		 *     ### Example
+		 *
+		 *     ```
+		 *     $ curl -X POST -is -u '{atlassian_account_email}:{api_token}' \
+		 *           -H 'Content-Type: application/yaml' \
+		 *           https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines?target.type=pipeline_ref_target&target.ref_type=branch&target.ref_name=master&target.selector.type=custom&target.selector.pattern=security-scan&variables[0].key=var1key&variables[0].value=var1value&variables[0].secured=true&variables[1].key=var2key&variables[1].value=var2value \
+		 *           -d '
+		 *     pipelines:
+		 *       custom:
+		 *         security-scan:
+		 *           - variables:
+		 *               - name: var1key
+		 *               - name: var2key
+		 *           - step:
+		 *               script:
+		 *                 - echo Run on-demand security scan'
+		 *     ```
+		 *
+		 *     ## Trigger a pull request pipeline
+		 *
+		 *     You can also initiate an on-demand pipeline for a specific pull request.
+		 *
+		 *     ### Example
+		 *
+		 *     ```
+		 *     $ curl -X POST -is -u '{atlassian_account_email}:{api_token}' \
+		 *           -H 'Content-Type: application/yaml' \
+		 *           https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/pipelines?target.type=pipeline_pullrequest_target&target.source=pull-request-branch&target.destination=destination&target.destination_commit.hash=9f848b7&target.commit.hash=1a372fc&target.pullrequest.id=3&target.selector.type=pull-requests&target.selector.pattern=** \
+		 *           -d '
+		 *     pipelines:
+		 *       pull-requests:
+		 *         "**":
+		 *           - step:
+		 *               script:
+		 *                 - echo This is an on-demand pipeline'
+		 *     ```
 		 */
 		readonly post: operations["createPipelineForRepository"]
 		readonly delete?: never
@@ -8535,6 +9235,58 @@ export interface paths {
 		readonly patch?: never
 		readonly trace?: never
 	}
+	readonly "/repositories/{workspace}/{repo_slug}/pipelines-config/runners": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path?: never
+			readonly cookie?: never
+		}
+		/**
+		 * Get repository runners
+		 * @description Retrieve repository runners.
+		 */
+		readonly get: operations["getRepositoryRunners"]
+		readonly put?: never
+		/**
+		 * Create repository runner
+		 * @description Create repository runner.
+		 */
+		readonly post: operations["createRepositoryRunner"]
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
+	readonly "/repositories/{workspace}/{repo_slug}/pipelines-config/runners/{runner_uuid}": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path?: never
+			readonly cookie?: never
+		}
+		/**
+		 * Get repository runner
+		 * @description Retrieve repository runner by uuid.
+		 */
+		readonly get: operations["getRepositoryRunner"]
+		/**
+		 * Update repository runner
+		 * @description Update repository runner.
+		 */
+		readonly put: operations["updateRepositoryRunner"]
+		readonly post?: never
+		/**
+		 * Delete repository runner
+		 * @description Delete repository runner by uuid.
+		 */
+		readonly delete: operations["deleteRepositoryRunner"]
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
 	readonly "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}": {
 		readonly parameters: {
 			readonly query?: never
@@ -8743,13 +9495,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -8774,13 +9528,15 @@ export interface paths {
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -8883,22 +9639,26 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
 			}
-			/** @description The new pull request.
+			/**
+			 * @description The new pull request.
 			 *
 			 *     The request URL you POST to becomes the destination repository URL. For this reason, you must specify an explicit source repository in the request object if you want to pull from a different repository (fork).
 			 *
-			 *     Since not all elements are required or even mutable, you only need to include the elements you want to initialize, such as the source branch and the title. */
+			 *     Since not all elements are required or even mutable, you only need to include the elements you want to initialize, such as the source branch and the title.
+			 */
 			readonly requestBody?: {
 				readonly content: {
 					readonly "application/json": components["schemas"]["pullrequest"]
@@ -8945,13 +9705,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -8967,13 +9729,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9016,13 +9780,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9078,13 +9844,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -9385,13 +10153,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9432,13 +10202,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -9456,13 +10228,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9504,13 +10278,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9557,13 +10333,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -9588,13 +10366,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9638,13 +10418,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9698,13 +10480,15 @@ export interface paths {
 				readonly comment_id: number
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -9722,13 +10506,15 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9771,13 +10557,15 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9826,13 +10614,15 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9874,13 +10664,15 @@ export interface paths {
 				readonly comment_id: number
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -9897,13 +10689,15 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9917,9 +10711,11 @@ export interface paths {
 						readonly "application/json": components["schemas"]["comment_resolution"]
 					}
 				}
-				/** @description If the authenticated user does not have access to the pull request,
+				/**
+				 * @description If the authenticated user does not have access to the pull request,
 				 *     if the provided comment is not a top-level comment,
-				 *     or if the comment is not on the diff. */
+				 *     or if the comment is not on the diff.
+				 */
 				readonly 403: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -9952,13 +10748,15 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -9970,8 +10768,10 @@ export interface paths {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
 				}
-				/** @description If the authenticated user does not have access to the pull request,
-				 *     or if the provided comment is not a top-level comment. */
+				/**
+				 * @description If the authenticated user does not have access to the pull request,
+				 *     or if the provided comment is not a top-level comment.
+				 */
 				readonly 403: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -9999,13 +10799,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -10024,13 +10826,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -10066,6 +10870,71 @@ export interface paths {
 		readonly patch?: never
 		readonly trace?: never
 	}
+	readonly "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/conflicts": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description The id of the pull request. */
+				readonly pull_request_id: number
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
+				 *     surrounded by curly-braces, for example: `{repository UUID}`.
+				 */
+				readonly repo_slug: string
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
+				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
+				 */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		/**
+		 * Get file conflicts for a pull request
+		 * @description Redirects to the [repository file conflicts](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-file-conflicts-spec-get)
+		 *     with the revspec that corresponds to the pull request.
+		 */
+		readonly get: {
+			readonly parameters: {
+				readonly query?: never
+				readonly header?: never
+				readonly path: {
+					/** @description The id of the pull request. */
+					readonly pull_request_id: number
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
+					 *     surrounded by curly-braces, for example: `{repository UUID}`.
+					 */
+					readonly repo_slug: string
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
+					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
+					 */
+					readonly workspace: string
+				}
+				readonly cookie?: never
+			}
+			readonly requestBody?: never
+			readonly responses: {
+				/**
+				 * @description Redirects to the [repository file conflicts](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-file-conflicts-spec-get) with the
+				 *     revspec that corresponds to the pull request.
+				 */
+				readonly 302: {
+					headers: Readonly<Record<string, unknown>>
+					content?: never
+				}
+			}
+		}
+		readonly put?: never
+		readonly post?: never
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
 	readonly "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/decline": {
 		readonly parameters: {
 			readonly query?: never
@@ -10073,13 +10942,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -10097,13 +10968,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -10117,8 +10990,10 @@ export interface paths {
 						readonly "application/json": components["schemas"]["pullrequest"]
 					}
 				}
-				/** @description If the decline took too long and timed out.
-				 *     In this case the caller should retry the request later. */
+				/**
+				 * @description If the decline took too long and timed out.
+				 *     In this case the caller should retry the request later.
+				 */
 				readonly 555: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -10140,13 +11015,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -10163,22 +11040,25 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
 			}
 			readonly requestBody?: never
 			readonly responses: {
-				/** @description Redirects to the [repository diff](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-diff-spec-get) with the
+				/**
+				 * @description Redirects to the [repository diff](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-diff-spec-get) with the
 				 *     revspec that corresponds to the pull request.
-				 *      */
+				 */
 				readonly 302: {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
@@ -10200,13 +11080,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -10223,22 +11105,25 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
 			}
 			readonly requestBody?: never
 			readonly responses: {
-				/** @description Redirects to the [repository diffstat](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-diffstat-spec-get) with
+				/**
+				 * @description Redirects to the [repository diffstat](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-diffstat-spec-get) with
 				 *     the revspec that corresponds to pull request.
-				 *      */
+				 */
 				readonly 302: {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
@@ -10260,13 +11145,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -10280,7 +11167,8 @@ export interface paths {
 		readonly post: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description Default value is false.
+					/**
+					 * @description Default value is false.
 					 *
 					 *
 					 *     When set to true, runs merge asynchronously and
@@ -10292,20 +11180,23 @@ export interface paths {
 					 *     complete, returning 200 when it succeeds. If the
 					 *     duration of the merge exceeds a timeout threshold,
 					 *     the API returns a 202 with polling link to the
-					 *     task-status API in the Location header. */
+					 *     task-status API in the Location header.
+					 */
 					readonly async?: boolean
 				}
 				readonly header?: never
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -10333,8 +11224,10 @@ export interface paths {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
 				}
-				/** @description If the merge took too long and timed out.
-				 *     In this case the caller should retry the request later */
+				/**
+				 * @description If the merge took too long and timed out.
+				 *     In this case the caller should retry the request later
+				 */
 				readonly 555: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -10356,15 +11249,17 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
 				/** @description ID of the merge task */
 				readonly task_id: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -10426,15 +11321,17 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
 					/** @description ID of the merge task */
 					readonly task_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -10478,13 +11375,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -10501,22 +11400,25 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
 			}
 			readonly requestBody?: never
 			readonly responses: {
-				/** @description Redirects to the [repository patch](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-patch-spec-get) with
+				/**
+				 * @description Redirects to the [repository patch](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-patch-spec-get) with
 				 *     the revspec that corresponds to pull request.
-				 *      */
+				 */
 				readonly 302: {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
@@ -10538,13 +11440,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -10559,13 +11463,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -10610,13 +11516,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -10663,13 +11571,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -10682,27 +11592,31 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description Query string to narrow down the response as per
+					/**
+					 * @description Query string to narrow down the response as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
-					 *      */
+					 */
 					readonly q?: string
-					/** @description Field by which the results should be sorted as per
+					/**
+					 * @description Field by which the results should be sorted as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
 					 *     Defaults to `created_on`.
-					 *      */
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -10745,13 +11659,15 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -10766,34 +11682,37 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Current number of objects on the existing page.
+					/**
+					 * @description Current number of objects on the existing page.
 					 *     The default value is 10 with 100 being the maximum allowed value.
 					 *     Individual APIs may enforce different values.
-					 *      */
+					 */
 					readonly pagelen?: number
-					/** @description
-					 *     Query string to narrow down the response. See
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for details. */
+					/**
+					 * @description Query string to narrow down the response. See
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for details.
+					 */
 					readonly q?: string
-					/** @description
-					 *     Field by which the results should be sorted as per
+					/**
+					 * @description Field by which the results should be sorted as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
 					 *     Defaults to `created_on`.
-					 *      */
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -10847,13 +11766,15 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -10912,15 +11833,17 @@ export interface paths {
 			readonly path: {
 				/** @description The id of the pull request. */
 				readonly pull_request_id: number
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
 				/** @description The ID of the task. */
 				readonly task_id: number
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -10936,15 +11859,17 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
 					/** @description The ID of the task. */
 					readonly task_id: number
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -10985,15 +11910,17 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
 					/** @description The ID of the task. */
 					readonly task_id: number
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -11047,15 +11974,17 @@ export interface paths {
 				readonly path: {
 					/** @description The id of the pull request. */
 					readonly pull_request_id: number
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
 					/** @description The ID of the task. */
 					readonly task_id: number
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -11121,13 +12050,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -11426,13 +12357,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -11471,13 +12404,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -11500,27 +12435,31 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response as per
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
+					/**
+					 * @description Query string to narrow down the response as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
 					readonly q?: string
-					/** @description
-					 *     Field by which the results should be sorted as per
+					/**
+					 * @description Field by which the results should be sorted as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). The `name`
 					 *     field is handled specially for refs in that, if specified as the sort field, it
 					 *     uses a natural sort order instead of the default lexicographical sort order. For example,
-					 *     it will return ['1.1', '1.2', '1.10'] instead of ['1.1', '1.10', '1.2']. */
+					 *     it will return ['1.1', '1.2', '1.10'] instead of ['1.1', '1.10', '1.2'].
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -11534,9 +12473,10 @@ export interface paths {
 						readonly "application/json": components["schemas"]["paginated_refs"]
 					}
 				}
-				/** @description If the repository is private and the authenticated user does not have
+				/**
+				 * @description If the repository is private and the authenticated user does not have
 				 *     access to it.
-				 *      */
+				 */
 				readonly 403: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -11565,13 +12505,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -11602,27 +12544,31 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response as per
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
+					/**
+					 * @description Query string to narrow down the response as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
 					readonly q?: string
-					/** @description
-					 *     Field by which the results should be sorted as per
+					/**
+					 * @description Field by which the results should be sorted as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). The `name`
 					 *     field is handled specially for branches in that, if specified as the sort field, it
 					 *     uses a natural sort order instead of the default lexicographical sort order. For example,
-					 *     it will return ['branch1', 'branch2', 'branch10'] instead of ['branch1', 'branch10', 'branch2']. */
+					 *     it will return ['branch1', 'branch2', 'branch10'] instead of ['branch1', 'branch10', 'branch2'].
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -11636,9 +12582,10 @@ export interface paths {
 						readonly "application/json": components["schemas"]["paginated_branches"]
 					}
 				}
-				/** @description If the repository is private and the authenticated user does not have
+				/**
+				 * @description If the repository is private and the authenticated user does not have
 				 *     access to it.
-				 *      */
+				 */
 				readonly 403: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -11688,13 +12635,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -11708,9 +12657,10 @@ export interface paths {
 						readonly "application/json": components["schemas"]["branch"]
 					}
 				}
-				/** @description If the repository is private and the authenticated user does not have
+				/**
+				 * @description If the repository is private and the authenticated user does not have
 				 *     access to it.
-				 *      */
+				 */
 				readonly 403: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -11739,13 +12689,15 @@ export interface paths {
 			readonly path: {
 				/** @description The name of the branch. */
 				readonly name: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -11768,13 +12720,15 @@ export interface paths {
 				readonly path: {
 					/** @description The name of the branch. */
 					readonly name: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -11788,9 +12742,10 @@ export interface paths {
 						readonly "application/json": components["schemas"]["branch"]
 					}
 				}
-				/** @description If the repository is private and the authenticated user does not have
+				/**
+				 * @description If the repository is private and the authenticated user does not have
 				 *     access to it.
-				 *      */
+				 */
 				readonly 403: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -11825,13 +12780,15 @@ export interface paths {
 				readonly path: {
 					/** @description The name of the branch. */
 					readonly name: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -11843,9 +12800,10 @@ export interface paths {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
 				}
-				/** @description If the repository is private and the authenticated user does not have
+				/**
+				 * @description If the repository is private and the authenticated user does not have
 				 *     access to it.
-				 *      */
+				 */
 				readonly 403: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -11871,13 +12829,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -11899,27 +12859,31 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response as per
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
+					/**
+					 * @description Query string to narrow down the response as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
 					readonly q?: string
-					/** @description
-					 *     Field by which the results should be sorted as per
+					/**
+					 * @description Field by which the results should be sorted as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). The `name`
 					 *     field is handled specially for tags in that, if specified as the sort field, it
 					 *     uses a natural sort order instead of the default lexicographical sort order. For example,
-					 *     it will return ['1.1', '1.2', '1.10'] instead of ['1.1', '1.10', '1.2']. */
+					 *     it will return ['1.1', '1.2', '1.10'] instead of ['1.1', '1.10', '1.2'].
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -11933,9 +12897,10 @@ export interface paths {
 						readonly "application/json": components["schemas"]["paginated_tags"]
 					}
 				}
-				/** @description If the repository is private and the authenticated user does not have
+				/**
+				 * @description If the repository is private and the authenticated user does not have
 				 *     access to it.
-				 *      */
+				 */
 				readonly 403: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -11954,7 +12919,7 @@ export interface paths {
 		readonly put?: never
 		/**
 		 * Create a tag
-		 * @description Creates a new tag in the specified repository.
+		 * @description Creates a new annotated tag in the specified repository.
 		 *
 		 *     The payload of the POST should consist of a JSON document that
 		 *     contains the name of the tag and the target hash.
@@ -11973,19 +12938,25 @@ export interface paths {
 		 *     This endpoint does support using short hash prefixes for the commit
 		 *     hash, but it may return a 400 response if the provided prefix is
 		 *     ambiguous. Using a full commit hash is the preferred approach.
+		 *
+		 *     A message for the tag object may optionally be provided. If it is
+		 *     omitted or the provided message is empty, a default message of
+		 *     "Added tag <tagname> for changeset <shorthash>" will be used.
 		 */
 		readonly post: {
 			readonly parameters: {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -12025,13 +12996,15 @@ export interface paths {
 			readonly path: {
 				/** @description The name of the tag. */
 				readonly name: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -12172,13 +13145,15 @@ export interface paths {
 				readonly path: {
 					/** @description The name of the tag. */
 					readonly name: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -12192,9 +13167,10 @@ export interface paths {
 						readonly "application/json": components["schemas"]["tag"]
 					}
 				}
-				/** @description If the repository is private and the authenticated user does not have
+				/**
+				 * @description If the repository is private and the authenticated user does not have
 				 *     access to it.
-				 *      */
+				 */
 				readonly 403: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -12225,13 +13201,15 @@ export interface paths {
 				readonly path: {
 					/** @description The name of the tag. */
 					readonly name: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -12243,9 +13221,10 @@ export interface paths {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
 				}
-				/** @description If the repository is private and the authenticated user does not have
+				/**
+				 * @description If the repository is private and the authenticated user does not have
 				 *     access to it.
-				 *      */
+				 */
 				readonly 403: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -12271,13 +13250,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -12301,27 +13282,30 @@ export interface paths {
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
 			}
 			readonly requestBody?: never
 			readonly responses: {
-				/** @description If the path matches a file, then the raw contents of the file are
+				/**
+				 * @description If the path matches a file, then the raw contents of the file are
 				 *     returned (unless the `format=meta` query parameter was provided,
 				 *     in which case a json document containing the file's meta data is
 				 *     returned). If the path matches a directory, then a paginated
 				 *     list of file and directory entries is returned (if the
 				 *     `format=meta` query parameter was provided, then the json document
 				 *     containing the directory's meta data is returned).
-				 *      */
+				 */
 				readonly 200: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -12468,17 +13452,18 @@ export interface paths {
 		readonly post: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     The raw string to be used as the new commit's author.
+					/**
+					 * @description The raw string to be used as the new commit's author.
 					 *     This string follows the format
 					 *     `Erik van Zijst <evzijst@atlassian.com>`.
 					 *
 					 *     When omitted, Bitbucket uses the authenticated user's
 					 *     full/display name and primary email address. Commits cannot
-					 *     be created anonymously. */
+					 *     be created anonymously.
+					 */
 					readonly author?: string
-					/** @description
-					 *     The name of the branch that the new commit should be
+					/**
+					 * @description The name of the branch that the new commit should be
 					 *     created on. When omitted, the commit will be created on top
 					 *     of the main branch and will become the main branch's new
 					 *     head.
@@ -12523,10 +13508,10 @@ export interface paths {
 					 *     This will create a new commit and branch with the same
 					 *     contents as the first parent. The diff of this commit
 					 *     against its first parent will be empty.
-					 *      */
+					 */
 					readonly branch?: string
-					/** @description
-					 *     Optional field that declares the files that the request is
+					/**
+					 * @description Optional field that declares the files that the request is
 					 *     manipulating. When adding a new file to a repo, or when
 					 *     overwriting an existing file, the client can just upload
 					 *     the full contents of the file in a normal form field and
@@ -12544,39 +13529,40 @@ export interface paths {
 					 *     This API does not support renaming as an explicit feature.
 					 *     To rename a file, simply delete it and recreate it under
 					 *     the new name in the same commit.
-					 *      */
+					 */
 					readonly files?: string
 					/** @description The commit message. When omitted, Bitbucket uses a canned string. */
 					readonly message?: string
-					/** @description
-					 *     A comma-separated list of SHA1s of the commits that should
-					 *     be the parents of the newly created commit.
+					/**
+					 * @description #### Deprecation Notice:
+					 *     Support for specifying multiple parent
+					 *     commits is deprecated and will be removed in a future release.
+					 *     Only a single SHA1 is accepted.
 					 *
-					 *     When omitted, the new commit will inherit from and become
-					 *     a child of the main branch's tip/HEAD commit.
-					 *
-					 *     When more than one SHA1 is provided, the first SHA1
-					 *     identifies the commit from which the content will be
-					 *     inherited.". */
+					 *     A SHA1 of the commit that should be the parent of the newly created
+					 *     commit. When omitted, the new commit will inherit from and
+					 *     become a child of the main branch's tip/HEAD commit.
+					 */
 					readonly parents?: string
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
 			}
 			readonly requestBody?: never
 			readonly responses: {
-				/** @description
-				 *      */
+				/** @description  */
 				readonly 201: {
 					headers: Readonly<Record<string, unknown>>
 					content?: never
@@ -12612,13 +13598,15 @@ export interface paths {
 				readonly commit: string
 				/** @description Path to the file. */
 				readonly path: string
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -12847,20 +13835,23 @@ export interface paths {
 					readonly commit: string
 					/** @description Path to the file. */
 					readonly path: string
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
 			}
 			readonly requestBody?: never
 			readonly responses: {
-				/** @description If the path matches a file, then the raw contents of the file are
+				/**
+				 * @description If the path matches a file, then the raw contents of the file are
 				 *     returned.  If the `format=meta` query parameter is provided,
 				 *     a json document containing the file's meta data is
 				 *     returned.  If the `format=rendered` query parameter is provided,
@@ -12869,7 +13860,7 @@ export interface paths {
 				 *     list of file and directory entries is returned (if the
 				 *     `format=meta` query parameter was provided, then the json document
 				 *     containing the directory's meta data is returned.)
-				 *      */
+				 */
 				readonly 200: {
 					headers: Readonly<Record<string, unknown>>
 					content: {
@@ -12905,19 +13896,22 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * List defined versions for issues
+		 * @deprecated
 		 * @description Returns the versions that have been defined in the issue tracker.
 		 *
 		 *     This resource is only available on repositories that have the issue
@@ -12928,13 +13922,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -12970,21 +13966,24 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
 				/** @description The version's id */
 				readonly version_id: number
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
 		}
 		/**
 		 * Get a defined version for issues
+		 * @deprecated
 		 * @description Returns the specified issue tracker version object.
 		 */
 		readonly get: {
@@ -12992,15 +13991,17 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
 					/** @description The version's id */
 					readonly version_id: number
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -13036,13 +14037,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -13057,13 +14060,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -13096,7 +14101,11 @@ export interface paths {
 		}
 		/**
 		 * List snippets
-		 * @description Returns all snippets. Like pull requests, repositories and workspaces, the
+		 * @deprecated
+		 * @description **This endpoint is deprecated. Please use the
+		 *     [workspace scoped alternative](/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-get).**
+		 *
+		 *     Returns all snippets. Like pull requests, repositories and workspaces, the
 		 *     full set of snippets is defined by what the current user has access to.
 		 *
 		 *     This includes all snippets owned by any of the workspaces the user is a member of,
@@ -13339,9 +14348,10 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -13360,9 +14370,10 @@ export interface paths {
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -13397,9 +14408,10 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -13446,9 +14458,10 @@ export interface paths {
 			readonly path: {
 				/** @description The snippet id. */
 				readonly encoded_id: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -13649,9 +14662,10 @@ export interface paths {
 				readonly path: {
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -13913,9 +14927,10 @@ export interface paths {
 				readonly path: {
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -13972,9 +14987,10 @@ export interface paths {
 				readonly path: {
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14023,9 +15039,10 @@ export interface paths {
 				readonly encoded_id: string
 				/** @description A commit revision (SHA1). */
 				readonly node_id: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -14051,9 +15068,10 @@ export interface paths {
 					readonly encoded_id: string
 					/** @description A commit revision (SHA1). */
 					readonly node_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14124,9 +15142,10 @@ export interface paths {
 					readonly encoded_id: string
 					/** @description A commit revision (SHA1). */
 					readonly node_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14201,9 +15220,10 @@ export interface paths {
 					readonly encoded_id: string
 					/** @description A commit revision (SHA1). */
 					readonly node_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14261,9 +15281,10 @@ export interface paths {
 				readonly node_id: string
 				/** @description Path to the file. */
 				readonly path: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -14291,9 +15312,10 @@ export interface paths {
 					readonly node_id: string
 					/** @description Path to the file. */
 					readonly path: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14344,9 +15366,10 @@ export interface paths {
 				readonly encoded_id: string
 				/** @description A revspec expression. This can simply be a commit SHA1, a ref name, or a compare expression like `staging..production`. */
 				readonly revision: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -14385,9 +15408,10 @@ export interface paths {
 					readonly encoded_id: string
 					/** @description A revspec expression. This can simply be a commit SHA1, a ref name, or a compare expression like `staging..production`. */
 					readonly revision: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14432,9 +15456,10 @@ export interface paths {
 				readonly encoded_id: string
 				/** @description A revspec expression. This can simply be a commit SHA1, a ref name, or a compare expression like `staging..production`. */
 				readonly revision: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -14471,9 +15496,10 @@ export interface paths {
 					readonly encoded_id: string
 					/** @description A revspec expression. This can simply be a commit SHA1, a ref name, or a compare expression like `staging..production`. */
 					readonly revision: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14516,9 +15542,10 @@ export interface paths {
 			readonly path: {
 				/** @description The snippet id. */
 				readonly encoded_id: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -14540,9 +15567,10 @@ export interface paths {
 				readonly path: {
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14588,9 +15616,10 @@ export interface paths {
 				readonly path: {
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14644,9 +15673,10 @@ export interface paths {
 				readonly comment_id: number
 				/** @description The snippet id. */
 				readonly encoded_id: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -14664,9 +15694,10 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14713,9 +15744,10 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14766,9 +15798,10 @@ export interface paths {
 					readonly comment_id: number
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14808,9 +15841,10 @@ export interface paths {
 			readonly path: {
 				/** @description The snippet id. */
 				readonly encoded_id: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -14826,9 +15860,10 @@ export interface paths {
 				readonly path: {
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14875,9 +15910,10 @@ export interface paths {
 				readonly encoded_id: string
 				/** @description The commit's SHA1. */
 				readonly revision: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -14895,9 +15931,10 @@ export interface paths {
 					readonly encoded_id: string
 					/** @description The commit's SHA1. */
 					readonly revision: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -14944,9 +15981,10 @@ export interface paths {
 				readonly encoded_id: string
 				/** @description Path to the file. */
 				readonly path: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -14966,9 +16004,10 @@ export interface paths {
 					readonly encoded_id: string
 					/** @description Path to the file. */
 					readonly path: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -15015,9 +16054,10 @@ export interface paths {
 			readonly path: {
 				/** @description The snippet id. */
 				readonly encoded_id: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -15038,9 +16078,10 @@ export interface paths {
 				readonly path: {
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -15072,9 +16113,10 @@ export interface paths {
 				readonly path: {
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -15115,9 +16157,10 @@ export interface paths {
 				readonly path: {
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -15157,9 +16200,10 @@ export interface paths {
 			readonly path: {
 				/** @description The snippet id. */
 				readonly encoded_id: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -15176,9 +16220,10 @@ export interface paths {
 				readonly path: {
 					/** @description The snippet id. */
 					readonly encoded_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -15280,7 +16325,10 @@ export interface paths {
 		}
 		/**
 		 * Search for code in a team's repositories
-		 * @description Search for code in the repositories of the specified team.
+		 * @deprecated
+		 * @description This API will be deprecated on November 1, 2026.
+		 *
+		 *     Search for code in the repositories of the specified team.
 		 *
 		 *     Note that searches can match in the file's text (`content_matches`),
 		 *     the path (`path_matches`), or both.
@@ -15296,7 +16344,6 @@ export interface paths {
 		 *     (the `%2B` is a URL-encoded `+`).
 		 *
 		 *     Try `fields=%2Bvalues.*.*.*.*` to get an idea what's possible.
-		 *
 		 */
 		readonly get: operations["searchTeam"]
 		readonly put?: never
@@ -15445,7 +16492,11 @@ export interface paths {
 		}
 		/**
 		 * List repository permissions for a user
-		 * @description Returns an object for each repository the caller has explicit access
+		 * @deprecated
+		 * @description **This endpoint is deprecated. Please use the
+		 *     [workspace scoped alternative](/cloud/bitbucket/rest/api-group-repositories/#api-user-workspaces-workspace-permissions-repositories-get).**
+		 *
+		 *     Returns an object for each repository the caller has explicit access
 		 *     to and their effective permission — the highest level of permission the
 		 *     caller has. This does not return public repositories that the user was
 		 *     not granted any specific permission in, and does not distinguish between
@@ -15470,13 +16521,15 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response as per
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
+					/**
+					 * @description Query string to narrow down the response as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
 					readonly q?: string
-					/** @description
-					 *     Name of a response property sort the result by as per
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
+					/**
+					 * @description Name of a response property sort the result by as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
@@ -15511,7 +16564,12 @@ export interface paths {
 		}
 		/**
 		 * List workspaces for the current user
-		 * @description Returns an object for each workspace the caller is a member of, and
+		 * @deprecated
+		 * @description **This endpoint is deprecated. Please use the supported alternatives:**
+		 *     * [List workspaces for user](/cloud/bitbucket/rest/api-group-workspaces/#api-user-workspaces-get)
+		 *     * [Get user permission on a workspace](/cloud/bitbucket/rest/api-group-workspaces/#api-user-workspaces-workspace-permission-get)
+		 *
+		 *     Returns an object for each workspace the caller is a member of, and
 		 *     their effective role - the highest level of privilege the caller has.
 		 *     If a user is a member of multiple groups with distinct roles, only the
 		 *     highest level is returned.
@@ -15541,15 +16599,16 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response. See
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for details. */
+					/**
+					 * @description Query string to narrow down the response. See
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for details.
+					 */
 					readonly q?: string
-					/** @description
-					 *     Name of a response property to sort results. See
+					/**
+					 * @description Name of a response property to sort results. See
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#sorting-query-results)
 					 *     for details.
-					 *      */
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
@@ -15582,14 +16641,253 @@ export interface paths {
 		readonly patch?: never
 		readonly trace?: never
 	}
+	readonly "/user/workspaces": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path?: never
+			readonly cookie?: never
+		}
+		/**
+		 * List workspaces for the current user
+		 * @description Returns an object for each workspace accessible to the caller. This object
+		 *     also contains details on whether the caller has admin permissions on the workspace
+		 *     (`"administrator" = true`) or not (`"administrator" = false`).
+		 *
+		 *     Queries support filtering based on administrator permissions,
+		 *     [sorting](/cloud/bitbucket/rest/intro/#sorting-query-results) or
+		 *     [filtering](/cloud/bitbucket/rest/intro/#filtering) by `slug`. Results can
+		 *     be [paginated](/cloud/bitbucket/rest/intro/#pagination).
+		 */
+		readonly get: {
+			readonly parameters: {
+				readonly query?: {
+					/** @description Filter workspaces based on which ones the caller has admin permissions or not. */
+					readonly administrator?: boolean
+					/** @description Name of a response property to sort results (only slug is supported). */
+					readonly sort?: string
+				}
+				readonly header?: never
+				readonly path?: never
+				readonly cookie?: never
+			}
+			readonly requestBody?: never
+			readonly responses: {
+				/** @description The list of workspaces accessible by the authenticated user. */
+				readonly 200: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["paginated_workspace_access"]
+					}
+				}
+				/** @description The request was invalid. */
+				readonly 400: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+				/** @description The request wasn't authenticated. */
+				readonly 401: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+			}
+		}
+		readonly put?: never
+		readonly post?: never
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
+	readonly "/user/workspaces/{workspace}/permission": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
+				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
+				 */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		/**
+		 * Get user permission on a workspace
+		 * @description Returns the caller's effective role; as in, the highest level of privilege
+		 *     the caller has for the workspace.
+		 *     If the calling user is a member of multiple groups with distinct roles, only the
+		 *     highest level is returned.
+		 *
+		 *     Permissions can be:
+		 *
+		 *     * `owner`
+		 *     * `create-project`
+		 *     * `collaborator` (deprecated; see this
+		 *     [deprecation announcement](/cloud/bitbucket/deprecation-notice-collaborator-role/) for more details)
+		 *     * `member`
+		 */
+		readonly get: {
+			readonly parameters: {
+				readonly query?: never
+				readonly header?: never
+				readonly path: {
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
+					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
+					 */
+					readonly workspace: string
+				}
+				readonly cookie?: never
+			}
+			readonly requestBody?: never
+			readonly responses: {
+				/** @description The user that is part of a workspace. */
+				readonly 200: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["workspace_membership"]
+					}
+				}
+				/** @description The request wasn't authenticated. */
+				readonly 401: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+				/** @description The requesting user does not have access to the workspace. */
+				readonly 403: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+			}
+		}
+		readonly put?: never
+		readonly post?: never
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
+	readonly "/user/workspaces/{workspace}/permissions/repositories": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
+				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
+				 */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		/**
+		 * List repository permissions in a workspace for a user
+		 * @description Returns an object for each repository the caller has explicit access to in the
+		 *     specified workspace and their effective permission — the highest level of
+		 *     permission the caller has. This does not return public repositories that the
+		 *     user was not granted any specific permission in, and does not distinguish between
+		 *     explicit and implicit privileges.
+		 *
+		 *     Permissions can be:
+		 *
+		 *     * `admin`
+		 *     * `write`
+		 *     * `read`
+		 *
+		 *     Results may be further [filtered or sorted](/cloud/bitbucket/rest/intro/#filtering) by
+		 *     repository or permission by adding the following query string
+		 *     parameters:
+		 *
+		 *     * `q=repository.name="bits"` or `q=permission>"read"`
+		 *     * `sort=repository.name`
+		 *
+		 *     Note that the query parameter values need to be URL escaped so that `=`
+		 *     would become `%3D`.
+		 */
+		readonly get: {
+			readonly parameters: {
+				readonly query?: {
+					/**
+					 * @description Query string to narrow down the response as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
+					readonly q?: string
+					/**
+					 * @description Name of a response property sort the result by as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
+					readonly sort?: string
+				}
+				readonly header?: never
+				readonly path: {
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
+					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
+					 */
+					readonly workspace: string
+				}
+				readonly cookie?: never
+			}
+			readonly requestBody?: never
+			readonly responses: {
+				/** @description The list of repository permissions for the authenticated user in the specified workspace. */
+				readonly 200: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["paginated_repository_permissions"]
+					}
+				}
+				/** @description The request was invalid. */
+				readonly 400: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+				/** @description The request wasn't authenticated. */
+				readonly 401: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+				/** @description The requesting user does not have access to the workspace. */
+				readonly 403: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+			}
+		}
+		readonly put?: never
+		readonly post?: never
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
 	readonly "/users/{selected_user}": {
 		readonly parameters: {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+				/**
+				 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 				 *     surrounded by curly-braces, for example: `{account UUID}`.
-				 *      */
+				 */
 				readonly selected_user: string
 			}
 			readonly cookie?: never
@@ -15609,9 +16907,10 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					/**
+					 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
 				}
 				readonly cookie?: never
@@ -15647,9 +16946,10 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+				/**
+				 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 				 *     surrounded by curly-braces, for example: `{account UUID}`.
-				 *      */
+				 */
 				readonly selected_user: string
 			}
 			readonly cookie?: never
@@ -15665,9 +16965,10 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					/**
+					 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
 				}
 				readonly cookie?: never
@@ -15713,9 +17014,10 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					/**
+					 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
 				}
 				readonly cookie?: never
@@ -15766,12 +17068,12 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description A GPG key fingerprint.
-				 *      */
+				/** @description A GPG key fingerprint. */
 				readonly fingerprint: string
-				/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+				/**
+				 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 				 *     surrounded by curly-braces, for example: `{account UUID}`.
-				 *      */
+				 */
 				readonly selected_user: string
 			}
 			readonly cookie?: never
@@ -15787,12 +17089,12 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description A GPG key fingerprint.
-					 *      */
+					/** @description A GPG key fingerprint. */
 					readonly fingerprint: string
-					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					/**
+					 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
 				}
 				readonly cookie?: never
@@ -15831,12 +17133,12 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description A GPG key fingerprint.
-					 *      */
+					/** @description A GPG key fingerprint. */
 					readonly fingerprint: string
-					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					/**
+					 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
 				}
 				readonly cookie?: never
@@ -15973,7 +17275,10 @@ export interface paths {
 		}
 		/**
 		 * Search for code in a user's repositories
-		 * @description Search for code in the repositories of the specified user.
+		 * @deprecated
+		 * @description This API will be deprecated on November 1, 2026.
+		 *
+		 *     Search for code in the repositories of the specified user.
 		 *
 		 *     Note that searches can match in the file's text (`content_matches`),
 		 *     the path (`path_matches`), or both.
@@ -15987,7 +17292,6 @@ export interface paths {
 		 *     the repository of matched files, use the query parameter
 		 *     `search_query=foo&fields=%2Bvalues.file.commit.repository`
 		 *     (the `%2B` is a URL-encoded `+`).
-		 *
 		 */
 		readonly get: operations["searchAccount"]
 		readonly put?: never
@@ -16003,9 +17307,10 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+				/**
+				 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 				 *     surrounded by curly-braces, for example: `{account UUID}`.
-				 *      */
+				 */
 				readonly selected_user: string
 			}
 			readonly cookie?: never
@@ -16019,9 +17324,10 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					/**
+					 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
 				}
 				readonly cookie?: never
@@ -16063,16 +17369,19 @@ export interface paths {
 		readonly post: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description The date or date-time of when the key will expire,
+					/**
+					 * @description The date or date-time of when the key will expire,
 					 *     in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-					 *     Example: `YYYY-MM-DDTHH:mm:ss.sssZ` */
+					 *     Example: `YYYY-MM-DDTHH:mm:ss.sssZ`
+					 */
 					readonly expires_on?: string
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					/**
+					 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
 				}
 				readonly cookie?: never
@@ -16125,9 +17434,10 @@ export interface paths {
 			readonly path: {
 				/** @description The SSH key's UUID value. */
 				readonly key_id: string
-				/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+				/**
+				 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 				 *     surrounded by curly-braces, for example: `{account UUID}`.
-				 *      */
+				 */
 				readonly selected_user: string
 			}
 			readonly cookie?: never
@@ -16143,9 +17453,10 @@ export interface paths {
 				readonly path: {
 					/** @description The SSH key's UUID value. */
 					readonly key_id: string
-					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					/**
+					 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
 				}
 				readonly cookie?: never
@@ -16192,9 +17503,10 @@ export interface paths {
 				readonly path: {
 					/** @description The SSH key's UUID value. */
 					readonly key_id: string
-					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					/**
+					 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
 				}
 				readonly cookie?: never
@@ -16246,9 +17558,10 @@ export interface paths {
 				readonly path: {
 					/** @description The SSH key's UUID value. */
 					readonly key_id: string
-					/** @description This can either be an Atlassian Account ID OR the UUID of the account,
+					/**
+					 * @description This can either be an Atlassian Account ID OR the UUID of the account,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
 				}
 				readonly cookie?: never
@@ -16295,7 +17608,11 @@ export interface paths {
 		}
 		/**
 		 * List workspaces for user
-		 * @description Returns a list of workspaces accessible by the authenticated user.
+		 * @deprecated
+		 * @description **This endpoint is deprecated. Please use the
+		 *     [supported alternative](/cloud/bitbucket/rest/api-group-workspaces/#api-user-workspaces-get).**
+		 *
+		 *     Returns a list of workspaces accessible by the authenticated user.
 		 *
 		 *     Results may be further [filtered or sorted](/cloud/bitbucket/rest/intro/#filtering) by
 		 *     workspace or permission by adding the following query string parameters:
@@ -16312,25 +17629,26 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response. See
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for details. */
+					/**
+					 * @description Query string to narrow down the response. See
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for details.
+					 */
 					readonly q?: string
-					/** @description
-					 *                 Filters the workspaces based on the authenticated user's role on each workspace.
+					/**
+					 * @description Filters the workspaces based on the authenticated user's role on each workspace.
 					 *
 					 *                 * **member**: returns a list of all the workspaces which the caller is a member of
 					 *                     at least one workspace group or repository
 					 *                 * **collaborator**: returns a list of workspaces which the caller has write access
 					 *                     to at least one repository in the workspace
 					 *                 * **owner**: returns a list of workspaces which the caller has administrator access
-					 *                  */
+					 */
 					readonly role?: "collaborator" | "member" | "owner"
-					/** @description
-					 *     Name of a response property to sort results. See
+					/**
+					 * @description Name of a response property to sort results. See
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#sorting-query-results)
 					 *     for details.
-					 *      */
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
@@ -16368,9 +17686,10 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -16384,9 +17703,10 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -16422,9 +17742,10 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -16438,9 +17759,10 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -16516,9 +17838,10 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -16565,9 +17888,10 @@ export interface paths {
 			readonly path: {
 				/** @description Installed webhook's ID */
 				readonly uid: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -16584,9 +17908,10 @@ export interface paths {
 				readonly path: {
 					/** @description Installed webhook's ID */
 					readonly uid: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -16637,9 +17962,10 @@ export interface paths {
 				readonly path: {
 					/** @description Installed webhook's ID */
 					readonly uid: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -16681,9 +18007,10 @@ export interface paths {
 				readonly path: {
 					/** @description Installed webhook's ID */
 					readonly uid: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -16721,9 +18048,10 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -16758,9 +18086,10 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -16805,9 +18134,10 @@ export interface paths {
 			readonly path: {
 				/** @description Member's UUID or Atlassian ID. */
 				readonly member: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -16825,9 +18155,10 @@ export interface paths {
 				readonly path: {
 					/** @description Member's UUID or Atlassian ID. */
 					readonly member: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -16870,9 +18201,10 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -16901,16 +18233,18 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response as per
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
+					/**
+					 * @description Query string to narrow down the response as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
 					readonly q?: string
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -16946,9 +18280,10 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -16983,21 +18318,23 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response as per
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
+					/**
+					 * @description Query string to narrow down the response as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
 					readonly q?: string
-					/** @description
-					 *     Name of a response property sort the result by as per
+					/**
+					 * @description Name of a response property sort the result by as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#sorting-query-results).
-					 *      */
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -17033,13 +18370,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the repository slug or the UUID of the repository,
+				/**
+				 * @description This can either be the repository slug or the UUID of the repository,
 				 *     surrounded by curly-braces, for example: `{repository UUID}`.
-				 *      */
+				 */
 				readonly repo_slug: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -17073,25 +18412,28 @@ export interface paths {
 		readonly get: {
 			readonly parameters: {
 				readonly query?: {
-					/** @description
-					 *     Query string to narrow down the response as per
-					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). */
+					/**
+					 * @description Query string to narrow down the response as per
+					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+					 */
 					readonly q?: string
-					/** @description
-					 *     Name of a response property sort the result by as per
+					/**
+					 * @description Name of a response property sort the result by as per
 					 *     [filtering and sorting](/cloud/bitbucket/rest/intro/#sorting-query-results).
-					 *      */
+					 */
 					readonly sort?: string
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the repository slug or the UUID of the repository,
+					/**
+					 * @description This can either be the repository slug or the UUID of the repository,
 					 *     surrounded by curly-braces, for example: `{repository UUID}`.
-					 *      */
+					 */
 					readonly repo_slug: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -17162,6 +18504,58 @@ export interface paths {
 		readonly patch?: never
 		readonly trace?: never
 	}
+	readonly "/workspaces/{workspace}/pipelines-config/runners": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path?: never
+			readonly cookie?: never
+		}
+		/**
+		 * Get workspace runners
+		 * @description Retrieve workspace runners.
+		 */
+		readonly get: operations["getWorkspaceRunners"]
+		readonly put?: never
+		/**
+		 * Create workspace runner
+		 * @description Create workspace runner.
+		 */
+		readonly post: operations["createWorkspaceRunner"]
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
+	readonly "/workspaces/{workspace}/pipelines-config/runners/{runner_uuid}": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path?: never
+			readonly cookie?: never
+		}
+		/**
+		 * Get workspace runner
+		 * @description Get workspace runner by uuid.
+		 */
+		readonly get: operations["getWorkspaceRunner"]
+		/**
+		 * Update workspace runner
+		 * @description Update workspace runner.
+		 */
+		readonly put: operations["updateWorkspaceRunner"]
+		readonly post?: never
+		/**
+		 * Delete workspace runner
+		 * @description Delete workspace runner by uuid.
+		 */
+		readonly delete: operations["deleteWorkspaceRunner"]
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
 	readonly "/workspaces/{workspace}/pipelines-config/variables": {
 		readonly parameters: {
 			readonly query?: never
@@ -17219,9 +18613,10 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -17235,9 +18630,10 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -17323,9 +18719,10 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -17370,13 +18767,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The project in question. This is the actual `key` assigned
+				/**
+				 * @description The project in question. This is the actual `key` assigned
 				 *     to the project.
-				 *      */
+				 */
 				readonly project_key: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -17390,13 +18789,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual `key` assigned
+					/**
+					 * @description The project in question. This is the actual `key` assigned
 					 *     to the project.
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -17463,13 +18864,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual `key` assigned
+					/**
+					 * @description The project in question. This is the actual `key` assigned
 					 *     to the project.
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -17479,8 +18882,10 @@ export interface paths {
 				/** @description The existing project is has been updated. */
 				readonly 200: {
 					headers: {
-						/** @description The location of the project. This header is only provided
-						 *     when the project key is updated. */
+						/**
+						 * @description The location of the project. This header is only provided
+						 *     when the project key is updated.
+						 */
 						readonly Location?: string
 						readonly [name: string]: unknown
 					}
@@ -17534,13 +18939,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual `key` assigned
+					/**
+					 * @description The project in question. This is the actual `key` assigned
 					 *     to the project.
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -17578,13 +18985,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The project in question. This is the actual `key` assigned
+				/**
+				 * @description The project in question. This is the actual `key` assigned
 				 *     to the project.
-				 *      */
+				 */
 				readonly project_key: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -17613,13 +19022,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual `key` assigned
+					/**
+					 * @description The project in question. This is the actual `key` assigned
 					 *     to the project.
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -17669,13 +19080,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The project in question. This is the actual `key` assigned
+				/**
+				 * @description The project in question. This is the actual `key` assigned
 				 *     to the project.
-				 *      */
+				 */
 				readonly project_key: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -17703,13 +19116,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual `key` assigned
+					/**
+					 * @description The project in question. This is the actual `key` assigned
 					 *     to the project.
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -17792,13 +19207,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual `key` assigned
+					/**
+					 * @description The project in question. This is the actual `key` assigned
 					 *     to the project.
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -17854,13 +19271,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The project in question. This is the actual `key` assigned
+				/**
+				 * @description The project in question. This is the actual `key` assigned
 				 *     to the project.
-				 *      */
+				 */
 				readonly project_key: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -17875,13 +19294,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual `key` assigned
+					/**
+					 * @description The project in question. This is the actual `key` assigned
 					 *     to the project.
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -17924,17 +19345,20 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The project in question. This can either be the actual `key` assigned
+				/**
+				 * @description The project in question. This can either be the actual `key` assigned
 				 *     to the project or the `UUID` (surrounded by curly-braces (`{}`)).
-				 *      */
+				 */
 				readonly project_key: string
-				/** @description This can either be the username or the UUID of the default reviewer,
+				/**
+				 * @description This can either be the username or the UUID of the default reviewer,
 				 *     surrounded by curly-braces, for example: `{account UUID}`.
-				 *      */
+				 */
 				readonly selected_user: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -17948,17 +19372,20 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This can either be the actual `key` assigned
+					/**
+					 * @description The project in question. This can either be the actual `key` assigned
 					 *     to the project or the `UUID` (surrounded by curly-braces (`{}`)).
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the username or the UUID of the default reviewer,
+					/**
+					 * @description This can either be the username or the UUID of the default reviewer,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18005,17 +19432,20 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This can either be the actual `key` assigned
+					/**
+					 * @description The project in question. This can either be the actual `key` assigned
 					 *     to the project or the `UUID` (surrounded by curly-braces (`{}`)).
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the username or the UUID of the default reviewer,
+					/**
+					 * @description This can either be the username or the UUID of the default reviewer,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18069,17 +19499,20 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This can either be the actual `key` assigned
+					/**
+					 * @description The project in question. This can either be the actual `key` assigned
 					 *     to the project or the `UUID` (surrounded by curly-braces (`{}`)).
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the username or the UUID of the default reviewer,
+					/**
+					 * @description This can either be the username or the UUID of the default reviewer,
 					 *     surrounded by curly-braces, for example: `{account UUID}`.
-					 *      */
+					 */
 					readonly selected_user: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18124,13 +19557,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The project in question. This is the actual `key` assigned
+				/**
+				 * @description The project in question. This is the actual `key` assigned
 				 *     to the project.
-				 *      */
+				 */
 				readonly project_key: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -18144,13 +19579,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual `key` assigned
+					/**
+					 * @description The project in question. This is the actual `key` assigned
 					 *     to the project.
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18202,13 +19639,15 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual `key` assigned
+					/**
+					 * @description The project in question. This is the actual `key` assigned
 					 *     to the project.
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18258,13 +19697,15 @@ export interface paths {
 			readonly path: {
 				/** @description The key ID matching the project deploy key. */
 				readonly key_id: string
-				/** @description The project in question. This is the actual `key` assigned
+				/**
+				 * @description The project in question. This is the actual `key` assigned
 				 *     to the project.
-				 *      */
+				 */
 				readonly project_key: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -18280,13 +19721,15 @@ export interface paths {
 				readonly path: {
 					/** @description The key ID matching the project deploy key. */
 					readonly key_id: string
-					/** @description The project in question. This is the actual `key` assigned
+					/**
+					 * @description The project in question. This is the actual `key` assigned
 					 *     to the project.
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18329,13 +19772,15 @@ export interface paths {
 				readonly path: {
 					/** @description The key ID matching the project deploy key. */
 					readonly key_id: string
-					/** @description The project in question. This is the actual `key` assigned
+					/**
+					 * @description The project in question. This is the actual `key` assigned
 					 *     to the project.
-					 *      */
+					 */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18373,12 +19818,12 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The project in question. This is the actual key assigned to the project.
-				 *      */
+				/** @description The project in question. This is the actual key assigned to the project. */
 				readonly project_key: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -18393,12 +19838,12 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual key assigned to the project.
-					 *      */
+					/** @description The project in question. This is the actual key assigned to the project. */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18450,12 +19895,12 @@ export interface paths {
 			readonly path: {
 				/** @description Slug of the requested group. */
 				readonly group_slug: string
-				/** @description The project in question. This is the actual key assigned to the project.
-				 *      */
+				/** @description The project in question. This is the actual key assigned to the project. */
 				readonly project_key: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -18481,12 +19926,12 @@ export interface paths {
 				readonly path: {
 					/** @description Slug of the requested group. */
 					readonly group_slug: string
-					/** @description The project in question. This is the actual key assigned to the project.
-					 *      */
+					/** @description The project in question. This is the actual key assigned to the project. */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18546,12 +19991,12 @@ export interface paths {
 				readonly path: {
 					/** @description Slug of the requested group. */
 					readonly group_slug: string
-					/** @description The project in question. This is the actual key assigned to the project.
-					 *      */
+					/** @description The project in question. This is the actual key assigned to the project. */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18616,12 +20061,12 @@ export interface paths {
 				readonly path: {
 					/** @description Slug of the requested group. */
 					readonly group_slug: string
-					/** @description The project in question. This is the actual key assigned to the project.
-					 *      */
+					/** @description The project in question. This is the actual key assigned to the project. */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18666,12 +20111,12 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The project in question. This is the actual key assigned to the project.
-				 *      */
+				/** @description The project in question. This is the actual key assigned to the project. */
 				readonly project_key: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -18686,12 +20131,12 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual key assigned to the project.
-					 *      */
+					/** @description The project in question. This is the actual key assigned to the project. */
 					readonly project_key: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18741,16 +20186,17 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The project in question. This is the actual key assigned to the project.
-				 *      */
+				/** @description The project in question. This is the actual key assigned to the project. */
 				readonly project_key: string
-				/** @description This can either be the username, the user's UUID surrounded by curly-braces,
+				/**
+				 * @description This can either be the username, the user's UUID surrounded by curly-braces,
 				 *     for example: {account UUID}, or the user's Atlassian ID.
-				 *      */
+				 */
 				readonly selected_user_id: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -18774,16 +20220,17 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual key assigned to the project.
-					 *      */
+					/** @description The project in question. This is the actual key assigned to the project. */
 					readonly project_key: string
-					/** @description This can either be the username, the user's UUID surrounded by curly-braces,
+					/**
+					 * @description This can either be the username, the user's UUID surrounded by curly-braces,
 					 *     for example: {account UUID}, or the user's Atlassian ID.
-					 *      */
+					 */
 					readonly selected_user_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18842,16 +20289,17 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual key assigned to the project.
-					 *      */
+					/** @description The project in question. This is the actual key assigned to the project. */
 					readonly project_key: string
-					/** @description This can either be the username, the user's UUID surrounded by curly-braces,
+					/**
+					 * @description This can either be the username, the user's UUID surrounded by curly-braces,
 					 *     for example: {account UUID}, or the user's Atlassian ID.
-					 *      */
+					 */
 					readonly selected_user_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18917,16 +20365,17 @@ export interface paths {
 				readonly query?: never
 				readonly header?: never
 				readonly path: {
-					/** @description The project in question. This is the actual key assigned to the project.
-					 *      */
+					/** @description The project in question. This is the actual key assigned to the project. */
 					readonly project_key: string
-					/** @description This can either be the username, the user's UUID surrounded by curly-braces,
+					/**
+					 * @description This can either be the username, the user's UUID surrounded by curly-braces,
 					 *     for example: {account UUID}, or the user's Atlassian ID.
-					 *      */
+					 */
 					readonly selected_user_id: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -18971,13 +20420,15 @@ export interface paths {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description This can either be the username of the pull request author, the author's UUID
+				/**
+				 * @description This can either be the username of the pull request author, the author's UUID
 				 *     surrounded by curly-braces, for example: `{account UUID}`, or the author's Atlassian ID.
-				 *      */
+				 */
 				readonly selected_user: string
-				/** @description This can either be the workspace ID (slug) or the workspace UUID
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
 				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-				 *      */
+				 */
 				readonly workspace: string
 			}
 			readonly cookie?: never
@@ -19002,13 +20453,15 @@ export interface paths {
 				}
 				readonly header?: never
 				readonly path: {
-					/** @description This can either be the username of the pull request author, the author's UUID
+					/**
+					 * @description This can either be the username of the pull request author, the author's UUID
 					 *     surrounded by curly-braces, for example: `{account UUID}`, or the author's Atlassian ID.
-					 *      */
+					 */
 					readonly selected_user: string
-					/** @description This can either be the workspace ID (slug) or the workspace UUID
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
 					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
-					 *      */
+					 */
 					readonly workspace: string
 				}
 				readonly cookie?: never
@@ -19048,7 +20501,10 @@ export interface paths {
 		}
 		/**
 		 * Search for code in a workspace
-		 * @description Search for code in the repositories of the specified workspace.
+		 * @deprecated
+		 * @description This API will be deprecated on November 1, 2026.
+		 *
+		 *     Search for code in the repositories of the specified workspace.
 		 *
 		 *     Note that searches can match in the file's text (`content_matches`),
 		 *     the path (`path_matches`), or both.
@@ -19064,9 +20520,77 @@ export interface paths {
 		 *     (the `%2B` is a URL-encoded `+`).
 		 *
 		 *     Try `fields=%2Bvalues.*.*.*.*` to get an idea what's possible.
-		 *
 		 */
 		readonly get: operations["searchWorkspace"]
+		readonly put?: never
+		readonly post?: never
+		readonly delete?: never
+		readonly options?: never
+		readonly head?: never
+		readonly patch?: never
+		readonly trace?: never
+	}
+	readonly "/workspaces/{workspace}/settings/gpg/public-key": {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/**
+				 * @description This can either be the workspace ID (slug) or the workspace UUID
+				 *     surrounded by curly-braces, for example: `{workspace UUID}`.
+				 */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		/**
+		 * Get the workspace system GPG public key(s)
+		 * @description Returns the system public GPG key(s). In most cases a single key is returned.
+		 *     During a key rotation period, two keys may be returned.
+		 */
+		readonly get: {
+			readonly parameters: {
+				readonly query?: never
+				readonly header?: never
+				readonly path: {
+					/**
+					 * @description This can either be the workspace ID (slug) or the workspace UUID
+					 *     surrounded by curly-braces, for example: `{workspace UUID}`.
+					 */
+					readonly workspace: string
+				}
+				readonly cookie?: never
+			}
+			readonly requestBody?: never
+			readonly responses: {
+				/** @description The system public GPG key(s). */
+				readonly 200: {
+					headers: Readonly<Record<string, unknown>>
+					content?: never
+				}
+				/** @description The request wasn't authenticated. */
+				readonly 401: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+				/** @description The requesting user is not a workspace member. */
+				readonly 403: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+				/** @description The workspace does not exist. */
+				readonly 404: {
+					headers: Readonly<Record<string, unknown>>
+					content: {
+						readonly "application/json": components["schemas"]["error"]
+					}
+				}
+			}
+		}
 		readonly put?: never
 		readonly post?: never
 		readonly delete?: never
@@ -19113,7 +20637,6 @@ export interface components {
 		 *     The `_attributes` field at its top level can be used to control who is allowed to read and update the property.
 		 *     The keys of the JSON object must match an allowed pattern. For details,
 		 *     see [Application properties](/cloud/bitbucket/application-properties/).
-		 *
 		 */
 		readonly application_property: Readonly<Record<string, unknown>> & {
 			readonly _attributes?: readonly ("public" | "read_only")[]
@@ -19305,7 +20828,8 @@ export interface components {
 				/** @description Apply the restriction to branches that match this pattern. Active when `branch_match_kind` is `glob`. Will be empty when `branch_match_kind` is `branching_model`. */
 				readonly pattern: string
 				readonly users?: readonly components["schemas"]["account"][]
-				/** @description Value with kind-specific semantics:
+				/**
+				 * @description Value with kind-specific semantics:
 				 *
 				 *     * `require_approvals_to_merge` uses it to require a minimum number of approvals on a PR.
 				 *
@@ -19313,7 +20837,8 @@ export interface components {
 				 *
 				 *     * `require_passing_builds_to_merge` uses it to require a minimum number of passing builds.
 				 *
-				 *     * `require_commits_behind` uses it to require the current branch is up to a maximum number of commits behind it destination. */
+				 *     * `require_commits_behind` uses it to require the current branch is up to a maximum number of commits behind it destination.
+				 */
 				readonly value?: number
 			}))
 		readonly comment: {
@@ -19334,13 +20859,18 @@ export interface components {
 				/** Format: date-time */
 				readonly created_on?: string
 				readonly deleted?: boolean
+				/** Format: int64 */
 				readonly id?: number
 				readonly inline?: {
-					/** @description The comment's anchor line in the old version of the file. */
+					/** @description The comment's anchor line in the old version of the file. If the comment is a multi-line comment, this is the ending line number in the old version of the file. */
 					readonly from?: number
 					/** @description The path of the file this comment is anchored to. */
 					readonly path: string
-					/** @description The comment's anchor line in the new version of the file. If the 'from' line is also provided, this value will be removed. */
+					/** @description The starting line number in the old version of the file, if the comment is a multi-line comment. This is null otherwise. */
+					readonly start_from?: number
+					/** @description The starting line number in the new version of the file, if the comment is a multi-line comment. This is null otherwise. */
+					readonly start_to?: number
+					/** @description The comment's anchor line in the new version of the file. If the comment is a multi-line comment, this is the ending line number in the new version of the file. */
 					readonly to?: number
 				}
 				readonly links?: {
@@ -19430,10 +20960,12 @@ export interface components {
 				readonly created_on?: string
 				/** @description A description of the build (e.g. "Unit tests in Bamboo") */
 				readonly description?: string
-				/** @description An identifier for the status that's unique to
+				/**
+				 * @description An identifier for the status that's unique to
 				 *             its type (current "build" is the only supported type) and the vendor,
-				 *             e.g. BB-DEPLOY */
-				readonly key?: string
+				 *             e.g. BB-DEPLOY
+				 */
+				readonly key: string
 				readonly links?: {
 					/**
 					 * Link
@@ -19456,26 +20988,25 @@ export interface components {
 				}
 				/** @description An identifier for the build itself, e.g. BB-DEPLOY-1 */
 				readonly name?: string
-				/** @description
-				 *     The name of the ref that pointed to this commit at the time the status
+				/**
+				 * @description The name of the ref that pointed to this commit at the time the status
 				 *     object was created. Note that this the ref may since have moved off of
 				 *     the commit. This optional field can be useful for build systems whose
 				 *     build triggers and configuration are branch-dependent (e.g. a Pipeline
 				 *     build).
 				 *     It is legitimate for this field to not be set, or even apply (e.g. a
-				 *     static linting job). */
+				 *     static linting job).
+				 */
 				readonly refname?: string
 				/**
 				 * @description Provides some indication of the status of this commit
 				 * @enum {string}
 				 */
-				readonly state?: "FAILED" | "INPROGRESS" | "STOPPED" | "SUCCESSFUL"
+				readonly state: "FAILED" | "INPROGRESS" | "STOPPED" | "SUCCESSFUL"
 				/** Format: date-time */
 				readonly updated_on?: string
 				/** @description A URL linking back to the vendor or build system, for providing more information about whatever process produced this status. Accepts context variables `repository` and `commit` that Bitbucket will evaluate at runtime whenever at runtime. For example, one could use https://foo.com/builds/{repository.full_name} which Bitbucket will turn into https://foo.com/builds/foo/bar at render time. */
 				readonly url?: string
-				/** @description The commit status' id. */
-				readonly uuid?: string
 			}))
 		readonly committer: {
 			readonly type: "committer"
@@ -19768,14 +21299,40 @@ export interface components {
 			readonly send_email?: boolean
 			readonly type: string
 		}
+		/**
+		 * File Conflict
+		 * @description A file conflict object.
+		 */
+		readonly file_conflict: Readonly<Record<string, unknown>> & {
+			readonly message?: string
+			readonly path?: string
+			/** @enum {string} */
+			readonly scenario?:
+				| "add_rename"
+				| "binary"
+				| "content"
+				| "delete_modify"
+				| "delete_rename"
+				| "directory_file"
+				| "file_directory"
+				| "flags"
+				| "mode"
+				| "modify_delete"
+				| "rename_add"
+				| "rename_delete"
+				| "rename"
+				| "subrepo"
+				| "symlink"
+				| "type"
+				| "unknown"
+			readonly type: string
+		}
 		readonly GPG_account_key: {
 			readonly type: "GPG_account_key"
 		} & (Omit<components["schemas"]["object"], "type"> &
 			(Readonly<Record<string, unknown>> & {
 				/** Format: date-time */
 				readonly added_on?: string
-				/** @description The comment parsed from the GPG key (if present) */
-				readonly comment?: string
 				/** Format: date-time */
 				readonly created_on?: string
 				/** Format: date-time */
@@ -19810,9 +21367,10 @@ export interface components {
 			readonly type: "group"
 		} & (Omit<components["schemas"]["object"], "type"> &
 			(Readonly<Record<string, unknown>> & {
-				/** @description The concatenation of the workspace's slug and the group's slug,
+				/**
+				 * @description The concatenation of the workspace's slug and the group's slug,
 				 *     separated with a colon (e.g. `acme:developers`)
-				 *      */
+				 */
 				readonly full_slug?: string
 				readonly links?: {
 					/**
@@ -19836,8 +21394,10 @@ export interface components {
 				}
 				readonly name?: string
 				readonly owner?: components["schemas"]["account"]
-				/** @description The "sluggified" version of the group's name. This contains only ASCII
-				 *     characters and can therefore be slightly different than the name */
+				/**
+				 * @description The "sluggified" version of the group's name. This contains only ASCII
+				 *     characters and can therefore be slightly different than the name
+				 */
 				readonly slug?: string
 				readonly workspace?: components["schemas"]["workspace"]
 			}))
@@ -19858,6 +21418,7 @@ export interface components {
 				| "issue:comment_created"
 				| "issue:created"
 				| "issue:updated"
+				| "pipeline:span_created"
 				| "project:updated"
 				| "pullrequest:approved"
 				| "pullrequest:changes_request_created"
@@ -20475,6 +22036,29 @@ export interface components {
 			readonly values?: readonly components["schemas"]["deployment_environment"][]
 		}
 		/**
+		 * Paginated File Conflicts
+		 * @description A paginated list of file conflicts.
+		 */
+		readonly paginated_file_conflicts: {
+			/**
+			 * Format: uri
+			 * @description Link to the next page if it exists. The last page of a collection does not have this value. Use this link to navigate the result set and refrain from constructing your own URLs.
+			 */
+			readonly next?: string
+			/** @description Page number of the current results. This is an optional element that is not provided in all responses. */
+			readonly page?: number
+			/** @description Current number of objects on the existing page. The default value is 10 with 100 being the maximum allowed value. Individual APIs may enforce different values. */
+			readonly pagelen?: number
+			/**
+			 * Format: uri
+			 * @description Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs.
+			 */
+			readonly previous?: string
+			/** @description Total number of objects in the response. This is an optional element that is not provided in all responses, as it can be expensive to compute. */
+			readonly size?: number
+			readonly values?: readonly components["schemas"]["file_conflict"][]
+		}
+		/**
 		 * Paginated Files
 		 * @description A paginated list of commit_file objects.
 		 */
@@ -20705,6 +22289,24 @@ export interface components {
 			readonly size?: number
 			/** @description The values of the current page. */
 			readonly values?: readonly components["schemas"]["pipeline_known_host"][]
+		}
+		/**
+		 * Paginated Runners
+		 * @description A paged list of runners.
+		 */
+		readonly paginated_pipeline_runners: {
+			/** @description Link to the next page if it exists. The last page of a collection does not have this value. Use this link to navigate the result set and refrain from constructing your own URLs. */
+			readonly next?: string
+			/** @description Page number of the current results. This is an optional element that is not provided in all responses. */
+			readonly page?: number
+			/** @description Current number of objects on the existing page. The default value is 10 with 100 being the maximum allowed value. Individual APIs may enforce different values. */
+			readonly pagelen?: number
+			/** @description Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs. */
+			readonly previous?: string
+			/** @description Total number of objects in the response. This is an optional element that is not provided in all responses, as it can be expensive to compute. */
+			readonly size?: number
+			/** @description The values of the current page. */
+			readonly values?: readonly components["schemas"]["pipeline_runner"][]
 		}
 		/**
 		 * Paginated Pipeline Schedule Executions
@@ -21311,6 +22913,29 @@ export interface components {
 			readonly values?: readonly components["schemas"]["webhook_subscription"][]
 		}
 		/**
+		 * Paginated Workspace Permissions
+		 * @description A paginated list of workspace permissions.
+		 */
+		readonly paginated_workspace_access: {
+			/**
+			 * Format: uri
+			 * @description Link to the next page if it exists. The last page of a collection does not have this value. Use this link to navigate the result set and refrain from constructing your own URLs.
+			 */
+			readonly next?: string
+			/** @description Page number of the current results. This is an optional element that is not provided in all responses. */
+			readonly page?: number
+			/** @description Current number of objects on the existing page. The default value is 10 with 100 being the maximum allowed value. Individual APIs may enforce different values. */
+			readonly pagelen?: number
+			/**
+			 * Format: uri
+			 * @description Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs.
+			 */
+			readonly previous?: string
+			/** @description Total number of objects in the response. This is an optional element that is not provided in all responses, as it can be expensive to compute. */
+			readonly size?: number
+			readonly values?: readonly components["schemas"]["workspace_access"][]
+		}
+		/**
 		 * Paginated Workspace Memberships
 		 * @description A paginated list of workspace memberships.
 		 */
@@ -21518,6 +23143,78 @@ export interface components {
 				 */
 				readonly ref_type?: "bookmark" | "branch" | "named_branch" | "tag"
 				readonly selector?: components["schemas"]["pipeline_selector"]
+			}))
+		readonly pipeline_runner: {
+			readonly type: "pipeline_runner"
+		} & (Omit<components["schemas"]["object"], "type"> &
+			(Readonly<Record<string, unknown>> & {
+				/**
+				 * Format: date-time
+				 * @description The timestamp when the runner was created.
+				 */
+				readonly created_on?: string
+				/** @description Labels assigned to the runner for identification and routing. */
+				readonly labels?: readonly string[]
+				/** @description The name of the runner. */
+				readonly name?: string
+				readonly oauth_client?: components["schemas"]["pipeline_runner_oauth_client"]
+				readonly state?: components["schemas"]["pipeline_runner_state"]
+				/**
+				 * Format: date-time
+				 * @description The timestamp when the runner was last updated.
+				 */
+				readonly updated_on?: string
+				/** @description The UUID identifying the runner. */
+				readonly uuid?: string
+			}))
+		readonly pipeline_runner_oauth_client: {
+			readonly type: "pipeline_runner_oauth_client"
+		} & (Omit<components["schemas"]["object"], "type"> &
+			(Readonly<Record<string, unknown>> & {
+				/** @description The intended audience for the OAuth token. */
+				readonly audience?: string
+				/** @description The OAuth client ID. */
+				readonly id?: string
+				/** @description The OAuth client secret. This is an optional element that is only provided once. */
+				readonly secret?: string
+				/**
+				 * Format: uri
+				 * @description The OAuth token endpoint URL.
+				 */
+				readonly token_endpoint?: string
+			}))
+		readonly pipeline_runner_state: {
+			readonly type: "pipeline_runner_state"
+		} & (Omit<components["schemas"]["object"], "type"> &
+			(Readonly<Record<string, unknown>> & {
+				/** @description Whether the runner is cordoned (prevented from accepting new steps). */
+				readonly cordoned?: boolean
+				/**
+				 * @description The current status of the runner.
+				 * @enum {string}
+				 */
+				readonly status?:
+					| "DISABLED"
+					| "ENABLED"
+					| "OFFLINE"
+					| "ONLINE"
+					| "UNHEALTHY"
+					| "UNREGISTERED"
+				/**
+				 * Format: date-time
+				 * @description The timestamp when the runner state was last updated.
+				 */
+				readonly updated_on?: string
+				readonly version?: components["schemas"]["pipeline_runner_version"]
+			}))
+		readonly pipeline_runner_version: {
+			readonly type: "pipeline_runner_version"
+		} & (Omit<components["schemas"]["object"], "type"> &
+			(Readonly<Record<string, unknown>> & {
+				/** @description The current recommended version of the runner. */
+				readonly current?: string
+				/** @description The currently installed version of the runner. */
+				readonly version?: string
 			}))
 		readonly pipeline_schedule: {
 			readonly type: "pipeline_schedule"
@@ -21975,14 +23672,16 @@ export interface components {
 				/** Format: date-time */
 				readonly created_on?: string
 				readonly description?: string
-				/** @description
-				 *     Indicates whether the project contains publicly visible repositories.
-				 *     Note that private projects cannot contain public repositories. */
+				/**
+				 * @description Indicates whether the project contains publicly visible repositories.
+				 *     Note that private projects cannot contain public repositories.
+				 */
 				readonly has_publicly_visible_repos?: boolean
-				/** @description
-				 *     Indicates whether the project is publicly accessible, or whether it is
+				/**
+				 * @description Indicates whether the project is publicly accessible, or whether it is
 				 *     private to the team and consequently only visible to team members.
-				 *     Note that private projects cannot contain public repositories. */
+				 *     Note that private projects cannot contain public repositories.
+				 */
 				readonly is_private?: boolean
 				/** @description The project's key. */
 				readonly key?: string
@@ -22229,7 +23928,10 @@ export interface components {
 				readonly merge_commit?: {
 					readonly hash?: string
 				}
-				/** @description         The list of users that are collaborating on this pull request.
+				/** @description A boolean flag indicating whether the pull request passes all merge checks */
+				readonly mergeable?: boolean
+				/**
+				 * @description The list of users that are collaborating on this pull request.
 				 *             Collaborators are user that:
 				 *
 				 *             * are added to the pull request as a reviewer (part of the reviewers
@@ -22241,7 +23943,7 @@ export interface components {
 				 *             whether they have approved the pull request. For performance reasons,
 				 *             the API only returns this list when an API requests a pull request by
 				 *             id.
-				 *              */
+				 */
 				readonly participants?: readonly components["schemas"]["participant"][]
 				/** @description A boolean flag indicating whether the pull request is queued */
 				readonly queued?: boolean
@@ -22293,7 +23995,13 @@ export interface components {
 				 * @description The pull request's current status.
 				 * @enum {string}
 				 */
-				readonly state?: "DECLINED" | "MERGED" | "OPEN" | "SUPERSEDED"
+				readonly state?:
+					| "DECLINED"
+					| "DRAFT"
+					| "MERGED"
+					| "OPEN"
+					| "QUEUED"
+					| "SUPERSEDED"
 				readonly summary?: {
 					/** @description The user's content rendered as HTML. */
 					readonly html?: string
@@ -22490,7 +24198,7 @@ export interface components {
 				 * @description A URL to the report logo. If none is provided, the default insights logo will be used.
 				 */
 				readonly logo_url?: string
-				/** @description If enabled, a remote link is created in Jira for the issue associated with the commit the report belongs to. */
+				/** @description If enabled, a remote link is created in Jira for the work item associated with the commit the report belongs to. */
 				readonly remote_link_enabled?: boolean
 				/**
 				 * @description The type of the report.
@@ -22591,30 +24299,28 @@ export interface components {
 				readonly created_on?: string
 				readonly description?: string
 				/**
-				 * @description
-				 *     Controls the rules for forking this repository.
+				 * @description Controls the rules for forking this repository.
 				 *
 				 *     * **allow_forks**: unrestricted forking
 				 *     * **no_public_forks**: restrict forking to private forks (forks cannot
 				 *       be made public later)
 				 *     * **no_forks**: deny all forking
-				 *
 				 * @enum {string}
 				 */
 				readonly fork_policy?: "allow_forks" | "no_forks" | "no_public_forks"
 				/** @description The concatenation of the repository owner's username and the slugified name, e.g. "evzijst/interruptingcow". This is the same string used in Bitbucket URLs. */
 				readonly full_name?: string
-				/** @description
-				 *     The issue tracker for this repository is enabled. Issue Tracker
+				/**
+				 * @description The issue tracker for this repository is enabled. Issue Tracker
 				 *     features are not supported for repositories in workspaces
 				 *     administered through admin.atlassian.com.
-				 *      */
+				 */
 				readonly has_issues?: boolean
-				/** @description
-				 *     The wiki for this repository is enabled. Wiki
+				/**
+				 * @description The wiki for this repository is enabled. Wiki
 				 *     features are not supported for repositories in workspaces
 				 *     administered through admin.atlassian.com.
-				 *      */
+				 */
 				readonly has_wiki?: boolean
 				readonly is_private?: boolean
 				readonly language?: string
@@ -22992,6 +24698,7 @@ export interface components {
 			/** Format: date-time */
 			readonly created_on: string
 			readonly creator: components["schemas"]["account"]
+			/** Format: int64 */
 			readonly id?: number
 			readonly pending?: boolean
 			readonly resolved_by?: components["schemas"]["account"]
@@ -23081,6 +24788,7 @@ export interface components {
 					| "issue:comment_created"
 					| "issue:created"
 					| "issue:updated"
+					| "pipeline:span_created"
 					| "project:updated"
 					| "pullrequest:approved"
 					| "pullrequest:changes_request_created"
@@ -23136,14 +24844,15 @@ export interface components {
 				 *
 				 *     * **allow_forks**: unrestricted forking
 				 *     * **internal_only**: prevents forking of private repositories outside the workspace or to public repositories
-				 *
 				 * @enum {string}
 				 */
 				readonly forking_mode?: "allow_forks" | "internal_only"
 				/** @description Indicates whether the workspace enforces private content, or whether it allows public content. */
 				readonly is_privacy_enforced?: boolean
-				/** @description Indicates whether the workspace is publicly accessible, or whether it is
-				 *     private to the members and consequently only visible to members. */
+				/**
+				 * @description Indicates whether the workspace is publicly accessible, or whether it is
+				 *     private to the members and consequently only visible to members.
+				 */
 				readonly is_private?: boolean
 				readonly links?: {
 					/**
@@ -23225,6 +24934,43 @@ export interface components {
 				readonly slug?: string
 				/** Format: date-time */
 				readonly updated_on?: string
+				/** @description The workspace's immutable id. */
+				readonly uuid?: string
+			}))
+		readonly workspace_access: {
+			readonly type: "workspace_access"
+		} & (Omit<components["schemas"]["object"], "type"> &
+			(Readonly<Record<string, unknown>> & {
+				/** @description The permission level the user has for the workspace. True if the user is an administrator, otherwise False. */
+				readonly administrator?: boolean
+				readonly workspace?: components["schemas"]["workspace_base"]
+			}))
+		readonly workspace_base: {
+			readonly type: "workspace_base"
+		} & (Omit<components["schemas"]["object"], "type"> &
+			(Readonly<Record<string, unknown>> & {
+				readonly links?: {
+					/**
+					 * Link
+					 * @description A link to a resource related to this object.
+					 */
+					readonly avatar?: {
+						/** Format: uri */
+						readonly href?: string
+						readonly name?: string
+					}
+					/**
+					 * Link
+					 * @description A link to a resource related to this object.
+					 */
+					readonly self?: {
+						/** Format: uri */
+						readonly href?: string
+						readonly name?: string
+					}
+				}
+				/** @description The short label that identifies this workspace. */
+				readonly slug?: string
 				/** @description The workspace's immutable id. */
 				readonly uuid?: string
 			}))
@@ -23350,6 +25096,7 @@ export type SchemaEffectiveRepoBranchingModel =
 	components["schemas"]["effective_repo_branching_model"]
 export type SchemaError = components["schemas"]["error"]
 export type SchemaExportOptions = components["schemas"]["export_options"]
+export type SchemaFileConflict = components["schemas"]["file_conflict"]
 export type SchemaGpgAccountKey = components["schemas"]["GPG_account_key"]
 export type SchemaGroup = components["schemas"]["group"]
 export type SchemaHookEvent = components["schemas"]["hook_event"]
@@ -23389,6 +25136,8 @@ export type SchemaPaginatedDiffstats =
 	components["schemas"]["paginated_diffstats"]
 export type SchemaPaginatedEnvironments =
 	components["schemas"]["paginated_environments"]
+export type SchemaPaginatedFileConflicts =
+	components["schemas"]["paginated_file_conflicts"]
 export type SchemaPaginatedFiles = components["schemas"]["paginated_files"]
 export type SchemaPaginatedGpgUserKeys =
 	components["schemas"]["paginated_gpg_user_keys"]
@@ -23407,6 +25156,8 @@ export type SchemaPaginatedPipelineCaches =
 	components["schemas"]["paginated_pipeline_caches"]
 export type SchemaPaginatedPipelineKnownHosts =
 	components["schemas"]["paginated_pipeline_known_hosts"]
+export type SchemaPaginatedPipelineRunners =
+	components["schemas"]["paginated_pipeline_runners"]
 export type SchemaPaginatedPipelineScheduleExecutions =
 	components["schemas"]["paginated_pipeline_schedule_executions"]
 export type SchemaPaginatedPipelineSchedules =
@@ -23455,6 +25206,8 @@ export type SchemaPaginatedVersions =
 	components["schemas"]["paginated_versions"]
 export type SchemaPaginatedWebhookSubscriptions =
 	components["schemas"]["paginated_webhook_subscriptions"]
+export type SchemaPaginatedWorkspaceAccess =
+	components["schemas"]["paginated_workspace_access"]
 export type SchemaPaginatedWorkspaceMemberships =
 	components["schemas"]["paginated_workspace_memberships"]
 export type SchemaPaginatedWorkspaces =
@@ -23477,6 +25230,13 @@ export type SchemaPipelineKnownHost =
 	components["schemas"]["pipeline_known_host"]
 export type SchemaPipelineRefTarget =
 	components["schemas"]["pipeline_ref_target"]
+export type SchemaPipelineRunner = components["schemas"]["pipeline_runner"]
+export type SchemaPipelineRunnerOauthClient =
+	components["schemas"]["pipeline_runner_oauth_client"]
+export type SchemaPipelineRunnerState =
+	components["schemas"]["pipeline_runner_state"]
+export type SchemaPipelineRunnerVersion =
+	components["schemas"]["pipeline_runner_version"]
 export type SchemaPipelineSchedule = components["schemas"]["pipeline_schedule"]
 export type SchemaPipelineScheduleExecution =
 	components["schemas"]["pipeline_schedule_execution"]
@@ -23616,6 +25376,8 @@ export type SchemaVersion = components["schemas"]["version"]
 export type SchemaWebhookSubscription =
 	components["schemas"]["webhook_subscription"]
 export type SchemaWorkspace = components["schemas"]["workspace"]
+export type SchemaWorkspaceAccess = components["schemas"]["workspace_access"]
+export type SchemaWorkspaceBase = components["schemas"]["workspace_base"]
 export type SchemaWorkspaceMembership =
 	components["schemas"]["workspace_membership"]
 export type RequestBodyApplicationProperty =
@@ -25375,6 +27137,160 @@ export interface operations {
 			}
 		}
 	}
+	readonly getRepositoryRunners: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description The repository. */
+				readonly repo_slug: string
+				/** @description This can either be the workspace ID (slug) or the workspace UUID surrounded by curly-braces, for example `{workspace UUID}`. */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The repository runners. */
+			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["paginated_pipeline_runners"]
+				}
+			}
+		}
+	}
+	readonly createRepositoryRunner: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description The repository. */
+				readonly repo_slug: string
+				/** @description This can either be the workspace ID (slug) or the workspace UUID surrounded by curly-braces, for example `{workspace UUID}`. */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The repository runner. */
+			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["pipeline_runner"]
+				}
+			}
+			/** @description The request body contained invalid properties or runner limit exceeded. */
+			readonly 400: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["error"]
+				}
+			}
+			/** @description The repository runner with the provided UUID already exists. */
+			readonly 409: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["error"]
+				}
+			}
+		}
+	}
+	readonly getRepositoryRunner: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description The repository. */
+				readonly repo_slug: string
+				/** @description The runner uuid. */
+				readonly runner_uuid: string
+				/** @description This can either be the workspace ID (slug) or the workspace UUID surrounded by curly-braces, for example `{workspace UUID}`. */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The repository runner. */
+			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["pipeline_runner"]
+				}
+			}
+			/** @description The repository runner was not found. */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["error"]
+				}
+			}
+		}
+	}
+	readonly updateRepositoryRunner: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description The repository. */
+				readonly repo_slug: string
+				/** @description The runner uuid. */
+				readonly runner_uuid: string
+				/** @description This can either be the workspace ID (slug) or the workspace UUID surrounded by curly-braces, for example `{workspace UUID}`. */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The repository runner. */
+			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["pipeline_runner"]
+				}
+			}
+			/** @description The repository runner was not found. */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["error"]
+				}
+			}
+		}
+	}
+	readonly deleteRepositoryRunner: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description The repository. */
+				readonly repo_slug: string
+				/** @description The runner uuid. */
+				readonly runner_uuid: string
+				/** @description This can either be the workspace ID (slug) or the workspace UUID surrounded by curly-braces, for example `{workspace UUID}`. */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The repository runner was deleted. */
+			readonly 204: {
+				headers: Readonly<Record<string, unknown>>
+				content?: never
+			}
+			/** @description The repository runner was not found. */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["error"]
+				}
+			}
+		}
+	}
 	readonly getPipelineForRepository: {
 		readonly parameters: {
 			readonly query?: never
@@ -26025,7 +27941,8 @@ export interface operations {
 					readonly "application/json": components["schemas"]["search_result_page"]
 				}
 			}
-			/** @description If the search request was invalid due to one of the
+			/**
+			 * @description If the search request was invalid due to one of the
 			 *     following reasons:
 			 *
 			 *     * the specified type of target account doesn''t match the actual
@@ -26035,7 +27952,7 @@ export interface operations {
 			 *
 			 *     * missing or malformed search query, in the latter case an error
 			 *     key will be returned in `error.data.key` property.
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -26303,7 +28220,8 @@ export interface operations {
 					readonly "application/json": components["schemas"]["search_result_page"]
 				}
 			}
-			/** @description If the search request was invalid due to one of the
+			/**
+			 * @description If the search request was invalid due to one of the
 			 *     following reasons:
 			 *
 			 *     * the specified type of target account doesn''t match the actual
@@ -26313,7 +28231,7 @@ export interface operations {
 			 *
 			 *     * missing or malformed search query, in the latter case an error
 			 *     key will be returned in `error.data.key` property.
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -26380,6 +28298,150 @@ export interface operations {
 				content?: never
 			}
 			/** @description The workspace was not found. */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["error"]
+				}
+			}
+		}
+	}
+	readonly getWorkspaceRunners: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description This can either be the workspace ID (slug) or the workspace UUID surrounded by curly-braces, for example `{workspace UUID}`. */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The workspace runners. */
+			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["paginated_pipeline_runners"]
+				}
+			}
+		}
+	}
+	readonly createWorkspaceRunner: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description This can either be the workspace ID (slug) or the workspace UUID surrounded by curly-braces, for example `{workspace UUID}`. */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The workspace runner. */
+			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["pipeline_runner"]
+				}
+			}
+			/** @description The request body contained invalid properties or runner limit exceeded. */
+			readonly 400: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["error"]
+				}
+			}
+			/** @description The workspace runner with the provided UUID already exists. */
+			readonly 409: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["error"]
+				}
+			}
+		}
+	}
+	readonly getWorkspaceRunner: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description The runner uuid. */
+				readonly runner_uuid: string
+				/** @description This can either be the workspace ID (slug) or the workspace UUID surrounded by curly-braces, for example `{workspace UUID}`. */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The workspace runner. */
+			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["pipeline_runner"]
+				}
+			}
+			/** @description The workspace runner was not found. */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["error"]
+				}
+			}
+		}
+	}
+	readonly updateWorkspaceRunner: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description The runner uuid. */
+				readonly runner_uuid: string
+				/** @description This can either be the workspace ID (slug) or the workspace UUID surrounded by curly-braces, for example `{workspace UUID}`. */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The workspace runner. */
+			readonly 200: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["pipeline_runner"]
+				}
+			}
+			/** @description The workspace runner was not found. */
+			readonly 404: {
+				headers: Readonly<Record<string, unknown>>
+				content: {
+					readonly "application/json": components["schemas"]["error"]
+				}
+			}
+		}
+	}
+	readonly deleteWorkspaceRunner: {
+		readonly parameters: {
+			readonly query?: never
+			readonly header?: never
+			readonly path: {
+				/** @description The runner uuid. */
+				readonly runner_uuid: string
+				/** @description This can either be the workspace ID (slug) or the workspace UUID surrounded by curly-braces, for example `{workspace UUID}`. */
+				readonly workspace: string
+			}
+			readonly cookie?: never
+		}
+		readonly requestBody?: never
+		readonly responses: {
+			/** @description The workspace runner was deleted. */
+			readonly 204: {
+				headers: Readonly<Record<string, unknown>>
+				content?: never
+			}
+			/** @description The workspace runner was not found. */
 			readonly 404: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -26562,7 +28624,8 @@ export interface operations {
 					readonly "application/json": components["schemas"]["search_result_page"]
 				}
 			}
-			/** @description If the search request was invalid due to one of the
+			/**
+			 * @description If the search request was invalid due to one of the
 			 *     following reasons:
 			 *
 			 *     * the specified type of target account doesn''t match the actual
@@ -26572,7 +28635,7 @@ export interface operations {
 			 *
 			 *     * missing or malformed search query, in the latter case an error
 			 *     key will be returned in `error.data.key` property.
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {

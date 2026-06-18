@@ -1682,7 +1682,7 @@ export interface paths {
 		}
 		/**
 		 * Get root log level
-		 * @description  Retrieve the current log level for the root logger.
+		 * @description Retrieve the current log level for the root logger.
 		 *
 		 *     The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
 		 */
@@ -2563,7 +2563,7 @@ export interface paths {
 		readonly post?: never
 		/**
 		 * Revoke group project permission
-		 * @description  Revoke all permissions for the specified project for a group.
+		 * @description Revoke all permissions for the specified project for a group.
 		 *
 		 *     The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
 		 *
@@ -4092,7 +4092,6 @@ export interface paths {
 		 *     - username.N - the "root" of a single participant filter, where "N" is a natural number   starting from 1. This allows clients to specify multiple participant filters, by providing consecutive   filters as username.1, username.2 etc. Note that the filters numbering has to start   with 1 and be continuous for all filters to be processed. The total allowed number of participant   filters is 10 and all filters exceeding that limit will be dropped.
 		 *     - role.N(optional) the role associated with username.N.   This must be one of AUTHOR, REVIEWER, or PARTICIPANT
 		 *     - approved.N (optional) the approved status associated with username.N.   That is whether username.N has approved the PR. Either true, or false
-		 *
 		 */
 		readonly get: operations["getPage"]
 		readonly put?: never
@@ -5499,9 +5498,6 @@ export interface paths {
 		 *     - requiredAllTasksComplete - whether or not all tasks on a pull request need to be completed for it to be mergeable
 		 *     - requiredSuccessfulBuilds - (Deprecated, please use com.atlassian.bitbucket.server.bitbucket-build.requiredBuildsMergeCheck instead) the number of successful builds on a pull request for it to be mergeable, or 0 if the merge check is disabled
 		 *     - com.atlassian.bitbucket.server.bitbucket-build.requiredBuildsMergeCheck - the merge check configuration for required builds
-		 *
-		 *
-		 *
 		 */
 		readonly get: operations["getPullRequestSettings_1"]
 		readonly put?: never
@@ -5542,9 +5538,6 @@ export interface paths {
 		 *     - The configuration set for this repository's SCM type as set at the project level, if present, otherwise
 		 *     - the configuration set for this repository's SCM type as set at the instance level, if present, otherwise
 		 *     - the default configuration for this repository's SCM type
-		 *
-		 *
-		 *
 		 */
 		readonly post: operations["updatePullRequestSettings_1"]
 		readonly delete?: never
@@ -7038,7 +7031,7 @@ export interface paths {
 		readonly put?: never
 		/**
 		 * Create branch
-		 * @description  Creates a branch in the specified repository.
+		 * @description Creates a branch in the specified repository.
 		 *
 		 *
 		 *     The authenticated user must have an effective <strong>REPO_WRITE</strong> permission to call this resource. If
@@ -7048,7 +7041,7 @@ export interface paths {
 		readonly post: operations["createBranch"]
 		/**
 		 * Delete branch
-		 * @description  Deletes a branch in the specified repository.
+		 * @description Deletes a branch in the specified repository.
 		 *
 		 *
 		 *      If the branch does not exist, this operation will not raise an error. In other words after calling this resource
@@ -7816,8 +7809,6 @@ export interface paths {
 		 * @description Retrieves the enchanced primary entitylink
 		 *
 		 *     The authenticated user must have <strong>PROJECT_READ</strong> permission for the project having the primary enhanced entitylink.
-		 *
-		 *
 		 */
 		readonly get: operations["getEnhancedEntityLinkForProject"]
 		readonly put?: never
@@ -8234,7 +8225,7 @@ export interface paths {
 		}
 		/**
 		 * Get synchronization progress state
-		 * @description  Retrieves synchronization progress state.If there's no progress to report, this resource will return <pre><code> {"discovering":false,"syncedRepos":0,"totalRepos":0}</code></pre> If there are repositories in the process of synchronizing, but the precise number hasn't been discovered yet, this resource will return: <pre><code> {"discovering":true,"syncedRepos":3,"totalRepos":100}</code></pre> If there is progress to report and the total number of repositories is known, this resource will return: <pre> <code> {"discovering":false,"syncedRepos":242,"totalRepos":1071}</code> </pre>
+		 * @description Retrieves synchronization progress state.If there's no progress to report, this resource will return <pre><code> {"discovering":false,"syncedRepos":0,"totalRepos":0}</code></pre> If there are repositories in the process of synchronizing, but the precise number hasn't been discovered yet, this resource will return: <pre><code> {"discovering":true,"syncedRepos":3,"totalRepos":100}</code></pre> If there is progress to report and the total number of repositories is known, this resource will return: <pre> <code> {"discovering":false,"syncedRepos":242,"totalRepos":1071}</code> </pre>
 		 */
 		readonly get: operations["getSynchronizationProgress"]
 		readonly put?: never
@@ -8813,9 +8804,6 @@ export interface paths {
 		 *
 		 *     - **exemptRefMatcher.id** The value to exempt refs in the source branch from this check
 		 *     - **exemptRefMatcher.type.id**: The type of exempt ref matcher, one of: "ANY_REF", "BRANCH", "PATTERN", "MODEL_CATEGORY" or "MODEL_BRANCH"
-		 *
-		 *
-		 *
 		 */
 		readonly post: operations["createRequiredBuildsMergeCheck"]
 		readonly delete?: never
@@ -8851,9 +8839,6 @@ export interface paths {
 		 *
 		 *     - **exemptRefMatcher.id** The value to exempt refs in the source branch from this check
 		 *     - **exemptRefMatcher.type.id**: The type of exempt ref matcher, one of: "ANY_REF", "BRANCH", "PATTERN", "MODEL_CATEGORY" or "MODEL_BRANCH"
-		 *
-		 *
-		 *
 		 */
 		readonly put: operations["updateRequiredBuildsMergeCheck"]
 		readonly post?: never
@@ -9461,10 +9446,12 @@ export interface components {
 		readonly GroupAndUsers: {
 			/** @example group */
 			readonly group?: string
-			/** @example [
+			/**
+			 * @example [
 			 *       "user1",
 			 *       "user2"
-			 *     ] */
+			 *     ]
+			 */
 			readonly users: readonly string[]
 		}
 		readonly GroupPickerContext: {
@@ -9591,10 +9578,12 @@ export interface components {
 			readonly expiryDays?: number
 			/** @example My access token */
 			readonly name?: string
-			/** @example [
+			/**
+			 * @example [
 			 *       "REPO_ADMIN",
 			 *       "PROJECT_READ"
-			 *     ] */
+			 *     ]
+			 */
 			readonly permissions?: readonly string[]
 		}
 		readonly RestAggregateRejectCounter: {
@@ -10311,11 +10300,13 @@ export interface components {
 			readonly conflict?: {
 				readonly ourChange?: {
 					readonly path?: {
-						/** @example [
+						/**
+						 * @example [
 						 *       "path",
 						 *       "to",
 						 *       "file.txt"
-						 *     ] */
+						 *     ]
+						 */
 						readonly components?: readonly string[]
 						/** @example txt */
 						readonly extension?: string
@@ -10325,11 +10316,13 @@ export interface components {
 						readonly parent?: string
 					}
 					readonly srcPath?: {
-						/** @example [
+						/**
+						 * @example [
 						 *       "path",
 						 *       "to",
 						 *       "file.txt"
-						 *     ] */
+						 *     ]
+						 */
 						readonly components?: readonly string[]
 						/** @example txt */
 						readonly extension?: string
@@ -10349,11 +10342,13 @@ export interface components {
 				}
 				readonly theirChange?: {
 					readonly path?: {
-						/** @example [
+						/**
+						 * @example [
 						 *       "path",
 						 *       "to",
 						 *       "file.txt"
-						 *     ] */
+						 *     ]
+						 */
 						readonly components?: readonly string[]
 						/** @example txt */
 						readonly extension?: string
@@ -10363,11 +10358,13 @@ export interface components {
 						readonly parent?: string
 					}
 					readonly srcPath?: {
-						/** @example [
+						/**
+						 * @example [
 						 *       "path",
 						 *       "to",
 						 *       "file.txt"
-						 *     ] */
+						 *     ]
+						 */
 						readonly components?: readonly string[]
 						/** @example txt */
 						readonly extension?: string
@@ -10395,11 +10392,13 @@ export interface components {
 			/** @enum {string} */
 			readonly nodeType?: "DIRECTORY" | "FILE" | "SUBMODULE"
 			readonly path?: {
-				/** @example [
+				/**
+				 * @example [
 				 *       "path",
 				 *       "to",
 				 *       "file.txt"
-				 *     ] */
+				 *     ]
+				 */
 				readonly components?: readonly string[]
 				/** @example txt */
 				readonly extension?: string
@@ -10415,11 +10414,13 @@ export interface components {
 			readonly percentUnchanged?: number
 			readonly srcExecutable?: boolean
 			readonly srcPath?: {
-				/** @example [
+				/**
+				 * @example [
 				 *       "path",
 				 *       "to",
 				 *       "file.txt"
-				 *     ] */
+				 *     ]
+				 */
 				readonly components?: readonly string[]
 				/** @example txt */
 				readonly extension?: string
@@ -10655,11 +10656,13 @@ export interface components {
 					readonly startLineType: "ADDED" | "CONTEXT" | "REMOVED"
 				}
 				readonly path?: {
-					/** @example [
+					/**
+					 * @example [
 					 *       "path",
 					 *       "to",
 					 *       "file.txt"
-					 *     ] */
+					 *     ]
+					 */
 					readonly components?: readonly string[]
 					/** @example txt */
 					readonly extension?: string
@@ -10932,11 +10935,13 @@ export interface components {
 					readonly version?: number
 				}
 				readonly srcPath?: {
-					/** @example [
+					/**
+					 * @example [
 					 *       "path",
 					 *       "to",
 					 *       "file.txt"
-					 *     ] */
+					 *     ]
+					 */
 					readonly components?: readonly string[]
 					/** @example txt */
 					readonly extension?: string
@@ -11009,11 +11014,13 @@ export interface components {
 						readonly startLineType: "ADDED" | "CONTEXT" | "REMOVED"
 					}
 					readonly path?: {
-						/** @example [
+						/**
+						 * @example [
 						 *       "path",
 						 *       "to",
 						 *       "file.txt"
-						 *     ] */
+						 *     ]
+						 */
 						readonly components?: readonly string[]
 						/** @example txt */
 						readonly extension?: string
@@ -11286,11 +11293,13 @@ export interface components {
 						readonly version?: number
 					}
 					readonly srcPath?: {
-						/** @example [
+						/**
+						 * @example [
 						 *       "path",
 						 *       "to",
 						 *       "file.txt"
-						 *     ] */
+						 *     ]
+						 */
 						readonly components?: readonly string[]
 						/** @example txt */
 						readonly extension?: string
@@ -11515,11 +11524,13 @@ export interface components {
 				readonly startLineType: "ADDED" | "CONTEXT" | "REMOVED"
 			}
 			readonly path?: {
-				/** @example [
+				/**
+				 * @example [
 				 *       "path",
 				 *       "to",
 				 *       "file.txt"
-				 *     ] */
+				 *     ]
+				 */
 				readonly components?: readonly string[]
 				/** @example txt */
 				readonly extension?: string
@@ -11792,11 +11803,13 @@ export interface components {
 				readonly version?: number
 			}
 			readonly srcPath?: {
-				/** @example [
+				/**
+				 * @example [
 				 *       "path",
 				 *       "to",
 				 *       "file.txt"
-				 *     ] */
+				 *     ]
+				 */
 				readonly components?: readonly string[]
 				/** @example txt */
 				readonly extension?: string
@@ -11850,11 +11863,13 @@ export interface components {
 		readonly RestConflict: {
 			readonly ourChange?: {
 				readonly path?: {
-					/** @example [
+					/**
+					 * @example [
 					 *       "path",
 					 *       "to",
 					 *       "file.txt"
-					 *     ] */
+					 *     ]
+					 */
 					readonly components?: readonly string[]
 					/** @example txt */
 					readonly extension?: string
@@ -11864,11 +11879,13 @@ export interface components {
 					readonly parent?: string
 				}
 				readonly srcPath?: {
-					/** @example [
+					/**
+					 * @example [
 					 *       "path",
 					 *       "to",
 					 *       "file.txt"
-					 *     ] */
+					 *     ]
+					 */
 					readonly components?: readonly string[]
 					/** @example txt */
 					readonly extension?: string
@@ -11888,11 +11905,13 @@ export interface components {
 			}
 			readonly theirChange?: {
 				readonly path?: {
-					/** @example [
+					/**
+					 * @example [
 					 *       "path",
 					 *       "to",
 					 *       "file.txt"
-					 *     ] */
+					 *     ]
+					 */
 					readonly components?: readonly string[]
 					/** @example txt */
 					readonly extension?: string
@@ -11902,11 +11921,13 @@ export interface components {
 					readonly parent?: string
 				}
 				readonly srcPath?: {
-					/** @example [
+					/**
+					 * @example [
 					 *       "path",
 					 *       "to",
 					 *       "file.txt"
-					 *     ] */
+					 *     ]
+					 */
 					readonly components?: readonly string[]
 					/** @example txt */
 					readonly extension?: string
@@ -11927,11 +11948,13 @@ export interface components {
 		}
 		readonly RestConflictChange: {
 			readonly path?: {
-				/** @example [
+				/**
+				 * @example [
 				 *       "path",
 				 *       "to",
 				 *       "file.txt"
-				 *     ] */
+				 *     ]
+				 */
 				readonly components?: readonly string[]
 				/** @example txt */
 				readonly extension?: string
@@ -11941,11 +11964,13 @@ export interface components {
 				readonly parent?: string
 			}
 			readonly srcPath?: {
-				/** @example [
+				/**
+				 * @example [
 				 *       "path",
 				 *       "to",
 				 *       "file.txt"
-				 *     ] */
+				 *     ]
+				 */
 				readonly components?: readonly string[]
 				/** @example txt */
 				readonly extension?: string
@@ -12325,11 +12350,13 @@ export interface components {
 		readonly RestDiff: {
 			readonly binary?: boolean
 			readonly destination?: {
-				/** @example [
+				/**
+				 * @example [
 				 *       "path",
 				 *       "to",
 				 *       "file.txt"
-				 *     ] */
+				 *     ]
+				 */
 				readonly components?: readonly string[]
 				/** @example txt */
 				readonly extension?: string
@@ -12342,11 +12369,13 @@ export interface components {
 			readonly lineComments?: readonly components["schemas"]["RestComment"][]
 			readonly properties?: Record<string, unknown>
 			readonly source?: {
-				/** @example [
+				/**
+				 * @example [
 				 *       "path",
 				 *       "to",
 				 *       "file.txt"
-				 *     ] */
+				 *     ]
+				 */
 				readonly components?: readonly string[]
 				/** @example txt */
 				readonly extension?: string
@@ -12468,7 +12497,8 @@ export interface components {
 			readonly id?: string
 			/** @example [] */
 			readonly subKeys?: readonly components["schemas"]["RestGpgSubKey"][]
-			/** @example -----BEGIN PGP SIGNATURE-----
+			/**
+			 * @example -----BEGIN PGP SIGNATURE-----
 			 *
 			 *     iQEzBAABCAAdFiEEM8MrWnoxlp3K1lFY5BMGiWNefn4FAlkqKE4ACgkQ5BMGiWNe
 			 *     fn6/kggAyzKhDDqdVb3Rq02hiSqeqKa1JuKRqDmzIpa6Pxa+1CpCnxwaIVrGgIii
@@ -12479,7 +12509,7 @@ export interface components {
 			 *     Pbs7BpD28w4lKlzb2EQ0n0C9rrxdPA==
 			 *     =VZpm
 			 *     -----END PGP SIGNATURE-----
-			 *      */
+			 */
 			readonly text?: string
 		}
 		readonly RestGpgSubKey: {
@@ -13190,11 +13220,13 @@ export interface components {
 			readonly values?: Record<string, unknown>
 		}
 		readonly RestPath: {
-			/** @example [
+			/**
+			 * @example [
 			 *       "path",
 			 *       "to",
 			 *       "file.txt"
-			 *     ] */
+			 *     ]
+			 */
 			readonly components?: readonly string[]
 			/** @example txt */
 			readonly extension?: string
@@ -14253,10 +14285,12 @@ export interface components {
 		}
 		readonly RestRefRestriction: {
 			readonly accessKeys?: readonly components["schemas"]["RestSshAccessKey"][]
-			/** @example [
+			/**
+			 * @example [
 			 *       "group_a",
 			 *       "group_b"
-			 *     ] */
+			 *     ]
+			 */
 			readonly groups?: readonly string[]
 			/**
 			 * Format: int32
@@ -14821,21 +14855,27 @@ export interface components {
 			}
 		}
 		readonly RestRestrictionRequest: {
-			/** @example [
+			/**
+			 * @example [
 			 *       1,
 			 *       2,
 			 *       3
-			 *     ] */
+			 *     ]
+			 */
 			readonly accessKeyIds?: readonly number[]
 			readonly accessKeys?: readonly components["schemas"]["RestSshAccessKey"][]
-			/** @example [
+			/**
+			 * @example [
 			 *       "bitbucket-developers"
-			 *     ] */
+			 *     ]
+			 */
 			readonly groupNames?: readonly string[]
-			/** @example [
+			/**
+			 * @example [
 			 *       "group_a",
 			 *       "group_b"
-			 *     ] */
+			 *     ]
+			 */
 			readonly groups?: readonly string[]
 			/**
 			 * Format: int32
@@ -14871,11 +14911,13 @@ export interface components {
 			/** @example pull-request-only */
 			readonly type?: string
 			readonly users?: readonly components["schemas"]["RestApplicationUser"][]
-			/** @example [
+			/**
+			 * @example [
 			 *       "bman",
 			 *       "tstark",
 			 *       "hulk"
-			 *     ] */
+			 *     ]
+			 */
 			readonly userSlugs?: readonly string[]
 		}
 		readonly RestReviewerGroup: {
@@ -15454,11 +15496,13 @@ export interface components {
 						readonly startLineType: "ADDED" | "CONTEXT" | "REMOVED"
 					}
 					readonly path?: {
-						/** @example [
+						/**
+						 * @example [
 						 *       "path",
 						 *       "to",
 						 *       "file.txt"
-						 *     ] */
+						 *     ]
+						 */
 						readonly components?: readonly string[]
 						/** @example txt */
 						readonly extension?: string
@@ -15731,11 +15775,13 @@ export interface components {
 						readonly version?: number
 					}
 					readonly srcPath?: {
-						/** @example [
+						/**
+						 * @example [
 						 *       "path",
 						 *       "to",
 						 *       "file.txt"
-						 *     ] */
+						 *     ]
+						 */
 						readonly components?: readonly string[]
 						/** @example txt */
 						readonly extension?: string
@@ -15808,11 +15854,13 @@ export interface components {
 							readonly startLineType: "ADDED" | "CONTEXT" | "REMOVED"
 						}
 						readonly path?: {
-							/** @example [
+							/**
+							 * @example [
 							 *       "path",
 							 *       "to",
 							 *       "file.txt"
-							 *     ] */
+							 *     ]
+							 */
 							readonly components?: readonly string[]
 							/** @example txt */
 							readonly extension?: string
@@ -16085,11 +16133,13 @@ export interface components {
 							readonly version?: number
 						}
 						readonly srcPath?: {
-							/** @example [
+							/**
+							 * @example [
 							 *       "path",
 							 *       "to",
 							 *       "file.txt"
-							 *     ] */
+							 *     ]
+							 */
 							readonly components?: readonly string[]
 							/** @example txt */
 							readonly extension?: string
@@ -16348,10 +16398,12 @@ export interface components {
 			readonly value?: string
 		}
 		readonly UserAndGroups: {
-			/** @example [
+			/**
+			 * @example [
 			 *       "group_a",
 			 *       "group_b"
-			 *     ] */
+			 *     ]
+			 */
 			readonly groups: readonly string[]
 			/** @example user */
 			readonly user?: string
@@ -16870,13 +16922,14 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestRawAccessToken"]
 				}
 			}
-			/** @description One of the following error cases occurred (check the error message for more details).
+			/**
+			 * @description One of the following error cases occurred (check the error message for more details).
 			 *
 			 *     - The request does not contain a token name
 			 *     - The request does not contain a list of permissions, or the list of permissions is empty
 			 *     - One of the provided permission levels are unknown
 			 *     - The project already has the maximum number of tokens
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -17120,9 +17173,11 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestRawAccessToken"]
 				}
 			}
-			/** @description One of the following error cases occurred (check the error message for more details).
+			/**
+			 * @description One of the following error cases occurred (check the error message for more details).
 			 *
-			 *     - The request does not contain a token name- The request does not contain a list of permissions, or the list of permissions is empty- One of the provided permission levels are unknown- The repository already has the maximum number of tokens */
+			 *     - The request does not contain a token name- The request does not contain a list of permissions, or the list of permissions is empty- One of the provided permission levels are unknown- The repository already has the maximum number of tokens
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -17368,13 +17423,14 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestRawAccessToken"]
 				}
 			}
-			/** @description One of the following error cases occurred (check the error message for more details).
+			/**
+			 * @description One of the following error cases occurred (check the error message for more details).
 			 *
 			 *     - The request does not contain a token name
 			 *     - The request does not contain a list of permissions, or the list of permissions is empty
 			 *     - One of the provided permission levels are unknown
 			 *     - The user already has their maximum number of tokens
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -17575,7 +17631,8 @@ export interface operations {
 				headers: Readonly<Record<string, unknown>>
 				content?: never
 			}
-			/** @description The request was invalid, which may be due to:
+			/**
+			 * @description The request was invalid, which may be due to:
 			 *
 			 *
 			 *     - attempted to set expiry to less than 1 day
@@ -17583,7 +17640,8 @@ export interface operations {
 			 *     - attempted to set a restriction on a key type which was invalid
 			 *
 			 *
-			 *     The exact reason for the error will be provided in the error message. */
+			 *     The exact reason for the error will be provided in the error message.
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -18923,8 +18981,10 @@ export interface operations {
 					}
 				}
 			}
-			/** @description The currently authenticated user is not an administrator or doesn't have the
-			 *     specified permission they are attempting to grant. */
+			/**
+			 * @description The currently authenticated user is not an administrator or doesn't have the
+			 *     specified permission they are attempting to grant.
+			 */
 			readonly 401: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -18951,9 +19011,11 @@ export interface operations {
 					}
 				}
 			}
-			/** @description The action was disallowed as it would reduce the currently authenticated user's
+			/**
+			 * @description The action was disallowed as it would reduce the currently authenticated user's
 			 *     permission level or the currently authenticated user has a lower permission
-			 *     level than the group they are attempting to modify. */
+			 *     level than the group they are attempting to modify.
+			 */
 			readonly 409: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -18999,9 +19061,11 @@ export interface operations {
 					}
 				}
 			}
-			/** @description The action was disallowed as it would reduce the currently authenticated user's
+			/**
+			 * @description The action was disallowed as it would reduce the currently authenticated user's
 			 *     permission level or the currently authenticated user has a lower permission
-			 *     level than the group they are attempting to modify. */
+			 *     level than the group they are attempting to modify.
+			 */
 			readonly 409: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -19146,8 +19210,10 @@ export interface operations {
 					}
 				}
 			}
-			/** @description The currently authenticated user is not an administrator or doesn't have the
-			 *     specified permission they are attempting to grant. */
+			/**
+			 * @description The currently authenticated user is not an administrator or doesn't have the
+			 *     specified permission they are attempting to grant.
+			 */
 			readonly 401: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -19174,9 +19240,11 @@ export interface operations {
 					}
 				}
 			}
-			/** @description The action was disallowed as it would reduce the currently authenticated user's
+			/**
+			 * @description The action was disallowed as it would reduce the currently authenticated user's
 			 *     permission level or the currently authenticated user has a lower permission
-			 *     level than the user they are attempting to modify. */
+			 *     level than the user they are attempting to modify.
+			 */
 			readonly 409: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -19222,9 +19290,11 @@ export interface operations {
 					}
 				}
 			}
-			/** @description The action was disallowed as it would reduce the currently authenticated user's
+			/**
+			 * @description The action was disallowed as it would reduce the currently authenticated user's
 			 *     permission level or the currently authenticated user has a lower permission
-			 *     level than the user they are attempting to modify. */
+			 *     level than the user they are attempting to modify.
+			 */
 			readonly 409: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -19481,9 +19551,11 @@ export interface operations {
 			readonly path?: never
 			readonly cookie?: never
 		}
-		/** @description Sets the rate limit settings for the instance.
+		/**
+		 * @description Sets the rate limit settings for the instance.
 		 *
-		 *     The authenticated user must have <strong>ADMIN</strong> permission to call this resource. */
+		 *     The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
+		 */
 		readonly requestBody?: {
 			readonly content: {
 				readonly "application/json": components["schemas"]["RestRateLimitSettings"]
@@ -19497,15 +19569,14 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestRateLimitSettings"]
 				}
 			}
-			/** @description One of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description One of the following error cases occurred (check the error message for more details):
 			 *
 			 *     - The request is empty
 			 *     - The enabled field of the request is not a boolean
 			 *     - The defaultSettings field of the request does not contain both capacity and fillRate
 			 *     - The capacity and fillRate are not positive integers
-			 *
-			 *
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -19596,7 +19667,8 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestUserRateLimitSettings"]
 				}
 			}
-			/** @description One of the following valid state error cases occurred (check the error message for more details):
+			/**
+			 * @description One of the following valid state error cases occurred (check the error message for more details):
 			 *
 			 *     - The request is empty
 			 *     - No users are provided in the request
@@ -19605,7 +19677,7 @@ export interface operations {
 			 *     - Whitelisted is false or not provided, settings are provided,   but do not contain both capacity and fillRate
 			 *     - Whitelisted is false or not provided, settings are provided,   but capacity and fillRate are not positive integers
 			 *     - Whitelisted is true, and settings are provided (only one must be provided)
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -19687,16 +19759,15 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestUserRateLimitSettings"]
 				}
 			}
-			/** @description One of the following valid state error cases occurred (check the error message for more details):
+			/**
+			 * @description One of the following valid state error cases occurred (check the error message for more details):
 			 *
 			 *     - The request is empty
 			 *     - Whitelisted is false or not provided, and no settings are provided either
 			 *     - Whitelisted is false or not provided, settings are provided,   but do not contain both capacity and fillRate
 			 *     - Whitelisted is false or not provided, settings are provided,   but capacity and fillRate are not positive integers
 			 *     - Whitelisted is true, and settings are provided (only one must be provided)
-			 *
-			 *
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -21168,7 +21239,7 @@ export interface operations {
 				 * @example 0
 				 */
 				readonly start?: number
-				/** @description  the type of labelables to be returned. Supported values: REPOSITORY */
+				/** @description the type of labelables to be returned. Supported values: REPOSITORY */
 				readonly type?: string
 			}
 			readonly header?: never
@@ -22939,14 +23010,13 @@ export interface operations {
 			readonly query?: never
 			readonly header?: never
 			readonly path: {
-				/** @description The permission to grant. Available project permissions are:
+				/**
+				 * @description The permission to grant. Available project permissions are:
 				 *
 				 *     - PROJECT_READ
 				 *     - PROJECT_WRITE
 				 *     - PROJECT_ADMIN
-				 *
-				 *
-				 *      */
+				 */
 				readonly permission: string
 				/** @description The project key */
 				readonly projectKey: string
@@ -23008,14 +23078,13 @@ export interface operations {
 			}
 			readonly header?: never
 			readonly path: {
-				/** @description The permission to grant. Available project permissions are:
+				/**
+				 * @description The permission to grant. Available project permissions are:
 				 *
 				 *     - PROJECT_READ
 				 *     - PROJECT_WRITE
 				 *     - PROJECT_ADMIN
-				 *
-				 *
-				 *      */
+				 */
 				readonly permission: string
 				/** @description The project key */
 				readonly projectKey: string
@@ -23126,14 +23195,13 @@ export interface operations {
 			readonly query?: {
 				/** @description The names of the groups */
 				readonly name?: string
-				/** @description The permission to grant.See the [permissions documentation](https://confluence.atlassian.com/display/BitbucketServer/Using+project+permissions)for a detailed explanation of what each permission entails. Available project permissions are:
+				/**
+				 * @description The permission to grant.See the [permissions documentation](https://confluence.atlassian.com/display/BitbucketServer/Using+project+permissions)for a detailed explanation of what each permission entails. Available project permissions are:
 				 *
 				 *     - PROJECT_READ
 				 *     - PROJECT_WRITE
 				 *     - PROJECT_ADMIN
-				 *
-				 *
-				 *      */
+				 */
 				readonly permission?: string
 			}
 			readonly header?: never
@@ -23226,7 +23294,7 @@ export interface operations {
 					}
 				}
 			}
-			/** @description  The action was disallowed as it would reduce the currently authenticated user'spermission level. */
+			/** @description The action was disallowed as it would reduce the currently authenticated user'spermission level. */
 			readonly 409: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -23305,13 +23373,13 @@ export interface operations {
 			readonly query?: {
 				/** @description Name of the user or group to filter the name of */
 				readonly filterText?: string
-				/** @description Permissions to filter by. See the [permissions documentation](https://confluence.atlassian.com/display/BitbucketServer/Using+project+permissions)for a detailed explanation of what each permission entails. This parameter can be specified multiple times to filter by more than one permission, and can contain global and project permissions.
-				 *
-				 *      */
+				/** @description Permissions to filter by. See the [permissions documentation](https://confluence.atlassian.com/display/BitbucketServer/Using+project+permissions)for a detailed explanation of what each permission entails. This parameter can be specified multiple times to filter by more than one permission, and can contain global and project permissions. */
 				readonly permission?: string
-				/** @description Type of entity (user or group)Valid entity types are:
+				/**
+				 * @description Type of entity (user or group)Valid entity types are:
 				 *
-				 *     - USER- GROUP */
+				 *     - USER- GROUP
+				 */
 				readonly type?: string
 			}
 			readonly header?: never
@@ -23400,14 +23468,13 @@ export interface operations {
 			readonly query?: {
 				/** @description The names of the users */
 				readonly name?: string
-				/** @description The permission to grant.See the [permissions documentation](https://confluence.atlassian.com/display/BitbucketServer/Using+project+permissions)for a detailed explanation of what each permission entails. Available project permissions are:
+				/**
+				 * @description The permission to grant.See the [permissions documentation](https://confluence.atlassian.com/display/BitbucketServer/Using+project+permissions)for a detailed explanation of what each permission entails. Available project permissions are:
 				 *
 				 *     - PROJECT_READ
 				 *     - PROJECT_WRITE
 				 *     - PROJECT_ADMIN
-				 *
-				 *
-				 *      */
+				 */
 				readonly permission?: string
 			}
 			readonly header?: never
@@ -23500,7 +23567,7 @@ export interface operations {
 					}
 				}
 			}
-			/** @description  The action was disallowed as it would reduce the currently authenticated user'spermission level. */
+			/** @description The action was disallowed as it would reduce the currently authenticated user'spermission level. */
 			readonly 409: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -24882,7 +24949,8 @@ export interface operations {
 			}
 			readonly cookie?: never
 		}
-		/** @description The contents of the build status request are:
+		/**
+		 * @description The contents of the build status request are:
 		 *     These fields are **required**:
 		 *
 		 *
@@ -24902,7 +24970,7 @@ export interface operations {
 		 *     - **parent** (optional): The identifier for the plan or job that ran the branch plan that produced this build status.
 		 *     - **ref** (optional): The fully qualified git reference e.g. refs/heads/master.
 		 *     - **testResults** (optional): A summary of the passed, failed and skipped tests.
-		 *      */
+		 */
 		readonly requestBody?: {
 			readonly content: {
 				readonly "*/*": components["schemas"]["RestBuildStatusSetRequest"]
@@ -24914,7 +24982,8 @@ export interface operations {
 				headers: Readonly<Record<string, unknown>>
 				content?: never
 			}
-			/** @description The build status was not added as the request was invalid. This could be because of a number of things:
+			/**
+			 * @description The build status was not added as the request was invalid. This could be because of a number of things:
 			 *
 			 *
 			 *     - an invalid commit hash was provided
@@ -24923,7 +24992,8 @@ export interface operations {
 			 *     - invalid state was provided
 			 *     - build status url was blank or longer than 450 characters
 			 *
-			 *     The specifics will be included in the error message. */
+			 *     The specifics will be included in the error message.
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -27504,13 +27574,13 @@ export interface operations {
 			readonly query?: {
 				/** @description Name of the user or group to filter the name of */
 				readonly filterText?: string
-				/** @description Permissions to filter by. See the [permissions documentation](https://confluence.atlassian.com/display/BitbucketServer/Using+repository+permissions)for a detailed explanation of what each permission entails. This parameter can be specified multiple times to filter by more than one permission, and can contain repository, project, and global permissions.
-				 *
-				 *      */
+				/** @description Permissions to filter by. See the [permissions documentation](https://confluence.atlassian.com/display/BitbucketServer/Using+repository+permissions)for a detailed explanation of what each permission entails. This parameter can be specified multiple times to filter by more than one permission, and can contain repository, project, and global permissions. */
 				readonly permission?: string
-				/** @description Type of entity (user or group)Valid entity types are:
+				/**
+				 * @description Type of entity (user or group)Valid entity types are:
 				 *
-				 *     - USER- GROUP */
+				 *     - USER- GROUP
+				 */
 				readonly type?: string
 			}
 			readonly header?: never
@@ -27917,14 +27987,15 @@ export interface operations {
 					}
 				}
 			}
-			/** @description One of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description One of the following error cases occurred (check the error message for more details):
 			 *
 			 *     - There was a problem resolving one or more reviewers.
 			 *     - The specified branches were the same.
 			 *     - The <em>to</em> branch is already up-to-date with all the commits on the     <em>from</em> branch.
 			 *     - A pull request between the two branches already exists.
 			 *     - The <em>to</em> repository is archived.
-			 *      */
+			 */
 			readonly 409: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -28006,13 +28077,14 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestPullRequest"]
 				}
 			}
-			/** @description One of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description One of the following error cases occurred (check the error message for more details):
 			 *
 			 *     - The request tried to modify the <em>author</em> or <em>participants</em>.
 			 *     - The pull request's version attribute was not specified.
 			 *     - A reviewer's username was not specified.
 			 *     - The toRef ID value was incorrectly left blank
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -28039,7 +28111,8 @@ export interface operations {
 					}
 				}
 			}
-			/** @description One of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description One of the following error cases occurred (check the error message for more details):
 			 *
 			 *     - The specified version is out of date.
 			 *     - One of the reviewers could not be added to the pull request.
@@ -28047,7 +28120,7 @@ export interface operations {
 			 *        - The from and new to branch <i>are</i> the same
 			 *        - The new destination branch up-to-date is up-to-date with all of                 changes from the from branch, resulting in a pull request with                 nothing to merge
 			 *     - The <em>to</em> repository is archived.
-			 *      */
+			 */
 			readonly 409: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -29692,14 +29765,15 @@ export interface operations {
 					}
 				}
 			}
-			/** @description One of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description One of the following error cases occurred (check the error message for more details):
 			 *
 			 *     - The pull request has conflicts.
 			 *     - A merge check vetoed the merge.
 			 *     - The specified version is out of date.
 			 *     - The specified pull request is not open.
 			 *     - The <em>to</em> repository is archived.
-			 *      */
+			 */
 			readonly 409: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -30116,12 +30190,13 @@ export interface operations {
 					}
 				}
 			}
-			/** @description One of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description One of the following error cases occurred (check the error message for more details):
 			 *
 			 *     - The pull request is not in a declined state.
 			 *     - The specified version is out of date.
 			 *     - The <em>to</em> repository is archived.
-			 *      */
+			 */
 			readonly 409: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -32999,7 +33074,7 @@ export interface operations {
 			readonly query?: {
 				/** @description List of <code>com.atlassian.webhooks.WebhookEvent</code> ids to filter for */
 				readonly event?: string
-				/** @description Scopes to filter by. This parameter can be specified once e.g. "scopeType=repository", or twice e.g. "scopeType=repository&scopeType=project", to filter by more than one scope level.  */
+				/** @description Scopes to filter by. This parameter can be specified once e.g. "scopeType=repository", or twice e.g. "scopeType=repository&scopeType=project", to filter by more than one scope level. */
 				readonly scopeType?: string
 				/** @description <code>true</code> if statistics should be provided for all found webhooks */
 				readonly statistics?: boolean
@@ -33674,11 +33749,13 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestProjectSettingsRestriction"]
 				}
 			}
-			/** @description The settings restriction could not be retrieved because the provided parameters were invalid. Possible issues include:
+			/**
+			 * @description The settings restriction could not be retrieved because the provided parameters were invalid. Possible issues include:
 			 *
 			 *     - The namespace was not provided, or longer than 255 characters
 			 *     - The featureKey was not provided, or longer than 255 characters
-			 *     - The provided componentKey was fewer than 2 characters, or longer than 255 characters */
+			 *     - The provided componentKey was fewer than 2 characters, or longer than 255 characters
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -33731,11 +33808,13 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestProjectSettingsRestriction"]
 				}
 			}
-			/** @description The settings restriction was not created because the request was invalid. Possible issues include:
+			/**
+			 * @description The settings restriction was not created because the request was invalid. Possible issues include:
 			 *
 			 *     - The namespace was not provided, or longer than 255 characters
 			 *     - The featureKey was not provided, or longer than 255 characters
-			 *     - The provided componentKey was fewer than 2 characters, or longer than 255 characters */
+			 *     - The provided componentKey was fewer than 2 characters, or longer than 255 characters
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -33797,11 +33876,13 @@ export interface operations {
 				headers: Readonly<Record<string, unknown>>
 				content?: never
 			}
-			/** @description The settings restriction was not deleted because the request was invalid. Possible issues include:
+			/**
+			 * @description The settings restriction was not deleted because the request was invalid. Possible issues include:
 			 *
 			 *     - The namespace was not provided, or longer than 255 characters
 			 *     - The featureKey was not provided, or longer than 255 characters
-			 *     - The provided componentKey was fewer than 2 characters, or longer than 255 characters */
+			 *     - The provided componentKey was fewer than 2 characters, or longer than 255 characters
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -33875,10 +33956,12 @@ export interface operations {
 					}
 				}
 			}
-			/** @description The settings restrictions could not be retrieved because the provided parameters were invalid. Possible issues include:
+			/**
+			 * @description The settings restrictions could not be retrieved because the provided parameters were invalid. Possible issues include:
 			 *
 			 *     - The namespace was not provided, or longer than 255 characters
-			 *     - The featureKey was not provided, or longer than 255 characters */
+			 *     - The featureKey was not provided, or longer than 255 characters
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -35855,7 +35938,8 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestApplicationUser"]
 				}
 			}
-			/** @description The search request was invalid, which may happen for multiple reasons, among
+			/**
+			 * @description The search request was invalid, which may happen for multiple reasons, among
 			 *     others:
 			 *
 			 *
@@ -35865,7 +35949,8 @@ export interface operations {
 			 *
 			 *
 			 *     The exact reason for the error and - in most cases - the request parameter name that had invalid value - will be
-			 *     provided in the error message. */
+			 *     provided in the error message.
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -35938,8 +36023,10 @@ export interface operations {
 		}
 		readonly requestBody?: never
 		readonly responses: {
-			/** @description The user matching the supplied <strong>userSlug</strong>. Note, this may
-			 *     <i>not</i> be the user's username, always use the <strong>user.slug</strong> property. */
+			/**
+			 * @description The user matching the supplied <strong>userSlug</strong>. Note, this may
+			 *     <i>not</i> be the user's username, always use the <strong>user.slug</strong> property.
+			 */
 			readonly 200: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -36662,9 +36749,11 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestBranch"]
 				}
 			}
-			/** @description The branch was not created because the request was invalid, e.g. the provided
+			/**
+			 * @description The branch was not created because the request was invalid, e.g. the provided
 			 *     ref name already existed in the repository, or was not a valid ref name in the
-			 *     repository */
+			 *     repository
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -36717,9 +36806,11 @@ export interface operations {
 				headers: Readonly<Record<string, unknown>>
 				content?: never
 			}
-			/** @description The branch was not deleted because the request was invalid, e.g. no ref name
+			/**
+			 * @description The branch was not deleted because the request was invalid, e.g. no ref name
 			 *     to delete was provided, or the provided ref name points to the default branch
-			 *     in the repository that cannot be deleted */
+			 *     in the repository that cannot be deleted
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -36728,9 +36819,11 @@ export interface operations {
 					}
 				}
 			}
-			/** @description The currently authenticated user has insufficient permissions to delete a
+			/**
+			 * @description The currently authenticated user has insufficient permissions to delete a
 			 *     branch. This could be due to insufficient repository permissions, or lack of
-			 *     branch permission for the provided ref name. */
+			 *     branch permission for the provided ref name.
+			 */
 			readonly 401: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -37501,10 +37594,12 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestDefaultTask"]
 				}
 			}
-			/** @description One or more of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description One or more of the following error cases occurred (check the error message for more details):
 			 *
 			 *
-			 *     - the description is empty- the sourceMatcher or targetMatcher is invalid */
+			 *     - the description is empty- the sourceMatcher or targetMatcher is invalid
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -37600,10 +37695,12 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestDefaultTask"]
 				}
 			}
-			/** @description One or more of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description One or more of the following error cases occurred (check the error message for more details):
 			 *
 			 *
-			 *     - the provided taskId does not exist- the description is empty- the sourceMatcher or targetMatcher is invalid */
+			 *     - the provided taskId does not exist- the description is empty- the sourceMatcher or targetMatcher is invalid
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -37760,10 +37857,12 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestDefaultTask"]
 				}
 			}
-			/** @description One or more of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description One or more of the following error cases occurred (check the error message for more details):
 			 *
 			 *
-			 *     - the description is empty- the sourceMatcher or targetMatcher is invalid */
+			 *     - the description is empty- the sourceMatcher or targetMatcher is invalid
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -37855,10 +37954,12 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestDefaultTask"]
 				}
 			}
-			/** @description One or more of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description One or more of the following error cases occurred (check the error message for more details):
 			 *
 			 *
-			 *     - the provided taskId does not exist- the description is empty- the sourceMatcher or targetMatcher is invalid */
+			 *     - the provided taskId does not exist- the description is empty- the sourceMatcher or targetMatcher is invalid
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -38015,14 +38116,16 @@ export interface operations {
 					}
 				}
 			}
-			/** @description Any of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description Any of the following error cases occurred (check the error message for more details):
 			 *
 			 *     - The rebase encountered conflicts.
 			 *     - The rebase discarded all of the incoming commits and would have left the pull request empty
 			 *     - A <tt>PreRepositoryHook</tt> vetoed the rebase.
 			 *     - The specified version is out of date.
 			 *     - The specified pull request is not open.
-			 *     - The target repository is archived. */
+			 *     - The target repository is archived.
+			 */
 			readonly 409: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -38483,13 +38586,14 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestInsightReport"]
 				}
 			}
-			/** @description One of the following error cases occurred (check the error message for more details):
+			/**
+			 * @description One of the following error cases occurred (check the error message for more details):
 			 *
 			 *     - The request does not contain a report title.
 			 *     - The data field contains unsupported objects.
 			 *     - The request does not contain a report key/
 			 *     - The provided commit hash is invalid, according to  the validation rules mentioned for the commitId above.
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -39580,7 +39684,7 @@ export interface operations {
 					}
 				}
 			}
-			/** @description  The currently authenticated user is not permitted to authenticate on behalf of users or authentication with the supplied user credentials failed for some reason */
+			/** @description The currently authenticated user is not permitted to authenticate on behalf of users or authentication with the supplied user credentials failed for some reason */
 			readonly 401: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -40975,14 +41079,13 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestRequiredBuildCondition"]
 				}
 			}
-			/** @description The request was malformed. This could be caused because:
+			/**
+			 * @description The request was malformed. This could be caused because:
 			 *
 			 *     - The build parent key list is empty
 			 *     - Either of the provided ref matchers is of an unrecognized type
 			 *     - Either of the provided ref matchers could not be created with the provided type and id
-			 *
-			 *
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
@@ -41029,14 +41132,13 @@ export interface operations {
 					readonly "application/json": components["schemas"]["RestRequiredBuildCondition"]
 				}
 			}
-			/** @description The request was malformed. This could be caused because:
+			/**
+			 * @description The request was malformed. This could be caused because:
 			 *
 			 *     - The build parent key list is empty
 			 *     - Either of the provided ref matchers is of an unrecognized type
 			 *     - Either of the provided ref matchers could not be created with the provided type and id
-			 *
-			 *
-			 *      */
+			 */
 			readonly 400: {
 				headers: Readonly<Record<string, unknown>>
 				content: {
