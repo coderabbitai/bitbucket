@@ -1,7 +1,7 @@
 import { test } from "vitest"
-import { createBitbucketCloudClient } from "./client.ts"
+import { BitbucketCloudClient } from "./client.ts"
 
-test("createBitbucketCloudClient", ({ expect }) => {
-	const client = createBitbucketCloudClient()
+test("BitbucketCloudClient", ({ expect }) => {
+	const client = new BitbucketCloudClient()
 	expect(client).toBeDefined()
 })
