@@ -41,13 +41,7 @@
 		"start": "node dist/main.js",
 		"test": "vitest run",
 		"test:watch": "vitest",
-		"openapi-typescript": "pnpm run openapi-typescript:cloud && pnpm run openapi-typescript:server",
-		"preopenapi-typescript:cloud": "curl --output ./src/cloud/openapi/swagger.v3.json https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json",
-		"openapi-typescript:cloud": "openapi-typescript ./src/cloud/openapi/swagger.v3.json --output ./src/cloud/openapi/openapi-typescript.ts --immutable --empty-objects-unknown --alphabetize --root-types",
-		"postopenapi-typescript:cloud": "ts-autofix ./src/cloud/openapi && pnpm run lint:fix",
-		"preopenapi-typescript:server": "curl --output ./src/server/openapi/swagger.v3.json https://dac-static.atlassian.com/server/bitbucket/9.2.swagger.v3.json",
-		"openapi-typescript:server": "openapi-typescript ./src/server/openapi/swagger.v3.json --output ./src/server/openapi/openapi-typescript.ts --immutable --empty-objects-unknown --alphabetize --root-types",
-		"postopenapi-typescript:server": "ts-autofix ./src/server/openapi && pnpm run lint:fix"
+		"openapi": "./scripts/openapi.sh"
 	},
 	"dependencies": {
 		"openapi-fetch": "~0.17.0"
@@ -64,6 +58,7 @@
 		"jiti": "^2.7.0",
 		"markdownlint-cli2": "^0.22.1",
 		"openapi-typescript": "^7.13.0",
+		"openapi-typescript-helpers": "^0.1.0",
 		"prettier": "^3.8.4",
 		"ts-autofix": "^1.0.0",
 		"typedoc": "^0.28.19",

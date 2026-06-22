@@ -59,5 +59,5 @@
 		"skipDefaultLibCheck": true,
 		"skipLibCheck": true
 	},
-	"include": ["eslint.config.ts", "src", "tests"]
+	"include": ["eslint.config.ts", "src", "tests", "scripts"]
 }

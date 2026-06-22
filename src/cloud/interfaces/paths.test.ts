@@ -1,5 +1,5 @@
 import { test } from "vitest"
-import { createBitbucketCloudClient } from "../client.js"
+import { createBitbucketCloudClient } from "../create_client.ts"
 import type { CreateBranchRequest } from "./paths.ts"
 
 async function fetch() {
