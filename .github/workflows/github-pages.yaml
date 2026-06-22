@@ -20,6 +20,7 @@ jobs:
           node-version: latest
           cache: pnpm
       - run: pnpm install
+      - run: pnpm run build
       - run: pnpm run docs
       - uses: actions/upload-pages-artifact@v5
         with:
