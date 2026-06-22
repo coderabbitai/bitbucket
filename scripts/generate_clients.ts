@@ -67,12 +67,14 @@ async function generateClient(
 	 */
 	const methods = operations
 		.map(({ method, path, operationId, description, summary }) => {
-			const jsdoc = `	/** ${summary}
+			const jsdoc = `	/** ${summary || ""}
 	 *
-${description
-	?.split("\n")
-	.map(line => `	 * ${line}`)
-	.join("\n")}
+${
+	description
+		?.split("\n")
+		.map(line => `	 * ${line}`)
+		.join("\n") || "	 *"
+}
 	 */`
 
 			return `${jsdoc}
@@ -125,14 +127,16 @@ ${methods}
 	await writeFile(classPath, classFile)
 }
 
-await generateClient(
-	"src/server/openapi/swagger.v3.json",
-	"BitbucketServerClient",
-	"src/server/client.ts",
-)
+await Promise.all([
+	generateClient(
+		"src/server/openapi/swagger.v3.json",
+		"BitbucketServerClient",
+		"src/server/client.ts",
+	),
 
-await generateClient(
-	"src/cloud/openapi/swagger.v3.json",
-	"BitbucketCloudClient",
-	"src/cloud/client.ts",
-)
+	generateClient(
+		"src/cloud/openapi/swagger.v3.json",
+		"BitbucketCloudClient",
+		"src/cloud/client.ts",
+	),
+])

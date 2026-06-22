@@ -1559,7 +1559,7 @@ export class BitbucketCloudClient {
 
 	/** Get a summary of test reports for a given step of a pipeline.
 	 *
-undefined
+	 *
 	 */
 	async getPipelineTestReports(
 		...init: InitParam<
@@ -1587,7 +1587,7 @@ undefined
 
 	/** Get test cases for a given step of a pipeline.
 	 *
-undefined
+	 *
 	 */
 	async getPipelineTestReportTestCases(
 		...init: InitParam<
@@ -1615,7 +1615,7 @@ undefined
 
 	/** Get test case reasons (output) for a given test case in a step of a pipeline.
 	 *
-undefined
+	 *
 	 */
 	async getPipelineTestReportTestCaseReasons(
 		...init: InitParam<
