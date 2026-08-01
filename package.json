@@ -56,7 +56,7 @@
 		"eslint-config-prettier": "^10.1.8",
 		"globals": "^17.6.0",
 		"jiti": "^2.7.0",
-		"markdownlint-cli2": "^0.22.1",
+		"markdownlint-cli2": "^0.23.2",
 		"openapi-typescript": "^7.13.0",
 		"openapi-typescript-helpers": "^0.1.0",
 		"prettier": "^3.8.4",
